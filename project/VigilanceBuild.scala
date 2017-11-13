@@ -40,8 +40,8 @@ object VigilanceBuild {
     licenses := Seq("APL2" -> url("http://www.apache.org/licenses/LICENSE-2.0.txt")),
     homepage := Some(githubUrl),
     scmInfo  := Some(ScmInfo(
-        browseUrl  = githubUrl,
-        connection = "git@github.com:pinguinson/vigilance.git"
+      browseUrl  = githubUrl,
+      connection = "git@github.com:pinguinson/vigilance.git"
     )),
     developers += Developer(
       id    = "pinguinson",
