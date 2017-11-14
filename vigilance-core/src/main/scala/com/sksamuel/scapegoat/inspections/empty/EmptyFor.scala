@@ -1,6 +1,6 @@
-package com.sksamuel.scapegoat.inspections.empty
+package com.github.pinguinson.vigilance.inspections.empty
 
-import com.sksamuel.scapegoat.{ Levels, Inspection, InspectionContext, Inspector }
+import com.github.pinguinson.vigilance.{ Levels, Inspection, InspectionContext, Inspector }
 
 /** @author Stephen Samuel */
 class EmptyFor extends Inspection {

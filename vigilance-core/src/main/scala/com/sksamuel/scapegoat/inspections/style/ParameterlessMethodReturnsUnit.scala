@@ -1,6 +1,6 @@
-package com.sksamuel.scapegoat.inspections.style
+package com.github.pinguinson.vigilance.inspections.style
 
-import com.sksamuel.scapegoat._
+import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
 class ParameterlessMethodReturnsUnit extends Inspection {

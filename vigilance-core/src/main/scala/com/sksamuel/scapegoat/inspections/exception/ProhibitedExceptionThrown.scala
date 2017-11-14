@@ -1,4 +1,4 @@
-package com.sksamuel.scapegoat.inspections.exception
+package com.github.pinguinson.vigilance.inspections.exception
 
 class ProhibitedExceptionThrown {
 

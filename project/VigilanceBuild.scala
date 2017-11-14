@@ -60,12 +60,13 @@ object VigilanceBuild {
 
   lazy val root = (project in file("."))
     .settings(publishSettings)
-    .aggregate(vigilanceCore, vigilanceScalac, vigilanceSbt)
+    .settings(name := "vigilance")
+    .aggregate(vigilanceCore, vigilanceSbt)
 
   lazy val vigilanceCore = (project in file("vigilance-core"))
     .settings(commonSettings)
     .settings(
-      name := "vigilance",
+      name := "scalac-vigilance-plugin",
       scalacOptions ++= Seq(
         "-Xmax-classfile-name", "254",
         "-Xlint",
@@ -80,10 +81,6 @@ object VigilanceBuild {
       fullClasspath in (Compile, console) ++= (fullClasspath in Test).value, // because that's where "PluginRunner" is
     )
 
-  lazy val vigilanceScalac = (project in file("vigilance-scalac"))
-    .settings(commonSettings)
-    .dependsOn(vigilanceCore)
-
   lazy val vigilanceSbt = (project in file("vigilance-sbt"))
     .settings(commonSettings)
     .settings(
@@ -91,5 +88,5 @@ object VigilanceBuild {
       sbtPlugin := true,
       crossSbtVersions := Seq("0.13.16", "1.0.3")
     )
-    .dependsOn(vigilanceScalac)
+    .dependsOn(vigilanceCore)
 }

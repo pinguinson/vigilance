@@ -1,4 +1,4 @@
-package com.sksamuel.scapegoat
+package com.github.pinguinson.vigilance
 
 import scala.reflect.internal.util.Position
 import scala.tools.nsc.Global

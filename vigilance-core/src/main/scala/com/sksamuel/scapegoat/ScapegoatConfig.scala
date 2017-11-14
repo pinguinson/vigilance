@@ -1,25 +1,25 @@
-package com.sksamuel.scapegoat
+package com.github.pinguinson.vigilance
 
-import com.sksamuel.scapegoat.inspections._
-import com.sksamuel.scapegoat.inspections.collections._
-import com.sksamuel.scapegoat.inspections.controlflow.WhileTrue
-import com.sksamuel.scapegoat.inspections.empty._
-import com.sksamuel.scapegoat.inspections.equality.{ ComparingFloatingPointTypes, ComparingUnrelatedTypes, ComparisonWithSelf }
-import com.sksamuel.scapegoat.inspections.exception._
-import com.sksamuel.scapegoat.inspections.imports.{ WildcardImport, DuplicateImport }
-import com.sksamuel.scapegoat.inspections.inference.{ PointlessTypeBounds, MethodReturningAny, BoundedByFinalType, ProductWithSerializableInferred }
-import com.sksamuel.scapegoat.inspections.matching.{ SuspiciousMatchOnClassObject, PartialFunctionInsteadOfMatch, RepeatedCaseBody }
-import com.sksamuel.scapegoat.inspections.math._
-import com.sksamuel.scapegoat.inspections.naming.{ MethodNames, ObjectNames, ClassNames }
-import com.sksamuel.scapegoat.inspections.nulls.{ NullAssignment, NullParameter }
-import com.sksamuel.scapegoat.inspections.option.{ EitherGet, ImpossibleOptionSizeCondition, OptionGet, OptionSize }
-import com.sksamuel.scapegoat.inspections.string._
-import com.sksamuel.scapegoat.inspections.style.{ AvoidOperatorOverload, ParameterlessMethodReturnsUnit, SimplifyBooleanExpression }
-import com.sksamuel.scapegoat.inspections.unneccesary._
-import com.sksamuel.scapegoat.inspections.unsafe._
+import com.github.pinguinson.vigilance.inspections._
+import com.github.pinguinson.vigilance.inspections.collections._
+import com.github.pinguinson.vigilance.inspections.controlflow.WhileTrue
+import com.github.pinguinson.vigilance.inspections.empty._
+import com.github.pinguinson.vigilance.inspections.equality.{ ComparingFloatingPointTypes, ComparingUnrelatedTypes, ComparisonWithSelf }
+import com.github.pinguinson.vigilance.inspections.exception._
+import com.github.pinguinson.vigilance.inspections.imports.{ WildcardImport, DuplicateImport }
+import com.github.pinguinson.vigilance.inspections.inference.{ PointlessTypeBounds, MethodReturningAny, BoundedByFinalType, ProductWithSerializableInferred }
+import com.github.pinguinson.vigilance.inspections.matching.{ SuspiciousMatchOnClassObject, PartialFunctionInsteadOfMatch, RepeatedCaseBody }
+import com.github.pinguinson.vigilance.inspections.math._
+import com.github.pinguinson.vigilance.inspections.naming.{ MethodNames, ObjectNames, ClassNames }
+import com.github.pinguinson.vigilance.inspections.nulls.{ NullAssignment, NullParameter }
+import com.github.pinguinson.vigilance.inspections.option.{ EitherGet, ImpossibleOptionSizeCondition, OptionGet, OptionSize }
+import com.github.pinguinson.vigilance.inspections.string._
+import com.github.pinguinson.vigilance.inspections.style.{ AvoidOperatorOverload, ParameterlessMethodReturnsUnit, SimplifyBooleanExpression }
+import com.github.pinguinson.vigilance.inspections.unneccesary._
+import com.github.pinguinson.vigilance.inspections.unsafe._
 
 /** @author Stephen Samuel */
-object ScapegoatConfig extends App {
+object VigilanceConfig extends App {
 
   def inspections: Seq[Inspection] = Seq(
     new ArrayEquals,

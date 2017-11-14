@@ -1,6 +1,6 @@
-package com.sksamuel.scapegoat.inspections.option
+package com.github.pinguinson.vigilance.inspections.option
 
-import com.sksamuel.scapegoat._
+import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
 class EitherGet extends Inspection {

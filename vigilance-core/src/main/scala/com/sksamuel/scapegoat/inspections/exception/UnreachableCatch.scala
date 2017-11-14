@@ -1,6 +1,6 @@
-package com.sksamuel.scapegoat.inspections.exception
+package com.github.pinguinson.vigilance.inspections.exception
 
-import com.sksamuel.scapegoat.{ Levels, Inspection, InspectionContext, Inspector }
+import com.github.pinguinson.vigilance.{ Levels, Inspection, InspectionContext, Inspector }
 
 import scala.collection.mutable
 

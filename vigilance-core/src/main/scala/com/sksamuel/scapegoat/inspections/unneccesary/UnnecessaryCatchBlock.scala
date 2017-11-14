@@ -1,4 +1,4 @@
-package com.sksamuel.scapegoat.inspections.unneccesary
+package com.github.pinguinson.vigilance.inspections.unneccesary
 
 /** @author Stephen Samuel */
 class UnnecessaryCatchBlock {

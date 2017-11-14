@@ -1,6 +1,6 @@
-package com.sksamuel.scapegoat.inspections.inference
+package com.github.pinguinson.vigilance.inspections.inference
 
-import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
+import com.github.pinguinson.vigilance.{ Inspection, InspectionContext, Inspector, Levels }
 
 /** @author Stephen Samuel */
 class BoundedByFinalType extends Inspection {

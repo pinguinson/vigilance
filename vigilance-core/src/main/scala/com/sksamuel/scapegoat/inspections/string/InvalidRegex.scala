@@ -1,8 +1,8 @@
-package com.sksamuel.scapegoat.inspections.string
+package com.github.pinguinson.vigilance.inspections.string
 
 import java.util.regex.PatternSyntaxException
 
-import com.sksamuel.scapegoat._
+import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
 class InvalidRegex extends Inspection {

@@ -1,6 +1,6 @@
-package com.sksamuel.scapegoat.io
+package com.github.pinguinson.vigilance.io
 
-import com.sksamuel.scapegoat.{Feedback, Level, Levels}
+import com.github.pinguinson.vigilance.{Feedback, Level, Levels}
 
 import scala.io.Source
 import scala.xml.{NodeSeq, Unparsed}
@@ -16,7 +16,7 @@ object HtmlReportWriter {
 
   private def body(reporter: Feedback) =
     <body>
-      <h1>Scapegoat Inspections</h1>
+      <h1>Vigilance Inspections</h1>
       <h3>
         Errors
         {reporter.warnings(Levels.Error).size.toString}
@@ -107,7 +107,7 @@ object HtmlReportWriter {
 
   private val header =
     <head>
-      <title>Scapegoat Inspection Reporter</title>
+      <title>Vigilance Inspection Reporter</title>
       {Unparsed("""<link href='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css' rel='stylesheet'>""")}
       {Unparsed("""<link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700,300italic,400italic,500italic,700italic' rel='stylesheet' type='text/css'>""")}
       {Unparsed("""<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>""")}

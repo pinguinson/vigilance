@@ -1,6 +1,6 @@
-package com.sksamuel.scapegoat.inspections.math
+package com.github.pinguinson.vigilance.inspections.math
 
-import com.sksamuel.scapegoat._
+import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
 class BigDecimalDoubleConstructor extends Inspection {

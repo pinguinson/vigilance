@@ -1,6 +1,6 @@
-package com.sksamuel.scapegoat.inspections.unneccesary
+package com.github.pinguinson.vigilance.inspections.unneccesary
 
-import com.sksamuel.scapegoat._
+import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
 class UnnecessaryIf extends Inspection {

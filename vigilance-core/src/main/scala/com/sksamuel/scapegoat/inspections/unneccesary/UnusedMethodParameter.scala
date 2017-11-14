@@ -1,8 +1,8 @@
-package com.sksamuel.scapegoat.inspections.unneccesary
+package com.github.pinguinson.vigilance.inspections.unneccesary
 
 import scala.reflect.internal.Flags
 
-import com.sksamuel.scapegoat._
+import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
 class UnusedMethodParameter extends Inspection {

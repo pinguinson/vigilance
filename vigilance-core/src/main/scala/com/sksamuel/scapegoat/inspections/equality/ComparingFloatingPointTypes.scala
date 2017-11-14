@@ -1,6 +1,6 @@
-package com.sksamuel.scapegoat.inspections.equality
+package com.github.pinguinson.vigilance.inspections.equality
 
-import com.sksamuel.scapegoat._
+import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
 class ComparingFloatingPointTypes extends Inspection {

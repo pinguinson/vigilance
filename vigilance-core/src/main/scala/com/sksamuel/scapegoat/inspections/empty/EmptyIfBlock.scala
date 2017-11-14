@@ -1,6 +1,6 @@
-package com.sksamuel.scapegoat.inspections.empty
+package com.github.pinguinson.vigilance.inspections.empty
 
-import com.sksamuel.scapegoat._
+import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
 class EmptyIfBlock extends Inspection {

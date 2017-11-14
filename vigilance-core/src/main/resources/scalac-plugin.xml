@@ -1,0 +1,4 @@
+<plugin>
+    <name>scapegoat</name>
+    <classname>com.github.pinguinson.vigilance.VigilancePlugin</classname>
+</plugin>

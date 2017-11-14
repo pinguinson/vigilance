@@ -1,6 +1,6 @@
-package com.sksamuel.scapegoat.inspections.controlflow
+package com.github.pinguinson.vigilance.inspections.controlflow
 
-import com.sksamuel.scapegoat._
+import com.github.pinguinson.vigilance._
 
 /**
  * @author Stephen Samuel

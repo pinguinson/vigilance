@@ -1,6 +1,6 @@
-package com.sksamuel.scapegoat.inspections.collections
+package com.github.pinguinson.vigilance.inspections.collections
 
-import com.sksamuel.scapegoat._
+import com.github.pinguinson.vigilance._
 
 class ReverseFunc extends Inspection {
 

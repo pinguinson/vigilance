@@ -1,6 +1,6 @@
-package com.sksamuel.scapegoat.inspections.naming
+package com.github.pinguinson.vigilance.inspections.naming
 
-import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
+import com.github.pinguinson.vigilance.{ Inspection, InspectionContext, Inspector, Levels }
 
 /** @author Stephen Samuel */
 class ClassNames extends Inspection {

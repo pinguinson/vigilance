@@ -1,6 +1,6 @@
-package com.sksamuel.scapegoat.inspections.exception
+package com.github.pinguinson.vigilance.inspections.exception
 
-import com.sksamuel.scapegoat._
+import com.github.pinguinson.vigilance._
 
 /**
  * @author Stephen Samuel

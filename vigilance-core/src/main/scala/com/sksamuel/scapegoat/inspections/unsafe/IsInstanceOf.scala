@@ -1,6 +1,6 @@
-package com.sksamuel.scapegoat.inspections.unsafe
+package com.github.pinguinson.vigilance.inspections.unsafe
 
-import com.sksamuel.scapegoat._
+import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
 class IsInstanceOf extends Inspection {

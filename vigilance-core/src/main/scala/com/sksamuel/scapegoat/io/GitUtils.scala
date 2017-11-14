@@ -1,4 +1,4 @@
-package com.sksamuel.scapegoat.io
+package com.github.pinguinson.vigilance.io
 
 import java.io.File
 
