@@ -8,8 +8,11 @@ import com.github.pinguinson.vigilance._
  */
 class CollectionPromotionToAny extends Inspection {
 
+  override val level = Levels.Warning
+  override val description = "Collection promotion to any"
+
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply new context.Traverser {
+    override def traverser = new context.Traverser {
 
       import context.global._
 
@@ -34,8 +37,11 @@ class CollectionPromotionToAny extends Inspection {
         tree match {
           case TypeApply(Select(l, TermName("$colon$plus")), List(a, r)) =>
             if (!isAnySeq(l) && isAny(a))
-              context.warn("Collection promotion to any", tree.pos, Levels.Warning, tree.toString().take(100),
-                CollectionPromotionToAny.this)
+              context.warn(
+                tree.pos,
+                CollectionPromotionToAny.this,
+                tree.toString.take(100)
+              )
           case _ => continue(tree)
         }
       }

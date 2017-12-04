@@ -7,8 +7,11 @@ import scala.reflect.internal.Flags
 /** @author Stephen Samuel */
 class MethodReturningAny extends Inspection {
 
+  override val level = Levels.Warning
+  override val description = "Method returning Any"
+
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply new context.Traverser {
+    override def traverser = new context.Traverser {
 
       import context.global._
 
@@ -21,9 +24,7 @@ class MethodReturningAny extends Inspection {
           /// ignore overridden methods as the parent will receive the warning
           case DefDef(mods, _, _, _, _, _) if mods.isOverride                 =>
           case DefDef(_, _, _, _, tpt, _) if tpt.tpe =:= typeOf[Any] || tpt.tpe =:= typeOf[AnyRef] =>
-            context.warn("MethodReturningAny", tree.pos, Levels.Warning,
-              "Method returns Any. Consider using a more specialized type: " + tree.toString().take(300),
-              MethodReturningAny.this)
+            context.warn(tree.pos, MethodReturningAny.this, "Method returns Any. Consider using a more specialized type: " + tree.toString.take(300))
           case _ => continue(tree)
         }
       }

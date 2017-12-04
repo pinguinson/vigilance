@@ -5,8 +5,11 @@ import com.github.pinguinson.vigilance.{ Inspection, InspectionContext, Inspecto
 /** @author Stephen Samuel */
 class ArraysInFormat extends Inspection {
 
+  override val level = Levels.Error
+  override val description = "Incorrect number of args for format"
+
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply new context.Traverser {
+    override def traverser = new context.Traverser {
 
       import context.global._
 
@@ -15,11 +18,7 @@ class ArraysInFormat extends Inspection {
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(Select(lhs, TermName("format")), args) if containsArrayType(args) =>
-            context.warn("Incorrect number of args for format",
-              tree.pos,
-              Levels.Error,
-              tree.toString().take(500),
-              ArraysInFormat.this)
+            context.warn(tree.pos, ArraysInFormat.this, tree.toString().take(500))
           case _ => continue(tree)
         }
       }

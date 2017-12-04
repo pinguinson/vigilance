@@ -5,13 +5,16 @@ import com.github.pinguinson.vigilance.{ Inspection, InspectionContext, Inspecto
 /** @author Stephen Samuel */
 class CatchThrowable extends Inspection {
 
+  override val level = Levels.Warning
+  override val description = "Catching Throwable"
+
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply new context.Traverser {
+    override def traverser = new context.Traverser {
 
       import context.global._
 
-      def catchesThrowable(cases: List[CaseDef]) = {
-        cases.exists {
+      def findThrowableCatch(cases: List[CaseDef]): Option[CaseDef] = {
+        cases.find {
           // matches t : Throwable
           case CaseDef(Bind(_, Typed(_, tpt)), _, _) if tpt.tpe =:= typeOf[Throwable] => true
           // matches _ : Throwable
@@ -22,12 +25,14 @@ class CatchThrowable extends Inspection {
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Try(_, cases, _) if catchesThrowable(cases) =>
-            context.warn("Catch throwable",
-              tree.pos,
-              Levels.Warning,
-              "Did you intend to catch all throwables, consider catching a more specific exception class: " +
-                tree.toString().take(300), CatchThrowable.this)
+          case Try(_, catches, _) =>
+            findThrowableCatch(catches).foreach { found =>
+              context.warn(
+                found.pos,
+                CatchThrowable.this,
+                "Consider catching a more specific exception class"
+              )
+            }
           case _ => continue(tree)
         }
       }

@@ -5,8 +5,11 @@ import com.github.pinguinson.vigilance._
 /** @author Stephen Samuel */
 class StripMarginOnRegex extends Inspection {
 
+  override val level = Levels.Error
+  override val description = "Strip margin on regex"
+
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply new context.Traverser {
+    override def traverser = new context.Traverser {
 
       import context.global._
 
@@ -17,12 +20,7 @@ class StripMarginOnRegex extends Inspection {
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Select(Apply(_, List(Select(Apply(Select(_, Augment), List(Literal(Constant(str: String)))), StripMargin))), R) if str.contains('|') =>
-            context
-              .warn("Strip margin on regex",
-                tree.pos,
-                Levels.Error,
-                "Strip margin will strip | from regex - possible corrupted regex",
-                StripMarginOnRegex.this)
+            context.warn(tree.pos, StripMarginOnRegex.this, "Strip margin will strip | from regex - possible corrupted regex")
           case _ => continue(tree)
         }
       }

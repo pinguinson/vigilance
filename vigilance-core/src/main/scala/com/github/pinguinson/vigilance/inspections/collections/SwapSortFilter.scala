@@ -5,8 +5,11 @@ import com.github.pinguinson.vigilance.{ Inspection, InspectionContext, Inspecto
 /** @author Stephen Samuel */
 class SwapSortFilter extends Inspection {
 
+  override val level = Levels.Warning
+  override val description = "Swap sort filter"
+
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply new context.Traverser {
+    override def traverser = new context.Traverser {
 
       import context.global._
 
@@ -26,11 +29,7 @@ class SwapSortFilter extends Inspection {
       }
 
       private def warn(tree: Tree): Unit = {
-        context.warn("Swap sort filter",
-          tree.pos,
-          Levels.Info,
-          "Swap sort.filter for filter.sort for better performance: " + tree.toString().take(500),
-          SwapSortFilter.this)
+        context.warn(tree.pos, SwapSortFilter.this, "Replace sort.filter with filter.sort for better performance: " + tree.toString.take(500))
       }
     }
   }

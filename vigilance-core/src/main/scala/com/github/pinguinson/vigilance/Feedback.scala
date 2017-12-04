@@ -1,5 +1,7 @@
 package com.github.pinguinson.vigilance
 
+import com.github.pinguinson.vigilance.io.IOUtils
+
 import scala.collection.mutable.ListBuffer
 import scala.reflect.internal.util.Position
 import scala.tools.nsc.reporters.Reporter
@@ -16,39 +18,26 @@ class Feedback(consoleOutput: Boolean, reporter: Reporter) {
   def warns = warnings(Levels.Warning)
   def warnings(level: Level): Seq[Warning] = warnings.filter(_.level == level)
 
-  def warn(text: String, pos: Position, level: Level, inspection: Inspection): Unit = {
-    warn(text, pos, level, None, inspection)
-  }
+  def warn(pos: Position,
+           inspection: Inspection,
+           comment: Option[String]): Unit = {
 
-  def warn(text: String, pos: Position, level: Level, snippet: String, inspection: Inspection): Unit = {
-    warn(text, pos, level, Option(snippet), inspection)
-  }
-
-  private def warn(text: String,
-    pos: Position,
-    level: Level,
-    snippet: Option[String],
-    inspection: Inspection): Unit = {
-
-    val adjustedLevel = levelOverridesByInspectionSimpleName.get(inspection.getClass.getSimpleName) match {
-      case Some(overrideLevel) => overrideLevel
-      case None                => level
-    }
+    val adjustedLevel = levelOverridesByInspectionSimpleName.getOrElse(inspection.getClass.getSimpleName, inspection.level)
 
     val sourceFileFull = pos.source.file.path
     val sourceFileNormalized = normalizeSourceFile(sourceFileFull)
-    val warning = Warning(text, pos.line, adjustedLevel, sourceFileFull, sourceFileNormalized, snippet, inspection.getClass.getCanonicalName)
+    val warning = Warning(inspection.description, pos.line, adjustedLevel, sourceFileFull, sourceFileNormalized, comment, inspection.getClass.getCanonicalName)
     warnings.append(warning)
     if (consoleOutput) {
-      println(s"[${warning.level.toString.toLowerCase}] $sourceFileNormalized:${warning.line}: $text")
-      snippet.foreach(s => println(s"          $s"))
-      println()
+      val snippet = IOUtils.getSourceLine(sourceFileFull, pos.line)
+      println(s"[${warning.level.toString.toLowerCase}] $sourceFileNormalized:${warning.line}: ${inspection.description}")
+      println(s"          $snippet")
     }
 
     adjustedLevel match {
-      case Levels.Error   => reporter.error(pos, text)
-      case Levels.Warning => reporter.warning(pos, text)
-      case Levels.Info    => reporter.info(pos, text, force = false)
+      case Levels.Error   => reporter.error(pos, inspection.description)
+      case Levels.Warning => reporter.warning(pos, inspection.description)
+      case Levels.Info    => reporter.info(pos, inspection.description, force = false)
     }
   }
 
@@ -60,9 +49,9 @@ class Feedback(consoleOutput: Boolean, reporter: Reporter) {
 }
 
 case class Warning(text: String,
-  line: Int,
-  level: Level,
-  sourceFileFull: String,
-  sourceFileNormalized: String,
-  snippet: Option[String],
-  inspection: String)
+                   line: Int,
+                   level: Level,
+                   sourceFileFull: String,
+                   sourceFileNormalized: String,
+                   snippet: Option[String],
+                   inspection: String)

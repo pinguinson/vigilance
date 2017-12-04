@@ -5,8 +5,11 @@ import com.github.pinguinson.vigilance._
 /** @author Stephen Samuel */
 class EmptyMethod extends Inspection {
 
+  override val level = Levels.Warning
+  override val description = "Empty method"
+
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply new context.Traverser {
+    override def traverser = new context.Traverser {
 
       import context.global._
 
@@ -17,8 +20,7 @@ class EmptyMethod extends Inspection {
           case ClassDef(mods, _, _, _) if mods.isTrait => continue(tree)
           case DefDef(_, _, _, _, _, _) if tree.symbol != null && tree.symbol.enclClass.isTrait =>
           case DefDef(mods, _, _, _, _, Literal(Constant(()))) =>
-            context.warn("Empty method", tree.pos, Levels.Warning, "Empty method statement " + tree.toString().take(500),
-              EmptyMethod.this)
+            context.warn(tree.pos, EmptyMethod.this, "Empty method statement " + tree.toString().take(500))
           case _ => continue(tree)
         }
       }

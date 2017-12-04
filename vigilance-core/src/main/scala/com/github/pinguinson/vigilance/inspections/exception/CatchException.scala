@@ -5,13 +5,16 @@ import com.github.pinguinson.vigilance.{ Inspection, InspectionContext, Inspecto
 /** @author Marconi Lanna */
 class CatchException extends Inspection {
 
+  override val level = Levels.Warning
+  override val description = "Catching Exception"
+
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply new context.Traverser {
+    override def traverser = new context.Traverser {
 
       import context.global._
 
-      def catchesException(cases: List[CaseDef]) = {
-        cases.exists {
+      def findExceptionCase(cases: List[CaseDef]) = {
+        cases.find {
           // matches t : Exception
           case CaseDef(Bind(_, Typed(_, tpt)), _, _) if tpt.tpe =:= typeOf[Exception] => true
           // matches _ : Exception
@@ -22,12 +25,10 @@ class CatchException extends Inspection {
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Try(_, cases, _) if catchesException(cases) =>
-            context.warn("Catch exception",
-              tree.pos,
-              Levels.Warning,
-              "Did you intend to catch all exceptions, consider catching a more specific exception class: " +
-                tree.toString().take(300), CatchException.this)
+          case Try(_, cases, _) =>
+            findExceptionCase(cases).foreach { found =>
+              context.warn(found.pos, CatchException.this, "Consider catching a more specific exception class")
+            }
           case _ => continue(tree)
         }
       }

@@ -4,8 +4,13 @@ import com.github.pinguinson.vigilance.{ Inspection, InspectionContext, Inspecto
 
 /** @author Stephen Samuel */
 class SimplifyBooleanExpression extends Inspection {
+
+  override val level = Levels.Info
+  override val description = "Simplify boolean expressions"
+
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply new context.Traverser {
+
+    override def traverser = new context.Traverser {
 
       import context.global._
 
@@ -14,11 +19,7 @@ class SimplifyBooleanExpression extends Inspection {
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(Select(lhs, Equals), List(Literal(Constant(false)))) =>
-            context.warn("Simplify boolean expressions",
-              tree.pos,
-              Levels.Info,
-              "Boolean expressions such as x == false can be re-written as !x: " + tree.toString().take(200),
-              SimplifyBooleanExpression.this)
+            context.warn(tree.pos, SimplifyBooleanExpression.this, "Boolean expressions such as x == false can be re-written as !x: " + tree.toString().take(200))
           case _ => continue(tree)
         }
       }

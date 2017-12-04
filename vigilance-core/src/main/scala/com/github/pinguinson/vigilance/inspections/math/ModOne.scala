@@ -9,16 +9,18 @@ import com.github.pinguinson.vigilance._
  */
 class ModOne extends Inspection {
 
+  override val level = Levels.Warning
+  override val description = "Integer mod one"
+
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply new context.Traverser {
+    override def traverser = new context.Traverser {
 
       import context.global._
 
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(Select(lhs, TermName("$percent")), List(Literal(Constant(1)))) if lhs.tpe <:< typeOf[Int] =>
-            context.warn("Integer mod one", tree.pos, Levels.Warning,
-              "Any expression x % 1 will always return 0. " + tree.toString().take(300), ModOne.this)
+            context.warn(tree.pos, ModOne.this, "Any expression x % 1 will always return 0. " + tree.toString().take(300))
           case _ => continue(tree)
         }
       }

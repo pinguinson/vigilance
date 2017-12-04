@@ -5,16 +5,22 @@ import com.github.pinguinson.vigilance._
 /** @author Stephen Samuel */
 class OptionGet extends Inspection {
 
+  override val level = Levels.Error
+  override val description = "Use of Option.get"
+
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply new context.Traverser {
+    override def traverser = new context.Traverser {
 
       import context.global._
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Select(left, TermName("get")) =>
-            if (left.tpe.typeSymbol.fullName == "scala.Option")
-              context.warn("Use of Option.get", tree.pos, Levels.Error, tree.toString().take(500), OptionGet.this)
+            case Select(lhs, TermName("get")) if lhs.tpe <:< typeOf[Option[_]] =>
+              context.warn(
+                tree.pos,
+                OptionGet.this,
+                tree.toString.take(500)
+              )
           case _ => continue(tree)
         }
       }

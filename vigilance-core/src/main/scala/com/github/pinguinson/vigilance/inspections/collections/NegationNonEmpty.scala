@@ -5,8 +5,11 @@ import com.github.pinguinson.vigilance.{ Inspection, InspectionContext, Inspecto
 /** @author Stephen Samuel */
 class NegationNonEmpty extends Inspection {
 
+  override val level = Levels.Info
+  override val description = "!nonEmpty can be replaced with isEmpty"
+
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply new context.Traverser {
+    override def traverser = new context.Traverser {
 
       import context.global._
 
@@ -17,8 +20,7 @@ class NegationNonEmpty extends Inspection {
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Select(Select(lhs, IsEmpty), Bang) if isTraversable(lhs) =>
-            context.warn("!nonEmpty can be replaced with isEmpty", tree.pos, Levels.Info,
-              tree.toString().take(100), NegationNonEmpty.this)
+            context.warn(tree.pos, NegationNonEmpty.this, tree.toString().take(100))
           case _ => continue(tree)
         }
       }

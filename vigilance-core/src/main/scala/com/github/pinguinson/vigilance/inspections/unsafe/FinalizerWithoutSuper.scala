@@ -5,8 +5,11 @@ import com.github.pinguinson.vigilance.{ Inspection, InspectionContext, Inspecto
 /** @author Stephen Samuel */
 class FinalizerWithoutSuper extends Inspection {
 
+  override val level = Levels.Warning
+  override val description = "Finalizer without super"
+
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply new context.Traverser {
+    override def traverser = new context.Traverser {
 
       import context.global._
 
@@ -21,11 +24,7 @@ class FinalizerWithoutSuper extends Inspection {
         tree match {
           case dd @ DefDef(mods, Finalize, _, _, tpt, rhs) if tpt.tpe <:< typeOf[Unit] =>
             if (!containsSuper(rhs))
-              context.warn("Finalizer without super",
-                tree.pos,
-                Levels.Warning,
-                "Finalizers should call super.finalize() to ensure superclasses are able to run any finalization logic",
-                FinalizerWithoutSuper.this)
+              context.warn(tree.pos, FinalizerWithoutSuper.this, "Finalizers should call super.finalize() to ensure superclasses are able to run any finalization logic")
           case _ => continue(tree)
         }
       }

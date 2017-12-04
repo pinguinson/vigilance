@@ -7,8 +7,11 @@ import scala.collection.mutable
 /** @author Stephen Samuel */
 class VarCouldBeVal extends Inspection {
 
+  override val level = Levels.Warning
+  override val description = "Var could be val"
+
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply new context.Traverser {
+    override def traverser = new context.Traverser {
 
       import context.global._
 
@@ -49,11 +52,11 @@ class VarCouldBeVal extends Inspection {
         tree match {
           case d @ DefDef(_, _, _, _, _, Block(stmt, expr)) =>
             for (unwritten <- containsUnwrittenVar(stmt :+ expr)) {
-              context.warn("Var could be val",
+              context.warn(
                 tree.pos,
-                Levels.Warning,
-                s"$unwritten is never written to, so could be a val: " + tree.toString().take(200),
-                VarCouldBeVal.this)
+                VarCouldBeVal.this,
+                s"$unwritten is never written to, so could be a val: " + tree.toString().take(200)
+              )
             }
           case _ => continue(tree)
         }

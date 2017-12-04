@@ -10,8 +10,11 @@ import com.github.pinguinson.vigilance._
  */
 class MapGetAndGetOrElse extends Inspection {
 
+  override val level = Levels.Info
+  override val description = "Use of .get.getOrElse instead of .getOrElse"
+
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply new context.Traverser {
+    override def traverser = new context.Traverser {
 
       import context.global._
 
@@ -22,11 +25,10 @@ class MapGetAndGetOrElse extends Inspection {
           case Apply(TypeApply(Select(Apply(Select(left, TermName("get")), List(key)),
             TermName("getOrElse")), _), List(defaultValue)) if isMap(left) =>
             context.warn(
-              s"Use of .get.getOrElse instead of .getOrElse",
               tree.pos,
-              Levels.Error,
-              s"Use of .get($key).getOrElse($defaultValue) instead of getOrElse($key, $defaultValue): " + tree.toString().take(500),
-              MapGetAndGetOrElse.this)
+              MapGetAndGetOrElse.this,
+              s"Use of .get($key).getOrElse($defaultValue) instead of getOrElse($key, $defaultValue): " + tree.toString.take(500)
+            )
           case _ => continue(tree)
         }
       }

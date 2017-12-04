@@ -1,0 +1,140 @@
+package com.github.pinguinson.vigilance
+
+//TODO: add every inspection to com.github.pinguinson.vigilance.inspections.all ?
+import com.github.pinguinson.vigilance.inspections._
+import com.github.pinguinson.vigilance.inspections.collections._
+import com.github.pinguinson.vigilance.inspections.controlflow._
+import com.github.pinguinson.vigilance.inspections.empty._
+import com.github.pinguinson.vigilance.inspections.equality._
+import com.github.pinguinson.vigilance.inspections.exception._
+import com.github.pinguinson.vigilance.inspections.imports._
+import com.github.pinguinson.vigilance.inspections.inference._
+import com.github.pinguinson.vigilance.inspections.matching._
+import com.github.pinguinson.vigilance.inspections.math._
+import com.github.pinguinson.vigilance.inspections.naming._
+import com.github.pinguinson.vigilance.inspections.nulls._
+import com.github.pinguinson.vigilance.inspections.option._
+import com.github.pinguinson.vigilance.inspections.string._
+import com.github.pinguinson.vigilance.inspections.style._
+import com.github.pinguinson.vigilance.inspections.unneccesary._
+import com.github.pinguinson.vigilance.inspections.unsafe._
+
+/** @author Stephen Samuel */
+object VigilanceConfig extends App {
+
+  def inspections: Seq[Inspection] = Seq(
+    new ArrayEquals,
+    new ArraysInFormat,
+    new ArraysToString,
+    new AvoidOperatorOverload,
+    new AvoidSizeEqualsZero,
+    new AvoidSizeNotEqualsZero,
+    new AvoidToMinusOne,
+    new AsInstanceOf,
+    new BigDecimalDoubleConstructor,
+    new BigDecimalScaleWithoutRoundingMode,
+    new BoundedByFinalType,
+    new BrokenOddness,
+    new CatchNpe,
+    new CatchException,
+    new CatchFatal,
+    new CatchThrowable,
+    new ClassNames,
+    new CollectionIndexOnNonIndexedSeq,
+    new CollectionNegativeIndex,
+    new CollectionPromotionToAny,
+    new ComparingFloatingPointTypes,
+    new ComparingUnrelatedTypes,
+    new ComparisonToEmptyList,
+    new ComparisonToEmptySet,
+    new ComparisonWithSelf,
+    new ConstantIf,
+    new DivideByOne,
+    new DoubleNegation,
+    new DuplicateImport,
+    new DuplicateMapKey,
+    new DuplicateSetValue,
+    new EitherGet,
+    new EmptyCaseClass,
+    new EmptyFor,
+    new EmptyIfBlock,
+    new EmptyInterpolatedString,
+    new EmptyMethod,
+    new EmptySynchronizedBlock,
+    new EmptyTryBlock,
+    new EmptyWhileBlock,
+    new ExistsSimplifiableToContains,
+    new FilterHead,
+    new FilterHeadOption,
+    new FilterIsEmpty,
+    new FilterOptionAndGet,
+    new FilterSize,
+    new FinalizerWithoutSuper,
+    new FinalModifierOnCaseClass,
+    new FindDotIsDefined,
+    new FindAndNotEqualsNoneReplaceWithExists,
+    new FutureOptionNames,
+    new FutureSeqNames,
+    new IllegalFormatString,
+    new IncorrectlyNamedExceptions,
+    new IncorrectNumberOfArgsToFormat,
+    new InvalidRegex,
+    new ImpossibleOptionSizeCondition,
+    new IsInstanceOf,
+    new JavaConversionsUse,
+    new ListAppend,
+    new ListSize,
+    new LooksLikeInterpolatedString,
+    new MapGetAndGetOrElse,
+    new MaxParameters,
+    new MethodNames,
+    new MethodReturningAny,
+    new ModOne,
+    new NanComparison,
+    new NegationIsEmpty,
+    new NegationNonEmpty,
+    new NoOpOverride,
+    new NullAssignment,
+    new NullParameter,
+    new ObjectNames,
+    new OptionGet,
+    new OptionSize,
+    new ParameterlessMethodReturnsUnit,
+    new PartialFunctionInsteadOfMatch,
+    new PointlessTypeBounds,
+    new PreferSeqEmpty,
+    new PreferSetEmpty,
+    new ProductWithSerializableInferred,
+    new PublicFinalizer,
+    new RedundantFinalizer,
+    new RedundantFinalModifierOnMethod,
+    new RedundantFinalModifierOnVar,
+    new RepeatedCaseBody,
+    new ReverseFunc,
+    new SimplifyBooleanExpression,
+    new StripMarginOnRegex,
+    new SubstringZero,
+    new SuspiciousMatchOnClassObject,
+    new SwallowedException,
+    new SwapSortFilter,
+    new TraversableHead,
+    new TraversableLast,
+    new TryGet,
+    new TypeShadowing,
+    new UnnecessaryIf,
+    new UnnecessaryReturnUse,
+    new UnnecessaryToInt,
+    new UnnecessaryToString,
+    new UnreachableCatch,
+    new UnsafeContains,
+    new UnusedMethodParameter,
+    new UseCbrt,
+    new UseExpM1,
+    new UseLog10,
+    new UseLog1P,
+    new UseSqrt,
+    new VarClosure,
+    new VarCouldBeVal,
+    new WhileTrue,
+    new ZeroNumerator)
+}

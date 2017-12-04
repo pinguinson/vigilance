@@ -5,8 +5,11 @@ import com.github.pinguinson.vigilance.{ Inspection, InspectionContext, Inspecto
 /** @author Stephen Samuel */
 class ListAppend extends Inspection {
 
+  override val level = Levels.Info
+  override val description = "List append is slow"
+
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply new context.Traverser {
+    override def traverser = new context.Traverser {
 
       import context.global._
 
@@ -16,11 +19,11 @@ class ListAppend extends Inspection {
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(TypeApply(Select(lhs, Append), _), _) if isList(lhs) =>
-            context.warn("List append is slow",
+            context.warn(
               tree.pos,
-              Levels.Info,
-              "List append is O(n). For large lists, consider using cons (::) or another data structure such as ListBuffer or Vector and converting to a List once built.",
-              ListAppend.this)
+              ListAppend.this,
+              "List append is O(n). For large lists, consider using cons (::) or another data structure such as ListBuffer or Vector and converting to a List once built."
+            )
           case _ => continue(tree)
         }
       }

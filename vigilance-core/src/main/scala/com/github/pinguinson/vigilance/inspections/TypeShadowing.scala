@@ -7,8 +7,11 @@ import com.github.pinguinson.vigilance.{ Levels, Inspection, InspectionContext, 
 /** @author Stephen Samuel */
 class TypeShadowing extends Inspection {
 
+  override val level = Levels.Warning
+  override val description = "Type shadowing"
+
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply new context.Traverser {
+    override def traverser = new context.Traverser {
 
       import context.global._
 
@@ -28,11 +31,7 @@ class TypeShadowing extends Inspection {
       }
 
       private def warn(dd: DefDef, name: TermName, tparam: TypeDef) {
-        context.warn("Type shadowing",
-          dd.pos,
-          Levels.Warning,
-          s"Method $name declares shadowed type parameter ${tparam.name}",
-          TypeShadowing.this)
+        context.warn(dd.pos, TypeShadowing.this, s"Method $name declares shadowed type parameter ${tparam.name}")
       }
 
       override def inspect(tree: Tree): Unit = {

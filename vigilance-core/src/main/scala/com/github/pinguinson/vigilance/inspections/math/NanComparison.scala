@@ -5,8 +5,11 @@ import com.github.pinguinson.vigilance._
 /** @author Stephen Samuel */
 class NanComparison extends Inspection {
 
+  override val level = Levels.Error
+  override val description = "NaN comparision"
+
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply new context.Traverser {
+    override def traverser = new context.Traverser {
 
       import context.global._
       import definitions._
@@ -33,9 +36,7 @@ class NanComparison extends Inspection {
       }
 
       private def warn(tree: Tree) {
-        context.warn("Nan comparision", tree.pos, Levels.Error,
-          "NaN comparision will always fail. Use value.isNan instead.",
-          NanComparison.this)
+        context.warn(tree.pos, NanComparison.this, tree.toString.take(500))
       }
     }
   }

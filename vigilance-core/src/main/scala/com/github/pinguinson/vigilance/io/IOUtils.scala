@@ -1,8 +1,10 @@
 package com.github.pinguinson.vigilance.io
 
-import java.io.{ BufferedWriter, File, FileWriter }
+import java.io.{BufferedWriter, File, FileWriter}
 
 import com.github.pinguinson.vigilance.Feedback
+
+import scala.io.Source
 
 /**
  * @author Stephen Samuel
@@ -14,7 +16,7 @@ object IOUtils {
   private val ScalastyleXmlFile = "vigilance-scalastyle.xml"
   private val HtmlFile = "vigilance.html"
 
-  def serialize(file: File, str: String) = {
+  def serialize(file: File, str: String): Unit = {
     val out = new BufferedWriter(new FileWriter(file))
     out.write(str)
     out.close()
@@ -33,6 +35,10 @@ object IOUtils {
   def writeScalastyleReport(targetDir: File, reporter: Feedback): File = {
     val html = ScalastyleReportWriter.toXML(reporter).toString()
     writeFile(targetDir, reporter, html, ScalastyleXmlFile)
+  }
+
+  def getSourceLine(filePath: String, lineNumber: Int): String = {
+    Source.fromFile(filePath).getLines.toStream.drop(lineNumber - 1).headOption.getOrElse("").trim
   }
 
   private def writeFile(targetDir: File, reporter: Feedback, data: String, fileName: String) = {

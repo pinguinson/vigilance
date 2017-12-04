@@ -5,8 +5,11 @@ import com.github.pinguinson.vigilance.{ Inspection, InspectionContext, Inspecto
 /** @author Stephen Samuel */
 class PredefIterableIsMutable extends Inspection {
 
+  override val level = Levels.Info
+  override val description = "Default Iterable is mutable"
+
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply new context.Traverser {
+    override def traverser = new context.Traverser {
 
       import context.global._
 
@@ -19,11 +22,7 @@ class PredefIterableIsMutable extends Inspection {
       }
 
       def warn(tree: Tree): Unit = {
-        context.warn("Default Iterable is mutable",
-          tree.pos,
-          Levels.Info,
-          "Iterable aliases scala.collection.mutable.Iterable. Did you intend to use an immutable Iterable?",
-          PredefIterableIsMutable.this)
+        context.warn(tree.pos, PredefIterableIsMutable.this, "Iterable aliases scala.collection.mutable.Iterable. Did you intend to use an immutable Iterable?")
       }
     }
   }

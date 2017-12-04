@@ -5,8 +5,11 @@ import com.github.pinguinson.vigilance.{ Inspection, InspectionContext, Inspecto
 /** @author Stephen Samuel */
 class ArrayEquals extends Inspection {
 
-  def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply new context.Traverser {
+  override val level = Levels.Info
+  override val description = "Array equals"
+
+  override def inspector(context: InspectionContext): Inspector = new Inspector(context) {
+    override def traverser = new context.Traverser {
 
       import context.global._
 
@@ -26,12 +29,11 @@ class ArrayEquals extends Inspection {
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(Select(lhs, TermName("$eq$eq") | TermName("$bang$eq")), List(rhs)) if isArray(lhs) && isArray(rhs) =>
-
-            context.warn("Array equals",
+            context.warn(
               tree.pos,
-              Levels.Info,
-              "Array equals is not an equality check. Use a.deep == b.deep or convert to another collection type",
-              ArrayEquals.this)
+              ArrayEquals.this,
+              "Array equals is not an equality check. Use a.deep == b.deep or convert to another collection type: " + tree.toString.take(100)
+            )
           case _ => continue(tree)
         }
       }

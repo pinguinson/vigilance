@@ -5,8 +5,11 @@ import com.github.pinguinson.vigilance._
 /** @author Matic Potočnik */
 class UseCbrt extends Inspection {
 
+  override val level = Levels.Info
+  override val description = "Use math.cbrt"
+
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply new context.Traverser {
+    override def traverser = new context.Traverser {
 
       import context.global._
 
@@ -19,9 +22,11 @@ class UseCbrt extends Inspection {
             && third >= 0.3333332
             && third <= 0.3333334 =>
             val math = pack.symbol.fullNameString.stripSuffix(".package").substring(pack.symbol.fullNameString.lastIndexOf('.'))
-            context.warn(s"Use $math.cbrt", tree.pos, Levels.Info,
-              s"$math.cbrt is clearer and more performant than $math.pow(x, 1/3)",
-              UseCbrt.this)
+            context.warn(
+              tree.pos,
+              UseCbrt.this,
+              s"$math.cbrt is clearer and more performant than $math.pow(x, 1/3)"
+            )
           case _ => continue(tree)
         }
       }

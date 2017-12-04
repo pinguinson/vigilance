@@ -7,12 +7,15 @@ import scala.util.control.ControlThrowable
 /** @author Marconi Lanna */
 class CatchFatal extends Inspection {
 
+  override val level = Levels.Warning
+  override val description = "Catching fatal exception"
+
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply new context.Traverser {
+    override def traverser = new context.Traverser {
 
       import context.global._
 
-      def isFatal(tpe: context.global.Type) = {
+      def isFatal(tpe: Type): Boolean = {
         tpe =:= typeOf[VirtualMachineError] ||
           tpe =:= typeOf[ThreadDeath] ||
           tpe =:= typeOf[InterruptedException] ||
@@ -20,8 +23,8 @@ class CatchFatal extends Inspection {
           tpe =:= typeOf[ControlThrowable]
       }
 
-      def catchesFatal(cases: List[CaseDef]) = {
-        cases.exists {
+      def findFatalCatch(cases: List[CaseDef]): Option[CaseDef] = {
+        cases.find {
           // matches t : FatalException
           case CaseDef(Bind(_, Typed(_, tpt)), _, _) if isFatal(tpt.tpe) => true
           // matches _ : FatalException
@@ -32,12 +35,10 @@ class CatchFatal extends Inspection {
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Try(_, cases, _) if catchesFatal(cases) =>
-            context.warn("Catch fatal exception",
-              tree.pos,
-              Levels.Warning,
-              "Did you intend to catch a fatal exception, consider using scala.util.control.NonFatal: " +
-                tree.toString().take(300), CatchFatal.this)
+          case Try(_, cases, _) =>
+            findFatalCatch(cases).foreach { found =>
+              context.warn(found.pos, CatchFatal.this, "Catching fatal exceptions is discouraged")
+            }
           case _ => continue(tree)
         }
       }

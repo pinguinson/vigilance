@@ -5,8 +5,11 @@ import com.github.pinguinson.vigilance._
 /** @author Stephen Samuel */
 class DuplicateMapKey extends Inspection {
 
+  override val level = Levels.Warning
+  override val description = "Duplicated map key"
+
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply new context.Traverser {
+    override def traverser = new context.Traverser {
 
       import context.global._
 
@@ -23,8 +26,7 @@ class DuplicateMapKey extends Inspection {
       }
 
       private def warn(tree: Tree) = {
-        context.warn("Duplicated map key", tree.pos, Levels.Warning,
-          "A map key is overwriten by a later entry: " + tree.toString().take(100), DuplicateMapKey.this)
+        context.warn(tree.pos, DuplicateMapKey.this, "A map key is overwriten by a later entry: " + tree.toString.take(100))
       }
 
       override def inspect(tree: Tree): Unit = {

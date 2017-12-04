@@ -68,7 +68,7 @@ class VigilancePlugin(val global: Global) extends Plugin {
       val nameLevels = option.drop("overrideLevels:".length).split(":")
       component.feedback.levelOverridesByInspectionSimpleName = nameLevels.map { nameLevel =>
         nameLevel.split("=") match {
-          case Array(insp, level) => insp -> Levels.fromName(level)
+          case Array(inspection, level) => inspection -> Levels.fromName(level)
           case _ =>
             throw new IllegalArgumentException(
               s"Malformed argument to 'overrideLevels': '$nameLevel'. " +
@@ -214,9 +214,7 @@ class VigilanceComponent(val global: Global, inspections: Seq[Inspection])
         val context = InspectionContext(global, feedback)
         activeInspections.foreach(inspection => {
           val inspector = inspection.inspector(context)
-          for (traverser <- inspector.postTyperTraverser)
-            traverser.traverse(tree.asInstanceOf[inspector.context.global.Tree])
-          inspector.postInspection()
+          inspector.traverser.traverse(tree.asInstanceOf[inspector.context.global.Tree])
         })
       }
       tree

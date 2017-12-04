@@ -5,8 +5,11 @@ import com.github.pinguinson.vigilance.{ Inspection, InspectionContext, Inspecto
 /** @author Stephen Samuel */
 class UnnecessaryToString extends Inspection {
 
+  override val level = Levels.Warning
+  override val description = "Unnecessary toString"
+
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply new context.Traverser {
+    override def traverser = new context.Traverser {
 
       import context.global._
       import definitions._
@@ -14,8 +17,7 @@ class UnnecessaryToString extends Inspection {
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Select(lhs, TermName("toString")) if lhs.tpe <:< StringClass.tpe =>
-            context.warn("Unnecessary toString", tree.pos, Levels.Warning,
-              "Unnecessary toString on instanceo of String: " + tree.toString().take(200), UnnecessaryToString.this)
+            context.warn(tree.pos, UnnecessaryToString.this, tree.toString().take(200))
           case _ =>
         }
         continue(tree)

@@ -4,8 +4,11 @@ import com.github.pinguinson.vigilance._
 
 class VarUse extends Inspection {
 
+  override val level = Levels.Warning
+  override val description = "Use of var"
+
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply new context.Traverser {
+    override def traverser = new context.Traverser {
 
       import context.global._
 
@@ -20,7 +23,7 @@ class VarUse extends Inspection {
           case ValDef(mods, _, _, _) if mods.isSynthetic || mods.isMacro                =>
           case ValDef(_, _, tpt, _) if isXmlLiteral(tpt.tpe)                            =>
           case v @ ValDef(modifiers, name, tpt, rhs) if modifiers.hasFlag(Flag.MUTABLE) =>
-            context.warn("Use of var", tree.pos, Levels.Warning, "var used: " + tree.toString().take(300), VarUse.this)
+            context.warn(tree.pos, VarUse.this,  tree.toString.take(300))
           case _ => continue(tree)
         }
       }

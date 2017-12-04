@@ -5,27 +5,27 @@ import com.github.pinguinson.vigilance._
 /** @author Stephen Samuel */
 class SwallowedException extends Inspection {
 
+  override val level = Levels.Warning
+  override val description = "Empty catch block"
+
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply new context.Traverser {
+    override def traverser = new context.Traverser {
 
       import context.global._
 
-      private def warn(cd: CaseDef): Unit = {
-        if (cd.body.toString == "()")
-          context.warn("Empty catch block", cd.pos, Levels.Warning,
-            "Empty catch block " + cd.toString().take(100), SwallowedException.this)
-      }
+      private val Unit = Literal(Constant(()))
 
-      private def checkCatches(defs: List[CaseDef]) = defs.foreach {
+      private def checkCatches(cases: List[CaseDef]): Unit = cases.foreach {
         case CaseDef(Bind(TermName("ignored") | TermName("ignore"), _), _, _) =>
-        case cdef @ CaseDef(_, _, Literal(Constant(()))) => warn(cdef)
+        case catchBlock @ CaseDef(_, _, Unit) =>
+          context.warn(catchBlock.pos, SwallowedException.this, "Empty catch block")
         case _ =>
       }
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Try(body, catches, finalizer) => checkCatches(catches)
-          case _                             => continue(tree)
+          case Try(_, catches, _) => checkCatches(catches)
+          case _                  => continue(tree)
         }
       }
     }

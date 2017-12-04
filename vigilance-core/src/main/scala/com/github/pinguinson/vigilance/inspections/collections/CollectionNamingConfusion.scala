@@ -3,10 +3,15 @@ package com.github.pinguinson.vigilance.inspections.collections
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
+
+@deprecated("High chance of false positive", "0.0.2")
 class CollectionNamingConfusion extends Inspection {
 
+  override val level = Levels.Info
+  override val description = "A Set is named list"
+
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply new context.Traverser {
+    override def traverser = new context.Traverser {
 
       import context.global._
 
@@ -18,15 +23,11 @@ class CollectionNamingConfusion extends Inspection {
       override def inspect(tree: Tree): Unit = {
         tree match {
           case ValDef(_, TermName(name), tpt, _) if isSet(tpt.tpe) && isNamedList(name) =>
-            context.warn("A Set is named list", tree.pos, Levels.Info,
-              "An instanceof Set is confusingly referred to by a variable called/containing list: " +
-                tree.toString().take(300),
-              CollectionNamingConfusion.this)
-          case v @ ValDef(_, TermName(name), tpt, _) if isList(tpt.tpe) && isNamedSet(name) =>
-            context.warn("A List is named set", tree.pos, Levels.Info,
-              "An instanceof List is confusingly referred to by a variable called/containing set: " +
-                tree.toString().take(300),
-              CollectionNamingConfusion.this)
+            context.warn(tree.pos, CollectionNamingConfusion.this, "An instanceof Set is confusingly referred to by a variable called/containing list: " +
+                            tree.toString().take(300))
+          case ValDef(_, TermName(name), tpt, _) if isList(tpt.tpe) && isNamedSet(name) =>
+            context.warn(tree.pos, CollectionNamingConfusion.this, "An instanceof List is confusingly referred to by a variable called/containing set: " +
+                            tree.toString().take(300))
           case _ => continue(tree)
         }
       }

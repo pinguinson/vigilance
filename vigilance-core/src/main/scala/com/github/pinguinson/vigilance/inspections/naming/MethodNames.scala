@@ -7,8 +7,11 @@ import com.github.pinguinson.vigilance.{ Inspection, InspectionContext, Inspecto
 /** @author Stephen Samuel */
 class MethodNames extends Inspection {
 
+  override val level = Levels.Info
+  override val description = "Method name not recommended"
+
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply new context.Traverser {
+    override def traverser = new context.Traverser {
 
       import context.global._
 
@@ -22,11 +25,7 @@ class MethodNames extends Inspection {
           case DefDef(mods, _, _, _, _, _) if tree.symbol != null && tree.symbol.isConstructor =>
           case DefDef(_, name, _, _, _, _) if !name.decode.exists(_.isLetter) =>
           case DefDef(_, name, _, _, _, _) if !name.toString.matches(regex) =>
-            context.warn("Method name not recommended",
-              tree.pos,
-              Levels.Info,
-              s"Methods should be in camelCase style with the first letter lower-case. See http://docs.scala-lang.org/style/naming-conventions.html#methods",
-              MethodNames.this)
+            context.warn(tree.pos, MethodNames.this, s"Methods should be in camelCase style with the first letter lower-case. See http://docs.scala-lang.org/style/naming-conventions.html#methods")
           case _ => continue(tree)
         }
       }
