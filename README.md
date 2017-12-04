@@ -1,2 +1,2 @@
 # vigilance
-Scala linter
+Scala linter (fork of https://github.com/sksamuel/scapegoat)
