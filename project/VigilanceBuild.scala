@@ -23,12 +23,12 @@ object VigilanceBuild {
       "-target", "1.8"
     ),
     libraryDependencies ++= Seq(
-      "org.scala-lang.modules" %  "scala-xml_2.11" % "1.0.6",
+      "org.scala-lang.modules" %% "scala-xml"      % "1.0.6",
       "org.scala-lang"         %  "scala-reflect"  % scalaVersion.value,
-      "org.scala-lang"         %  "scala-compiler" % scalaVersion.value % Provided exclude("org.scala-lang.modules", "scala-xml_2.12"),
-      "org.scala-lang"         %  "scala-compiler" % scalaVersion.value % Test     exclude("org.scala-lang.modules", "scala-xml_2.12"),
+      "org.scala-lang"         %  "scala-compiler" % scalaVersion.value % Provided,
+      "org.scala-lang"         %  "scala-compiler" % scalaVersion.value % Test,
       "commons-io"             %  "commons-io"     % "2.5"              % Test,
-      "org.scalatest"          %% "scalatest"      % "3.0.4"            % Test     exclude("org.scala-lang.modules", "scala-xml_2.12"),
+      "org.scalatest"          %% "scalatest"      % "3.0.4"            % Test,
       "org.mockito"            %  "mockito-all"    % "1.10.19"          % Test,
       "joda-time"              %  "joda-time"      % "2.9.9"            % Test,
       "org.joda"               %  "joda-convert"   % "1.9.2"            % Test,
@@ -78,7 +78,7 @@ object VigilanceBuild {
         "-Ywarn-nullary-unit",
         "-Ywarn-numeric-widen"
       ),
-      fullClasspath in (Compile, console) ++= (fullClasspath in Test).value // because that's where "PluginRunner" is
+      fullClasspath in (Compile, console) ++= (fullClasspath in Test).value, // because that's where "PluginRunner" is
     )
 
   lazy val vigilanceSbt = (project in file("vigilance-sbt"))
