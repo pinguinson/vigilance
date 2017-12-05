@@ -14,9 +14,8 @@ class TraversableLast extends Inspection {
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Select(left, TermName("last")) =>
-            if (left.tpe <:< typeOf[Traversable[_]])
-              context.warn(tree.pos, TraversableLast.this, tree.toString().take(500))
+          case Select(left, TermName("last")) if left.tpe <:< typeOf[Traversable[_]] =>
+              context.warn(tree.pos, TraversableLast.this, "Traversable.last is unsafe, use Traversable.lastOption instead")
           case _ => continue(tree)
         }
       }

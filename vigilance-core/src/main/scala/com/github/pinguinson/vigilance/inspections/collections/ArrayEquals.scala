@@ -29,11 +29,7 @@ class ArrayEquals extends Inspection {
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(Select(lhs, TermName("$eq$eq") | TermName("$bang$eq")), List(rhs)) if isArray(lhs) && isArray(rhs) =>
-            context.warn(
-              tree.pos,
-              ArrayEquals.this,
-              "Array equals is not an equality check. Use a.deep == b.deep or convert to another collection type: " + tree.toString.take(100)
-            )
+            context.warn(tree.pos, ArrayEquals.this, "Array equals is not an equality check. Use a.deep == b.deep or convert to another collection type")
           case _ => continue(tree)
         }
       }

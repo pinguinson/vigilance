@@ -13,7 +13,8 @@ class ComparingFloatingPointTypes extends Inspection {
 
       import context.global._
 
-      private val EqEq = TermName("$eq$eq")
+      private val Equals = TermName("$eq$eq")
+      private val NotEquals = TermName("$bang$eq")
 
       private def isFloating(tree: Tree) = {
         tree.tpe <:< typeOf[Double] || tree.tpe <:< typeOf[Float]
@@ -21,8 +22,8 @@ class ComparingFloatingPointTypes extends Inspection {
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Apply(Select(left, EqEq), List(right)) if isFloating(left) && isFloating(right) =>
-            context.warn(tree.pos, ComparingFloatingPointTypes.this, tree.toString.take(300))
+          case Apply(Select(left, Equals | NotEquals), List(right)) if isFloating(left) && isFloating(right) =>
+            context.warn(tree.pos, ComparingFloatingPointTypes.this, "You should not compare floating point number with == or !=")
           case _ => continue(tree)
         }
       }

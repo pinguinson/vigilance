@@ -16,7 +16,7 @@ class TraversableHead extends Inspection {
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Select(left, TermName("head")) if left.tpe <:< typeOf[Traversable[_]] =>
-            context.warn(tree.pos, TraversableHead.this, tree.toString().take(500))
+            context.warn(tree.pos, TraversableHead.this, "Traversable.head is unsafe, use Traversable.headOption instead")
           case _ => continue(tree)
         }
       }
