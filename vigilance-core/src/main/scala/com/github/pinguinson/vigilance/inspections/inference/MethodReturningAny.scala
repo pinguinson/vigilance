@@ -1,11 +1,11 @@
 package com.github.pinguinson.vigilance.inspections.inference
 
-import com.github.pinguinson.vigilance.{ Inspection, InspectionContext, Inspector, Levels }
+import com.github.pinguinson.vigilance.{Inspection, InspectionContext, Inspector, Levels}
 
 import scala.reflect.internal.Flags
 
 /** @author Stephen Samuel */
-class MethodReturningAny extends Inspection {
+class MethodReturningAny extends Inspection { self =>
 
   override val level = Levels.Warning
   override val description = "Method returning Any"
@@ -13,20 +13,18 @@ class MethodReturningAny extends Inspection {
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def traverser = new context.Traverser {
 
+      import context._
       import context.global._
 
-      override def inspect(tree: Tree): Unit = {
-        tree match {
-          case DefDef(mods, _, _, _, _, _) if mods.isSynthetic                =>
-          case DefDef(mods, _, _, _, _, _) if mods.hasFlag(Flags.SetterFlags) =>
-          case DefDef(mods, _, _, _, _, _) if mods.hasFlag(Flags.GetterFlags) =>
-          case DefDef(mods, _, _, _, _, _) if mods.hasFlag(Flags.ACCESSOR)    =>
-          /// ignore overridden methods as the parent will receive the warning
-          case DefDef(mods, _, _, _, _, _) if mods.isOverride                 =>
-          case DefDef(_, _, _, _, tpt, _) if tpt.tpe =:= typeOf[Any] || tpt.tpe =:= typeOf[AnyRef] =>
-            context.warn(tree.pos, MethodReturningAny.this, "Method returns Any. Consider using a more specialized type: " + tree.toString.take(300))
-          case _ => continue(tree)
-        }
+      override def inspect(tree: Tree) = {
+        case DefDef(mods, _, _, _, _, _) if mods.isSynthetic =>
+        case DefDef(mods, _, _, _, _, _) if mods.hasFlag(Flags.SetterFlags) =>
+        case DefDef(mods, _, _, _, _, _) if mods.hasFlag(Flags.GetterFlags) =>
+        case DefDef(mods, _, _, _, _, _) if mods.hasFlag(Flags.ACCESSOR) =>
+        /// ignore overridden methods as the parent will receive the warning
+        case DefDef(mods, _, _, _, _, _) if mods.isOverride =>
+        case DefDef(_, _, _, _, tpt, _) if tpt.tpe =:= typeOf[Any] || tpt.tpe =:= typeOf[AnyRef] =>
+          context.warn(tree.pos, self, "Method returns Any. Consider using a more specialized type: " + tree.toString.take(300))
       }
     }
   }

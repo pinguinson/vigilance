@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.collections
 import com.github.pinguinson.vigilance.{ Inspection, InspectionContext, Inspector, Levels }
 
 /** @author Stephen Samuel */
-class ComparisonToEmptyList extends Inspection {
+class ComparisonToEmptyList extends Inspection { self =>
 
   override val level = Levels.Info
   override val description = "Comparison to empty list"
@@ -11,25 +11,18 @@ class ComparisonToEmptyList extends Inspection {
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def traverser = new context.Traverser {
 
+      import context._
       import context.global._
 
-      private val Equals = TermName("$eq$eq")
-      private val Empty = TermName("empty")
-      private val Nil = TermName("Nil")
-      private val TermList = TermName("List")
-
-      override def inspect(tree: Tree): Unit = {
-        tree match {
-          case Apply(Select(_, Equals), List(Select(_, Nil))) => warn(tree)
-          case Apply(Select(Select(_, Nil), Equals), _) => warn(tree)
-          case Apply(Select(_, Equals), List(TypeApply(Select(Select(_, TermList), Empty), _))) => warn(tree)
-          case Apply(Select(TypeApply(Select(Select(_, TermList), Empty), _), Equals), _) => warn(tree)
-          case _ => continue(tree)
-        }
+      override def inspect(tree: Tree) = {
+        case Apply(Select(_, Equals), List(Select(_, TermNil))) => warn(tree)
+        case Apply(Select(Select(_, TermNil), Equals), _) => warn(tree)
+        case Apply(Select(_, Equals), List(TypeApply(Select(Select(_, TermList), Empty), _))) => warn(tree)
+        case Apply(Select(TypeApply(Select(Select(_, TermList), Empty), _), Equals), _) => warn(tree)
       }
 
       private def warn(tree: Tree) {
-        context.warn(tree.pos, ComparisonToEmptyList.this, "Prefer use of isEmpty instead of comparison to an empty List: " + tree.toString().take(200))
+        context.warn(tree.pos, self, "Prefer use of isEmpty instead of comparison to an empty List: " + tree.toString().take(200))
       }
     }
   }

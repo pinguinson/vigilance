@@ -1,5 +1,7 @@
 package com.github.pinguinson.vigilance
 
+import com.github.pinguinson.vigilance.util._
+
 import scala.annotation.tailrec
 import scala.reflect.internal.util.Position
 import scala.tools.nsc.Global
@@ -15,11 +17,10 @@ abstract class Inspector(val context: InspectionContext) {
   def traverser: context.Traverser
 }
 
-case class InspectionContext(global: Global, feedback: Feedback) {
+case class InspectionContext(global: Global, feedback: Feedback) extends CompilerAccess with Constants with Extractors {
 
   def warn(pos: Position, inspection: Inspection, snippet: String): Unit = {
-    val snippetOpt = if (snippet == "") None else Some(snippet)
-    feedback.warn(pos, inspection, snippetOpt)
+    feedback.warn(pos, inspection, snippet)
   }
 
   trait Traverser extends global.Traverser {
@@ -53,10 +54,9 @@ case class InspectionContext(global: Global, feedback: Feedback) {
 
     protected def continue(tree: Tree): Unit = super.traverse(tree)
 
-    protected def inspect(tree: Tree): Unit
+    protected def inspect(tree: Tree): PartialFunction[Tree, Unit]
 
-    override final def traverse(tree: Tree): Unit = {
-      tree match {
+    override final def traverse(tree: Tree): Unit = tree match {
         // ignore synthetic methods added
         // TODO: can we replace these with `case t: Tree if isSuppressed(t.symbol)`?
         case ddf: DefDef    if isSuppressed(ddf.symbol) || tree.symbol.isSynthetic =>
@@ -67,9 +67,8 @@ case class InspectionContext(global: Global, feedback: Feedback) {
         case ClassDef(_, _, _, Template(parents, _, _)) if parents.map(_.tpe.typeSymbol.fullName).contains("scala.reflect.api.TypeCreator") =>
         case cdf: ClassDef  if isSuppressed(cdf.symbol) =>
         case _ if analyzer.hasMacroExpansionAttachment(tree) => //skip macros as per http://bit.ly/2uS8BrU
-        case _ => inspect(tree)
+        case _ => inspect(tree).applyOrElse(tree, continue)
       }
     }
   }
-}
 

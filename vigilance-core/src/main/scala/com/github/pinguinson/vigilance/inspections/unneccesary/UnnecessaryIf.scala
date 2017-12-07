@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.unneccesary
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-class UnnecessaryIf extends Inspection {
+class UnnecessaryIf extends Inspection { self =>
 
   override val level = Levels.Info
   override val description = "Unnecessary if condition"
@@ -11,14 +11,12 @@ class UnnecessaryIf extends Inspection {
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def traverser = new context.Traverser {
 
+      import context._
       import context.global._
 
-      override def inspect(tree: Tree): Unit = {
-        tree match {
-          case If(cond, Literal(Constant(true)), Literal(Constant(false))) =>
-            context.warn(tree.pos, UnnecessaryIf.this, tree.toString.take(500))
-          case _ => continue(tree)
-        }
+      override def inspect(tree: Tree) = {
+        case If(_, True | False, False | True) =>
+          context.warn(tree.pos, self, tree.toString.take(500))
       }
     }
   }

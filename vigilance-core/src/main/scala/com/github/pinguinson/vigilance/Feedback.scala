@@ -20,7 +20,7 @@ class Feedback(consoleOutput: Boolean, reporter: Reporter) {
 
   def warn(pos: Position,
            inspection: Inspection,
-           comment: Option[String]): Unit = {
+           comment: String): Unit = {
 
     val adjustedLevel = levelOverridesByInspectionSimpleName.getOrElse(inspection.getClass.getSimpleName, inspection.level)
 
@@ -53,5 +53,5 @@ case class Warning(text: String,
                    level: Level,
                    sourceFileFull: String,
                    sourceFileNormalized: String,
-                   snippet: Option[String],
+                   snippet: String,
                    inspection: String)

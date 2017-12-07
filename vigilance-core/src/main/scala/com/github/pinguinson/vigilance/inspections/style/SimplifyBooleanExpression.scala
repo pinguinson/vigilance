@@ -1,9 +1,9 @@
 package com.github.pinguinson.vigilance.inspections.style
 
-import com.github.pinguinson.vigilance.{ Inspection, InspectionContext, Inspector, Levels }
+import com.github.pinguinson.vigilance.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
-class SimplifyBooleanExpression extends Inspection {
+class SimplifyBooleanExpression extends Inspection { self =>
 
   override val level = Levels.Info
   override val description = "Simplify boolean expressions"
@@ -12,16 +12,12 @@ class SimplifyBooleanExpression extends Inspection {
 
     override def traverser = new context.Traverser {
 
+      import context._
       import context.global._
 
-      private val Equals = TermName("$eq$eq")
-
-      override def inspect(tree: Tree): Unit = {
-        tree match {
-          case Apply(Select(lhs, Equals), List(Literal(Constant(false)))) =>
-            context.warn(tree.pos, SimplifyBooleanExpression.this, "Boolean expressions such as x == false can be re-written as !x: " + tree.toString().take(200))
-          case _ => continue(tree)
-        }
+      override def inspect(tree: Tree) = {
+        case Apply(Select(lhs, Equals), List(False)) =>
+          context.warn(tree.pos, self, "Boolean expressions such as x == false can be re-written as !x: " + tree.toString().take(200))
       }
     }
   }

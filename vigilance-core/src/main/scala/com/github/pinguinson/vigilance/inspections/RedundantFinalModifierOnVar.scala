@@ -1,8 +1,8 @@
 package com.github.pinguinson.vigilance.inspections
 
-import com.github.pinguinson.vigilance.{ Inspection, InspectionContext, Inspector, Levels }
+import com.github.pinguinson.vigilance.{Inspection, InspectionContext, Inspector, Levels}
 
-class RedundantFinalModifierOnVar extends Inspection {
+class RedundantFinalModifierOnVar extends Inspection { self =>
 
   override val level = Levels.Info
   override val description = "Redundant final modifier on var"
@@ -13,16 +13,14 @@ class RedundantFinalModifierOnVar extends Inspection {
 
     override def traverser = new context.Traverser {
 
-      override def inspect(tree: Tree): Unit = {
-        tree match {
-          case ValDef(mods, _, _, _) if mods.isFinal && mods.isMutable &&
-            (tree.symbol.enclClass.isFinal ||
-              tree.symbol.enclClass.isCase ||
-              tree.symbol.enclClass.isModuleOrModuleClass ||
-              tree.symbol.enclClass.isPackageObjectOrClass) =>
-            context.warn(tree.pos, RedundantFinalModifierOnVar.this, "This var cannot be overridden, final modifier is redundant")
-          case _ => continue(tree)
-        }
+      override def inspect(tree: Tree) = {
+
+        case ValDef(mods, _, _, _) if mods.isFinal && mods.isMutable &&
+          (tree.symbol.enclClass.isFinal ||
+            tree.symbol.enclClass.isCase ||
+            tree.symbol.enclClass.isModuleOrModuleClass ||
+            tree.symbol.enclClass.isPackageObjectOrClass) =>
+          context.warn(tree.pos, self, "This var cannot be overridden, final modifier is redundant")
       }
     }
   }

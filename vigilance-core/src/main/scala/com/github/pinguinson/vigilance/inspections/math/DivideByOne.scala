@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.math
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-class DivideByOne extends Inspection {
+class DivideByOne extends Inspection { self =>
 
   override val level = Levels.Warning
   override val description = "Division by one"
@@ -11,6 +11,7 @@ class DivideByOne extends Inspection {
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def traverser = new context.Traverser {
 
+      import context._
       import context.global._
 
       private def isNumber(tree: Tree) = {
@@ -22,15 +23,13 @@ class DivideByOne extends Inspection {
 
       private def isOne(value: Any): Boolean = value match {
         case i: Int => i == 1
-        case _      => false
+        case _ => false
       }
 
-      override def inspect(tree: Tree): Unit = {
-        tree match {
-          case Apply(Select(lhs, TermName("$div")), List(Literal(Constant(x)))) if isNumber(lhs) && isOne(x) =>
-            context.warn(tree.pos, DivideByOne.this, tree.toString.take(500))
-          case _ => continue(tree)
-        }
+      //TODO: fix this
+      override def inspect(tree: Tree) = {
+        case Apply(Select(lhs, TermName("$div")), List(Literal(Constant(x)))) if isNumber(lhs) && isOne(x) =>
+          context.warn(tree.pos, self, tree.toString.take(500))
       }
     }
   }

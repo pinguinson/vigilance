@@ -1,9 +1,9 @@
 package com.github.pinguinson.vigilance.inspections.imports
 
-import com.github.pinguinson.vigilance.{ Inspection, InspectionContext, Inspector, Levels }
+import com.github.pinguinson.vigilance.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
-class WildcardImport extends Inspection {
+class WildcardImport extends Inspection { self =>
 
   override val level = Levels.Warning
   override val description = "Wildcard import"
@@ -16,12 +16,9 @@ class WildcardImport extends Inspection {
 
     override def traverser = new context.Traverser {
 
-      override def inspect(tree: Tree): Unit = {
-        tree match {
-          case Import(expr, selector) if isWildcard(selector) =>
-            context.warn(tree.pos, WildcardImport.this, "Wildcard import used: " + tree.toString())
-          case _ => continue(tree)
-        }
+      override def inspect(tree: Tree) = {
+        case Import(_, selector) if isWildcard(selector) =>
+          context.warn(tree.pos, self, "Wildcard import used: " + tree.toString())
       }
     }
   }

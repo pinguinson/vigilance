@@ -3,32 +3,26 @@ package com.github.pinguinson.vigilance.inspections.controlflow
 import com.github.pinguinson.vigilance._
 
 /**
- * @author Stephen Samuel
- */
-class WhileTrue extends Inspection {
+  * @author Stephen Samuel
+  */
+class WhileTrue extends Inspection { self =>
 
   override val level = Levels.Warning
   override val description = "While true loop"
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def traverser = new context.Traverser {
+     override def traverser = new context.Traverser {
 
+      import context._
       import context.global._
 
-      override def inspect(tree: Tree): Unit = {
-        this.getClass.getSimpleName
-        tree match {
-          case LabelDef(name, _, If(cond, _, _)) if isWhile(name) && isConstantCondition(cond) =>
-            context.warn(tree.pos, WhileTrue.this, "A while true loop is unlikely to be meant for production: " + tree.toString.take(500))
-          case LabelDef(name, _, Block(_, If(cond, _, _))) if isWhile(name) && isConstantCondition(cond) =>
-            context.warn(tree.pos, WhileTrue.this, "A do while true loop is unlikely to be meant for production: " + tree.toString.take(500))
-          case _ => continue(tree)
-        }
-      }
+      private val True = Literal(Constant(true))
 
-      private def isConstantCondition(tree: Tree): Boolean = tree match {
-        case Literal(Constant(true)) => true
-        case _                       => false
+      override def inspect(tree: Tree) = {
+        case LabelDef(name, _, If(True, _, _)) if isWhile(name) =>
+          context.warn(tree.pos, self, "A while true loop is unlikely to be meant for production")
+        case LabelDef(name, _, Block(_, If(True, _, _))) if isWhile(name) =>
+          context.warn(tree.pos, self, "A do while true loop is unlikely to be meant for production")
       }
 
       private def isWhile(name: TermName): Boolean = {

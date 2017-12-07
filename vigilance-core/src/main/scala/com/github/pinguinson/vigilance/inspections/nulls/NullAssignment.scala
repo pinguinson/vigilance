@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.nulls
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-class NullAssignment extends Inspection {
+class NullAssignment extends Inspection { self =>
 
   override val level = Levels.Warning
   override val description = "Null assignment"
@@ -11,24 +11,20 @@ class NullAssignment extends Inspection {
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def traverser = new context.Traverser {
 
+      import context._
       import context.global._
 
-      private val Null = Literal(Constant(null))
-
-      override def inspect(tree: Tree): Unit = {
-        tree match {
-          case ValDef(_, _, _, Null) =>
-            warn(tree)
-          case Apply(Select(_, name), List(Null)) if name.endsWith("_$eq") =>
-            warn(tree)
-          case Assign(_, Null) =>
-            warn(tree)
-          case _ => continue(tree)
-        }
+      private def warn(tree: Tree) {
+        context.warn(tree.pos, self, "Null assignment on line " + tree.pos.line)
       }
 
-      private def warn(tree: Tree) {
-        context.warn(tree.pos, NullAssignment.this, "Null assignment on line " + tree.pos.line)
+      override def inspect(tree: Tree) = {
+        case ValDef(_, _, _, Null) =>
+          warn(tree)
+        case Apply(Select(_, name), List(Null)) if name.endsWith("_$eq") =>
+          warn(tree)
+        case Assign(_, Null) =>
+          warn(tree)
       }
     }
   }

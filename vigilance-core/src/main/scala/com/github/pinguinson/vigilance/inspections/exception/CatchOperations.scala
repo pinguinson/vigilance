@@ -6,14 +6,15 @@ import scala.collection.mutable
 import scala.util.control.ControlThrowable
 
 /** @author Marconi Lanna */
-class CatchOperations extends Inspection {
+class CatchOperations extends Inspection { self =>
 
   override val level = Levels.Warning
   override val description = "Catching exceptions"
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def traverser = new context.Traverser {
+     override def traverser = new context.Traverser {
 
+      import context._
       import context.global._
 
       private val isNpe: Tree => Boolean = tree =>
@@ -38,8 +39,8 @@ class CatchOperations extends Inspection {
 
       private val checks = Seq(
         isException -> "Consider catching a more specific exception class",
-        isFatal     -> "Catching fatal exceptions is discouraged",
-        isNpe       -> "Catching NPE",
+        isFatal -> "Catching fatal exceptions is discouraged",
+        isNpe -> "Catching NPE",
         isThrowable -> "Consider catching a more specific exception class"
       )
 
@@ -55,6 +56,7 @@ class CatchOperations extends Inspection {
 
       def getUnreachable(cases: List[CaseDef]): Option[Tree] = {
         val trees = mutable.HashSet[Tree]()
+
         def check(tpt: Tree): Boolean = {
           if (trees.exists(tpt.tpe <:< _.tpe)) true
           else {
@@ -62,6 +64,7 @@ class CatchOperations extends Inspection {
             false
           }
         }
+
         cases.find {
           case CaseDef(Bind(_, Typed(_, tpt)), _, _) => check(tpt)
           case CaseDef(Typed(_, tpt), _, _) if tpt.tpe =:= typeOf[Throwable] => check(tpt)
@@ -69,18 +72,16 @@ class CatchOperations extends Inspection {
         }
       }
 
-      override def inspect(tree: Tree): Unit = {
-        tree match {
-          case Try(_, cases, _) =>
-            getUnreachable(cases).foreach { found =>
-              context.warn(found.pos, CatchOperations.this, "This case is unreachable")
-            }
-            for {
-              (check, comment) <- checks
-              found <- find(cases)(check)
-            } yield context.warn(found.pos, CatchOperations.this, comment)
-          case _ => continue(tree)
-        }
+      override def inspect(tree: Tree) = {
+
+        case Try(_, cases, _) =>
+          getUnreachable(cases).foreach { found =>
+            context.warn(found.pos, self, "This case is unreachable")
+          }
+          for {
+            (check, comment) <- checks
+            found <- find(cases)(check)
+          } yield context.warn(found.pos, self, comment)
       }
     }
   }

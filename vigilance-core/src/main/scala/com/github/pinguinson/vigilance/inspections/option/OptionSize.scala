@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.option
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-class OptionSize extends Inspection {
+class OptionSize extends Inspection { self =>
 
   override val level = Levels.Info
   override val description = "Prefer Option.isDefined instead of Option.size"
@@ -11,15 +11,13 @@ class OptionSize extends Inspection {
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def traverser = new context.Traverser {
 
+      import context._
       import context.global._
 
-      override def inspect(tree: Tree): Unit = {
-        tree match {
-          case Select(Apply(option2Iterable, List(opt)), TermName("size")) ⇒
-            if (option2Iterable.symbol.fullName == "scala.Option.option2Iterable")
-              context.warn(tree.pos, OptionSize.this, tree.toString().take(500))
-          case _ ⇒ continue(tree)
-        }
+      override def inspect(tree: Tree) = {
+        case Select(Apply(lhs, _), Size) if lhs.symbol.fullName == "scala.Option.option2Iterable" ⇒
+          context.warn(tree.pos, self, tree.toString().take(500))
+        case _ ⇒ continue(tree)
       }
     }
   }

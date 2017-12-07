@@ -1,18 +1,19 @@
 package com.github.pinguinson.vigilance.inspections.matching
 
-import com.github.pinguinson.vigilance.{ Inspection, InspectionContext, Inspector, Levels }
+import com.github.pinguinson.vigilance.{Inspection, InspectionContext, Inspector, Levels}
 
 import scala.collection.mutable
 
 /** @author Stephen Samuel */
-class RepeatedCaseBody extends Inspection {
+class RepeatedCaseBody extends Inspection { self =>
 
   override val level = Levels.Warning
   override val description = "Repeated case body"
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def traverser = new context.Traverser {
+     override def traverser = new context.Traverser {
 
+      import context._
       import context.global._
 
       // FIXME: this one looks really dirty
@@ -25,12 +26,9 @@ class RepeatedCaseBody extends Inspection {
         bodies.size < filteredCases.size
       }
 
-      override def inspect(tree: Tree): Unit = {
-        tree match {
-          case Match(_, cases) if isRepeated(cases) =>
-            context.warn(tree.pos, RepeatedCaseBody.this, "Case body is repeated. Consider merging pattern clauses together: " + tree.toString().take(500))
-          case _ => continue(tree)
-        }
+      override def inspect(tree: Tree) = {
+        case Match(_, cases) if isRepeated(cases) =>
+          context.warn(tree.pos, self, "Case body is repeated. Consider merging pattern clauses together: " + tree.toString().take(500))
       }
     }
   }

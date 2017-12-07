@@ -2,7 +2,7 @@ package com.github.pinguinson.vigilance.io
 
 import com.github.pinguinson.vigilance.{Feedback, Level, Levels}
 
-import scala.xml.{NodeSeq, Unparsed}
+import scala.xml.Unparsed
 
 /** @author Stephen Samuel */
 object HtmlReportWriter {
@@ -27,20 +27,25 @@ object HtmlReportWriter {
       {warnings(reporter)}
     </body>
 
-  private def warnings(reporter: Feedback) = reporter.warnings.map { warning =>
-    <div class="warning">
-      <div class="source">
-        {warning.sourceFileNormalized + ":" + warning.line}
+  private def warnings(reporter: Feedback) = {
+    //TODO: ordering
+    val sorted = reporter.warnings.filter(_.level == Levels.Error) ++ reporter.warnings.filter(_.level == Levels.Warning) ++ reporter.warnings.filter(_.level == Levels.Info)
+    sorted.map { warning =>
+      <div class="warning">
+        <div class="source">
+          {warning.sourceFileNormalized + ":" + warning.line}
+        </div>
+        <div class="title">
+          {levelSpan(warning.level)}
+          &nbsp;{warning.text}&nbsp;
+          <span class="inspection">{warning.inspection}</span>
+        </div>
+        <div class="snippet">{IOUtils.getSourceLine(warning.sourceFileFull, warning.line)}</div>
+        <div class="snippet">{warning.snippet}</div>
       </div>
-      <div class="title">
-        {levelSpan(warning.level)}
-        &nbsp;{warning.text}&nbsp;
-        <span class="inspection">{warning.inspection}</span>
-      </div>
-      <div class="snippet">{IOUtils.getSourceLine(warning.sourceFileFull, warning.line)}</div>
-      {warning.snippet.map(snippet => <div class="snippet">{snippet}</div>).getOrElse(NodeSeq.Empty)}
-    </div>
+    }
   }
+
   private def levelSpan(level: Level) = level match {
     case Levels.Info    => <span class="label label-info">Info</span>
     case Levels.Warning => <span class="label label-warning">Warning</span>

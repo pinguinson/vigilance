@@ -1,11 +1,11 @@
 package com.github.pinguinson.vigilance.inspections.unneccesary
 
-import com.github.pinguinson.vigilance.{ Inspection, InspectionContext, Inspector, Levels }
+import com.github.pinguinson.vigilance.{Inspection, InspectionContext, Inspector, Levels}
 
 import scala.collection.mutable
 
 /** @author Stephen Samuel */
-class VarCouldBeVal extends Inspection {
+class VarCouldBeVal extends Inspection { self =>
 
   override val level = Levels.Warning
   override val description = "Var could be val"
@@ -13,12 +13,13 @@ class VarCouldBeVal extends Inspection {
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def traverser = new context.Traverser {
 
+      import context._
       import context.global._
 
       private def unwrittenVars(tree: Tree, vars: mutable.HashSet[String]): List[String] = {
         tree match {
           case Block(stmt, expr) => containsUnwrittenVar(stmt :+ expr, vars)
-          case _                 => containsUnwrittenVar(List(tree), vars)
+          case _ => containsUnwrittenVar(List(tree), vars)
         }
       }
 
@@ -31,7 +32,7 @@ class VarCouldBeVal extends Inspection {
             if (lhs.symbol != null)
               vars.remove(lhs.symbol.name.toString)
           case DefDef(_, _, _, _, _, rhs) => unwrittenVars(rhs, vars)
-          case block: Block               => unwrittenVars(block, vars)
+          case block: Block => unwrittenVars(block, vars)
           case ClassDef(_, _, _, Template(_, _, body)) =>
             containsUnwrittenVar(body, vars)
           case ModuleDef(_, _, Template(_, _, body)) => containsUnwrittenVar(body, vars)
@@ -48,18 +49,15 @@ class VarCouldBeVal extends Inspection {
         containsUnwrittenVar(trees, mutable.HashSet[String]())
       }
 
-      override final def inspect(tree: Tree): Unit = {
-        tree match {
-          case d @ DefDef(_, _, _, _, _, Block(stmt, expr)) =>
-            for (unwritten <- containsUnwrittenVar(stmt :+ expr)) {
-              context.warn(
-                tree.pos,
-                VarCouldBeVal.this,
-                s"$unwritten is never written to, so could be a val: " + tree.toString().take(200)
-              )
-            }
-          case _ => continue(tree)
-        }
+      override final def inspect(tree: Tree) = {
+        case DefDef(_, _, _, _, _, Block(stmt, expr)) =>
+          for (unwritten <- containsUnwrittenVar(stmt :+ expr)) {
+            context.warn(
+              tree.pos,
+              self,
+              s"$unwritten is never written to, so could be a val: " + tree.toString().take(200)
+            )
+          }
       }
     }
   }

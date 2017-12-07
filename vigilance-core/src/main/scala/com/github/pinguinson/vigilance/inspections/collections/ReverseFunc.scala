@@ -2,7 +2,7 @@ package com.github.pinguinson.vigilance.inspections.collections
 
 import com.github.pinguinson.vigilance._
 
-class ReverseFunc extends Inspection {
+class ReverseFunc extends Inspection { self =>
 
   override val level = Levels.Warning
   override val description = "Unnecessary reverse"
@@ -22,25 +22,22 @@ class ReverseFunc extends Inspection {
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def traverser = new context.Traverser {
 
+      import context._
       import context.global._
 
-      override def inspect(tree: Tree): Unit = {
-        tree match {
-          case Select(Select(c, TermName("reverse")), TermName(FuncReplace(func, replace)))
-            if c.tpe <:< typeOf[Traversable[Any]] =>
-            warn(func, replace, tree)
-          case Select(Apply(arrayOps1, List(Select(Apply(arrayOps2, List(_)), TermName("reverse")))), TermName(FuncReplace(func, replace)))
-            if arrayOps1.toString.contains("ArrayOps") && arrayOps2.toString.contains("ArrayOps") =>
-            warn(func, replace, tree)
-          case _ => continue(tree)
-        }
+      override def inspect(tree: Tree) = {
+        case Select(SelectTraversable(Reverse), TermName(FuncReplace(func, replace))) =>
+          warn(func, replace, tree)
+        case Select(Apply(arrayOps1, List(Select(Apply(arrayOps2, List(_)), Reverse))), TermName(FuncReplace(func, replace)))
+          if arrayOps1.toString.contains("ArrayOps") && arrayOps2.toString.contains("ArrayOps") =>
+          warn(func, replace, tree)
       }
 
       private def warn(func: String, replace: String, tree: Tree): Unit =
         context.warn(
           tree.pos,
-          ReverseFunc.this,
-          s".reverse.$func can be replaced with $replace: " + tree.toString.take(500)
+          self,
+          s".reverse.$func can be replaced with $replace"
         )
 
     }

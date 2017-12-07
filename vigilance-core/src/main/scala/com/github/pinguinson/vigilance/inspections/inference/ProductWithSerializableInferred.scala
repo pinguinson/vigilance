@@ -1,11 +1,11 @@
 package com.github.pinguinson.vigilance.inspections.inference
 
-import com.github.pinguinson.vigilance.{ Levels, Inspection, InspectionContext, Inspector }
+import com.github.pinguinson.vigilance.{Levels, Inspection, InspectionContext, Inspector}
 
 import scala.reflect.internal.Flags
 
 /** @author Stephen Samuel */
-class ProductWithSerializableInferred extends Inspection {
+class ProductWithSerializableInferred extends Inspection { self =>
 
   override val level = Levels.Warning
   override val description = "Product with Serializable inferred"
@@ -13,6 +13,7 @@ class ProductWithSerializableInferred extends Inspection {
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def traverser = new context.Traverser {
 
+      import context._
       import context.global._
 
       private val Product = typeOf[Product]
@@ -26,13 +27,11 @@ class ProductWithSerializableInferred extends Inspection {
         }
       }
 
-      override def inspect(tree: Tree): Unit = {
-        tree match {
-          case ValDef(mods, _, _, _) if mods.hasFlag(Flags.SYNTHETIC) =>
-          case ValDef(mods, name, tpt, rhs) if isProductWithSerializable(tpt.tpe) =>
-            context.warn(tree.pos, ProductWithSerializableInferred.this, "It is unlikely that this was your target type: " + tree.toString().take(300))
-          case _ => continue(tree)
-        }
+      override def inspect(tree: Tree) = {
+
+        case ValDef(mods, _, _, _) if mods.hasFlag(Flags.SYNTHETIC) =>
+        case ValDef(_, _, tpt, _) if isProductWithSerializable(tpt.tpe) =>
+          context.warn(tree.pos, self, "It is unlikely that this was your target type: " + tree.toString().take(300))
       }
     }
   }

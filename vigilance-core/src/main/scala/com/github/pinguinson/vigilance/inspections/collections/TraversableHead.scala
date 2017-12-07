@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.collections
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-class TraversableHead extends Inspection {
+class TraversableHead extends Inspection { self =>
 
   override val level = Levels.Error
   override val description = "Use of Traversable.head"
@@ -11,14 +11,12 @@ class TraversableHead extends Inspection {
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def traverser = new context.Traverser {
 
+      import context._
       import context.global._
 
-      override def inspect(tree: Tree): Unit = {
-        tree match {
-          case Select(left, TermName("head")) if left.tpe <:< typeOf[Traversable[_]] =>
-            context.warn(tree.pos, TraversableHead.this, "Traversable.head is unsafe, use Traversable.headOption instead")
-          case _ => continue(tree)
-        }
+      override def inspect(tree: Tree) = {
+        case SelectTraversable(Head) =>
+          context.warn(tree.pos, self, "Traversable.head is unsafe, use Traversable.headOption instead")
       }
     }
   }

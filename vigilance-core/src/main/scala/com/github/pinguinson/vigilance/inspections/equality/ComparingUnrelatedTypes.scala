@@ -3,32 +3,33 @@ package com.github.pinguinson.vigilance.inspections.equality
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-class ComparingUnrelatedTypes extends Inspection {
+class ComparingUnrelatedTypes extends Inspection { self =>
 
   override val level = Levels.Error
   override val description = "Comparing unrelated types"
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def traverser = new context.Traverser {
+     override def traverser = new context.Traverser {
 
+      import context._
       import context.global._
 
-      override def inspect(tree: Tree): Unit = {
+      private def isIntegral(t: Type) =
+        Seq(typeOf[Byte], typeOf[Char], typeOf[Short], typeOf[Int], typeOf[Long]).exists(t <:< _)
 
-        def isIntegral(t: Type) =
-          Seq(typeOf[Byte], typeOf[Char], typeOf[Short], typeOf[Int], typeOf[Long]).exists(t <:< _)
-
-        def integralLiteralFitsInType(literal: Literal, targetType: Type): Boolean = {
-          if (!isIntegral(literal.tpe) || !isIntegral(targetType)) {
-            false
-          } else {
-            // convertTo has built-in range checking and will return null if the value cannot be
-            // accurately represented in the target type.
-            literal.value.convertTo(targetType) != null
-          }
+      private def integralLiteralFitsInType(literal: Literal, targetType: Type): Boolean = {
+        if (!isIntegral(literal.tpe) || !isIntegral(targetType)) {
+          false
+        } else {
+          // convertTo has built-in range checking and will return null if the value cannot be
+          // accurately represented in the target type.
+          literal.value.convertTo(targetType) != null
         }
+      }
 
-        tree match {
+
+      override def inspect(tree: Tree) = {
+
           // -- Special cases ---------------------------------------------------------------------
 
           // Comparing any numeric value to a literal 0 should be ignored:
@@ -50,7 +51,7 @@ class ComparingUnrelatedTypes extends Inspection {
               lt <:< rt || rt <:< lt || lt =:= rt
             def isDerivedValueClass(ts: Symbol) =
               ts.isClass && ts.asClass.isDerivedValueClass
-            def warn(): Unit = context.warn(tree.pos, ComparingUnrelatedTypes.this, tree.toString.take(500))
+            def warn(): Unit = context.warn(tree.pos, self, tree.toString.take(500))
             def eraseIfNecessaryAndCompare(lt: Type, rt: Type): Unit = {
               val lTypeSymbol = lt.typeSymbol
               val rTypeSymbol = rt.typeSymbol
@@ -74,9 +75,7 @@ class ComparingUnrelatedTypes extends Inspection {
 
             eraseIfNecessaryAndCompare(lhs.tpe, rhs.tpe)
 
-          case _ => continue(tree)
-        }
+           }
       }
     }
   }
-}

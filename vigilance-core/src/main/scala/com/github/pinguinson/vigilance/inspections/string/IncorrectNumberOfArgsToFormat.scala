@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.string
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-class IncorrectNumberOfArgsToFormat extends Inspection {
+class IncorrectNumberOfArgsToFormat extends Inspection { self =>
 
   override val level = Levels.Error
   override val description = "Incorrect number of args for format"
@@ -14,17 +14,15 @@ class IncorrectNumberOfArgsToFormat extends Inspection {
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def traverser = new context.Traverser {
 
+      import context._
       import context.global._
 
-      override def inspect(tree: Tree): Unit = {
-        tree match {
-          case Apply(Select(Apply(Select(_, TermName("augmentString")), List(Literal(Constant(format)))),
-            TermName("format")), args) =>
-            val argCount = argRegex.findAllIn(format.toString).matchData.size
-            if (argCount > args.size)
-              context.warn(tree.pos, IncorrectNumberOfArgsToFormat.this, tree.toString().take(500))
-          case _ => continue(tree)
-        }
+      override def inspect(tree: Tree) = {
+        case Apply(Select(Apply(Select(_, TermName("augmentString")), List(Literal(Constant(format)))),
+        TermName("format")), args) =>
+          val argCount = argRegex.findAllIn(format.toString).matchData.size
+          if (argCount > args.size)
+            context.warn(tree.pos, self, tree.toString().take(500))
       }
     }
   }
