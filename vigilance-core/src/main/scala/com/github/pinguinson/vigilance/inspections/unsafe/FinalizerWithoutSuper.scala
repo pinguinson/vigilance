@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.unsafe
 import com.github.pinguinson.vigilance.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
-class FinalizerWithoutSuper extends Inspection { self =>
+object FinalizerWithoutSuper extends Inspection { self =>
 
   override val level = Levels.Warning
   override val description = "Finalizer without super"

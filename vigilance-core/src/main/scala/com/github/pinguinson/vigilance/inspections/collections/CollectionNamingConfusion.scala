@@ -5,7 +5,7 @@ import com.github.pinguinson.vigilance._
 /** @author Stephen Samuel */
 
 @deprecated("High chance of false positive", "0.0.2")
-class CollectionNamingConfusion extends Inspection { self =>
+object CollectionNamingConfusion extends Inspection { self =>
 
   override val level = Levels.Info
   override val description = "A Set is named list"

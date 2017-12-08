@@ -6,7 +6,7 @@ import com.github.pinguinson.vigilance._
   * @author Stephen Samuel
   *         This inspection was inspired by http://p5wscala.wordpress.com/scalaprocessing-gotchas/#t2
   */
-class CollectionPromotionToAny extends Inspection { self =>
+object CollectionPromotionToAny extends Inspection { self =>
 
   override val level = Levels.Warning
   override val description = "Collection promotion to any"

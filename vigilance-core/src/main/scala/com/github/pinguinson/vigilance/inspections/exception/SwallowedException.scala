@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.exception
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-class SwallowedException extends Inspection { self =>
+object SwallowedException extends Inspection { self =>
 
   override val level = Levels.Warning
   override val description = "Empty catch block"

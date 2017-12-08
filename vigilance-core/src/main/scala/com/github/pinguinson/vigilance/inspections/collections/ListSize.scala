@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.collections
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-class ListSize extends Inspection { self =>
+object ListSize extends Inspection { self =>
 
   override val level = Levels.Info
   override val description = "List.size is O(n)"

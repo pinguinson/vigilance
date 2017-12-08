@@ -5,7 +5,7 @@ import com.github.pinguinson.vigilance.{Inspection, InspectionContext, Inspector
 import scala.collection.mutable
 
 /** @author Stephen Samuel */
-class DuplicateImport extends Inspection { self =>
+object DuplicateImport extends Inspection { self =>
 
   override val level = Levels.Info
   override val description = "Duplicated import"

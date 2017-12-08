@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.inference
 import com.github.pinguinson.vigilance.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
-class BoundedByFinalType extends Inspection { self =>
+object BoundedByFinalType extends Inspection { self =>
 
   override val level = Levels.Warning
   override val description = "Bounded by final type"

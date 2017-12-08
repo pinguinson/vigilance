@@ -212,10 +212,10 @@ class VigilanceComponent(val global: Global, inspections: Seq[Inspection])
           reporter.echo(s"[debug] Vigilance analysis [$unit] .....")
         }
         val context = InspectionContext(global, feedback)
-        activeInspections.foreach(inspection => {
+        activeInspections.foreach { inspection =>
           val inspector = inspection.inspector(context)
           inspector.traverser.traverse(tree.asInstanceOf[inspector.context.global.Tree])
-        })
+        }
       }
       tree
     }

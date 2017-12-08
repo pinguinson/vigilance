@@ -5,7 +5,7 @@ import scala.collection.mutable
 import com.github.pinguinson.vigilance.{Levels, Inspection, InspectionContext, Inspector}
 
 /** @author Stephen Samuel */
-class TypeShadowing extends Inspection { self =>
+object TypeShadowing extends Inspection { self =>
 
   override val level = Levels.Warning
   override val description = "Type shadowing"

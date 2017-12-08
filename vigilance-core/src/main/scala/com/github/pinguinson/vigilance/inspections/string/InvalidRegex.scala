@@ -5,7 +5,7 @@ import java.util.regex.PatternSyntaxException
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-class InvalidRegex extends Inspection { self =>
+object InvalidRegex extends Inspection { self =>
 
   override val level = Levels.Info
   override val description = "Invalid regex"

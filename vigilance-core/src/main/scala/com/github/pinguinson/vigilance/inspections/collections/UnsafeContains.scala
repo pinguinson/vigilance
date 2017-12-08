@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.collections
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-class UnsafeContains extends Inspection { self =>
+object UnsafeContains extends Inspection { self =>
 
   override val level = Levels.Error
   override val description = "Unsafe contains"

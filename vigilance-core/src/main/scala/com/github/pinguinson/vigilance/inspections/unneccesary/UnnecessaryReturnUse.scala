@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.unneccesary
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-class UnnecessaryReturnUse extends Inspection { self =>
+object UnnecessaryReturnUse extends Inspection { self =>
 
   override val level = Levels.Info
   override val description = "Unnecessary return"

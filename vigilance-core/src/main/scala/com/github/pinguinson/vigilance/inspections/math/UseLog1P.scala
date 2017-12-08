@@ -2,7 +2,7 @@ package com.github.pinguinson.vigilance.inspections.math
 
 import com.github.pinguinson.vigilance._
 
-class UseLog1P extends Inspection { self =>
+object UseLog1P extends Inspection { self =>
 
   override val level = Levels.Info
   override val description = "Use math.log1p"

@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.style
 import com.github.pinguinson.vigilance.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
-class SimplifyBooleanExpression extends Inspection { self =>
+object SimplifyBooleanExpression extends Inspection { self =>
 
   override val level = Levels.Info
   override val description = "Simplify boolean expressions"

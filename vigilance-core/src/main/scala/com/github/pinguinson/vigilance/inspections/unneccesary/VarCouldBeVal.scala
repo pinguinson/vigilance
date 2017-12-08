@@ -5,7 +5,7 @@ import com.github.pinguinson.vigilance.{Inspection, InspectionContext, Inspector
 import scala.collection.mutable
 
 /** @author Stephen Samuel */
-class VarCouldBeVal extends Inspection { self =>
+object VarCouldBeVal extends Inspection { self =>
 
   override val level = Levels.Warning
   override val description = "Var could be val"

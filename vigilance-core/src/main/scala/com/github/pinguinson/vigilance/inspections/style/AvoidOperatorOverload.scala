@@ -1,7 +1,6 @@
 package com.github.pinguinson.vigilance.inspections.style
 
 import com.github.pinguinson.vigilance.{Inspection, InspectionContext, Inspector, Levels}
-import com.github.pinguinson.vigilance.inspections.style.AvoidOperatorOverload._
 
 import scala.reflect.internal.Flags
 
@@ -11,10 +10,13 @@ import scala.reflect.internal.Flags
   *
   *         http://docs.scala-lang.org/style/naming-conventions.html#symbolic-method-names
   */
-class AvoidOperatorOverload extends Inspection { self =>
+object AvoidOperatorOverload extends Inspection { self =>
 
   override val level = Levels.Info
   override val description = "Avoid operator overload"
+
+  private val docsLink = "http://docs.scala-lang.org/style/naming-conventions.html#symbolic-method-names"
+  private val message: String => String = names => s"Scala style guide advocates against routinely using operators as method names ($names). $docsLink"
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def traverser = new context.Traverser {
@@ -36,11 +38,4 @@ class AvoidOperatorOverload extends Inspection { self =>
       }
     }
   }
-}
-
-
-object AvoidOperatorOverload {
-  private val docsLink = "http://docs.scala-lang.org/style/naming-conventions.html#symbolic-method-names"
-  private val message: String => String = names =>
-    s"Scala style guide advocates against routinely using operators as method names ($names). $docsLink"
 }

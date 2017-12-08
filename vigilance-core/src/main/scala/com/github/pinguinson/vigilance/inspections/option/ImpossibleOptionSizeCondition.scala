@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.option
 import com.github.pinguinson.vigilance.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
-class ImpossibleOptionSizeCondition extends Inspection { self =>
+object ImpossibleOptionSizeCondition extends Inspection { self =>
 
   override val level = Levels.Error
   override val description = "Option.size is either 0 or 1"

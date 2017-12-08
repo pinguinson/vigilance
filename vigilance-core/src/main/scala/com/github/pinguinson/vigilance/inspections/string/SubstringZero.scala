@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.string
 import com.github.pinguinson.vigilance.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
-class SubstringZero extends Inspection { self =>
+object SubstringZero extends Inspection { self =>
 
   override val level = Levels.Info
   override val description = "String.substring(0)"

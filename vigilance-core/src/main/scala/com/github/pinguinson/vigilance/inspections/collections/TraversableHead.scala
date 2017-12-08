@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.collections
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-class TraversableHead extends Inspection { self =>
+object TraversableHead extends Inspection { self =>
 
   override val level = Levels.Error
   override val description = "Use of Traversable.head"

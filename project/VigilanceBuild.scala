@@ -3,6 +3,8 @@ import sbt.Keys._
 import sbt.Opts.resolver._
 import sbt._
 import sbtrelease.ReleasePlugin.autoImport._
+import bintray.BintrayPlugin
+import bintray.BintrayKeys._
 
 object VigilanceBuild {
 
@@ -21,18 +23,6 @@ object VigilanceBuild {
     javacOptions ++= Seq(
       "-source", "1.8",
       "-target", "1.8"
-    ),
-    libraryDependencies ++= Seq(
-      "org.scala-lang.modules" %% "scala-xml"      % "1.0.6",
-      "org.scala-lang"         %  "scala-reflect"  % scalaVersion.value,
-      "org.scala-lang"         %  "scala-compiler" % scalaVersion.value % Provided,
-      "org.scala-lang"         %  "scala-compiler" % scalaVersion.value % Test,
-      "commons-io"             %  "commons-io"     % "2.5"              % Test,
-      "org.scalatest"          %% "scalatest"      % "3.0.4"            % Test,
-      "org.mockito"            %  "mockito-all"    % "1.10.19"          % Test,
-      "joda-time"              %  "joda-time"      % "2.9.9"            % Test,
-      "org.joda"               %  "joda-convert"   % "1.9.2"            % Test,
-      "org.slf4j"              %  "slf4j-api"      % "1.7.25"           % Test
     )
   ) ++ publishSettings
 
@@ -60,16 +50,17 @@ object VigilanceBuild {
 
   lazy val root = (project in file("."))
     .settings(publishSettings)
+    .disablePlugins(BintrayPlugin)
     .settings(name := "vigilance")
     .aggregate(vigilanceCore, vigilanceSbt)
 
   lazy val vigilanceCore = (project in file("vigilance-core"))
     .settings(commonSettings)
+    .disablePlugins(BintrayPlugin)
     .settings(
       name := "scalac-vigilance-plugin",
       scalacOptions ++= Seq(
         "-Xmax-classfile-name", "254",
-        "-Xlint",
         "-Ywarn-adapted-args",
         "-Ywarn-dead-code",
         "-Ywarn-inaccessible",
@@ -78,15 +69,29 @@ object VigilanceBuild {
         "-Ywarn-nullary-unit",
         "-Ywarn-numeric-widen"
       ),
-      fullClasspath in (Compile, console) ++= (fullClasspath in Test).value, // because that's where "PluginRunner" is
+      libraryDependencies ++= Seq(
+        "org.scala-lang.modules" %% "scala-xml"      % "1.0.6",
+        "org.scala-lang"         %  "scala-reflect"  % scalaVersion.value,
+        "org.scala-lang"         %  "scala-compiler" % scalaVersion.value % Provided,
+        "org.scala-lang"         %  "scala-compiler" % scalaVersion.value % Test,
+        "commons-io"             %  "commons-io"     % "2.5"              % Test,
+        "org.scalatest"          %% "scalatest"      % "3.0.4"            % Test,
+        "org.mockito"            %  "mockito-all"    % "1.10.19"          % Test,
+        "joda-time"              %  "joda-time"      % "2.9.9"            % Test,
+        "org.joda"               %  "joda-convert"   % "1.9.2"            % Test,
+        "org.slf4j"              %  "slf4j-api"      % "1.7.25"           % Test
+      ),
+      fullClasspath in (Compile, console) ++= (fullClasspath in Test).value // because that's where "PluginRunner" is
     )
 
   lazy val vigilanceSbt = (project in file("vigilance-sbt"))
-    .settings(commonSettings)
     .settings(
-      name := "sbt-vigilance",
-      sbtPlugin := true,
-      crossSbtVersions := Seq("0.13.16", "1.0.3")
+      publishMavenStyle   := false,
+      bintrayRepository   := "sbt-plugins",
+      bintrayOrganization := None,
+      organization        := "com.github.pinguinson",
+      name                := "sbt-vigilance",
+      sbtPlugin           := true,
+      crossSbtVersions    := Seq("0.13.16", "1.0.3")
     )
-    .dependsOn(vigilanceCore)
 }

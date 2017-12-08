@@ -7,7 +7,7 @@ import com.github.pinguinson.vigilance._
   *
   *         Inspired by http://codenarc.sourceforge.net/codenarc-rules-basic.html#BrokenOddnessCheck
   */
-class BrokenOddness extends Inspection { self =>
+object BrokenOddness extends Inspection { self =>
 
   override val level = Levels.Warning
   override val description = "Broken odd check"

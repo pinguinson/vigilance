@@ -53,7 +53,7 @@ object VigilanceSbtPlugin extends AutoPlugin {
             val vigilanceDependencies = (update in Vigilance).value matching configurationFilter(Compile.name)
             // ensure we have the vigilance dependency on the classpath and if so add it as a scalac plugin
             vigilanceDependencies.find(_.getAbsolutePath.contains(ArtifactId)) match {
-              case None => throw new Exception(s"Fatal: $ArtifactId not in libraryDependencies ($vigilanceDependencies)")
+              case None => throw new Exception(s"Fatal: ${ArtifactId}_${scalaBinaryVersion.value} not in libraryDependencies ($vigilanceDependencies)")
               case Some(classpath) =>
 
                 val verbose = vigilanceVerbose.value
@@ -123,9 +123,7 @@ object VigilanceSbtPlugin extends AutoPlugin {
       vigilanceDiffBranch := None,
       vigilanceOutputPath := (crossTarget in Compile).value.getAbsolutePath + "/vigilance-report",
       vigilanceReports := Seq("all"),
-      libraryDependencies ++= Seq(
-        GroupId % (ArtifactId + "_" + scalaBinaryVersion.value) % (vigilanceVersion in Vigilance).value % Compile.name
-      )
+      libraryDependencies += GroupId %% ArtifactId % vigilanceVersion.value % Compile
     )
   }
 }

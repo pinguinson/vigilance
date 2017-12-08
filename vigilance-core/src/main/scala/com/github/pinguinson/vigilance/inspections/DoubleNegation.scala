@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections
 import com.github.pinguinson.vigilance.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
-class DoubleNegation extends Inspection { self =>
+object DoubleNegation extends Inspection { self =>
 
   override val level = Levels.Info
   override val description = "Double negation"

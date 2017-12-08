@@ -2,7 +2,7 @@ package com.github.pinguinson.vigilance.inspections.math
 
 import com.github.pinguinson.vigilance._
 
-class UseSqrt extends Inspection { self =>
+object UseSqrt extends Inspection { self =>
 
   override val level = Levels.Info
   override val description = "Use math.sqrt"

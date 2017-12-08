@@ -5,7 +5,7 @@ import com.github.pinguinson.vigilance.{Inspection, InspectionContext, Inspector
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
-class VariableShadowing extends Inspection { self =>
+object VariableShadowing extends Inspection { self =>
 
   override val level = Levels.Warning
   override val description = "Variable shadowing"

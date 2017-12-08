@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.option
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-class EitherGet extends Inspection { self =>
+object EitherGet extends Inspection { self =>
 
   override val level = Levels.Error
   override val description = "Use of Either Projection get"
@@ -15,7 +15,6 @@ class EitherGet extends Inspection { self =>
       import context.global._
 
       override def inspect(tree: Tree) = {
-
         case Select(SelectEither(Left | Right), Get) =>
           context.warn(tree.pos, self, tree.toString.take(500))
       }

@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.equality
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-class ComparisonWithSelf extends Inspection { self =>
+object ComparisonWithSelf extends Inspection { self =>
 
   override val level = Levels.Warning
   override val description = "Comparision with self"

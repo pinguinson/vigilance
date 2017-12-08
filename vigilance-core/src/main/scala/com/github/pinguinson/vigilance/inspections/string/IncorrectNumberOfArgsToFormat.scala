@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.string
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-class IncorrectNumberOfArgsToFormat extends Inspection { self =>
+object IncorrectNumberOfArgsToFormat extends Inspection { self =>
 
   override val level = Levels.Error
   override val description = "Incorrect number of args for format"

@@ -7,7 +7,7 @@ import com.github.pinguinson.vigilance._
   *
   *         Inspired by http://findbugs.sourceforge.net/bugDescriptions.html#FI_USELESS
   */
-class RedundantFinalizer extends Inspection { self =>
+object RedundantFinalizer extends Inspection { self =>
 
   override val level = Levels.Warning
   override val description = "Redundant finalizer"

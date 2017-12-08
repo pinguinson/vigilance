@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.math
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-class NanComparison extends Inspection { self =>
+object NanComparison extends Inspection { self =>
 
   override val level = Levels.Error
   override val description = "NaN comparision"

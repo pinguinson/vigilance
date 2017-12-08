@@ -4,7 +4,7 @@ import scala.reflect.internal.Flags
 
 import com.github.pinguinson.vigilance.{Inspection, InspectionContext, Inspector, Levels}
 
-class RedundantFinalModifierOnMethod extends Inspection { self =>
+object RedundantFinalModifierOnMethod extends Inspection { self =>
 
   override val level = Levels.Info
   override val description = "Redundant final modifier on method"

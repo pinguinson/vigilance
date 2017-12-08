@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.collections
 import com.github.pinguinson.vigilance.{ Inspection, InspectionContext, Inspector, Levels }
 
 /** @author Stephen Samuel */
-class AvoidSizeEqualsZero extends Inspection { self =>
+object AvoidSizeEqualsZero extends Inspection { self =>
 
   override val level = Levels.Warning
   override val description = "Avoid Traversable.size == 0"

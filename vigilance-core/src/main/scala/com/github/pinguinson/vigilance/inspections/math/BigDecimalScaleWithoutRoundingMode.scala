@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.math
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-class BigDecimalScaleWithoutRoundingMode extends Inspection { self =>
+object BigDecimalScaleWithoutRoundingMode extends Inspection { self =>
 
   override val level = Levels.Warning
   override val description = "BigDecimal setScale() without rounding mode"

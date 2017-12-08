@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.math
 import com.github.pinguinson.vigilance._
 
 /** @author Matic Potočnik */
-class UseCbrt extends Inspection { self =>
+object UseCbrt extends Inspection { self =>
 
   override val level = Levels.Info
   override val description = "Use math.cbrt"

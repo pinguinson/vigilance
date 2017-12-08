@@ -5,7 +5,7 @@ import com.github.pinguinson.vigilance.{Inspection, InspectionContext, Inspector
 import scala.collection.mutable
 
 /** @author Stephen Samuel */
-class RepeatedCaseBody extends Inspection { self =>
+object RepeatedCaseBody extends Inspection { self =>
 
   override val level = Levels.Warning
   override val description = "Repeated case body"

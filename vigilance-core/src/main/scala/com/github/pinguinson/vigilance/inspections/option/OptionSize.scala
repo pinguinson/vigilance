@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.option
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-class OptionSize extends Inspection { self =>
+object OptionSize extends Inspection { self =>
 
   override val level = Levels.Info
   override val description = "Prefer Option.isDefined instead of Option.size"

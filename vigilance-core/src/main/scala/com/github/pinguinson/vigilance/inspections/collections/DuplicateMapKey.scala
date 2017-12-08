@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.collections
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-class DuplicateMapKey extends Inspection { self =>
+object DuplicateMapKey extends Inspection { self =>
 
   override val level = Levels.Warning
   override val description = "Duplicated map key"

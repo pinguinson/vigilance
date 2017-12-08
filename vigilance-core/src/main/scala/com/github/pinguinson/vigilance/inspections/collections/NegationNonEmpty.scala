@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.collections
 import com.github.pinguinson.vigilance.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
-class NegationNonEmpty extends Inspection { self =>
+object NegationNonEmpty extends Inspection { self =>
 
   override val level = Levels.Info
   override val description = "!nonEmpty can be replaced with isEmpty"

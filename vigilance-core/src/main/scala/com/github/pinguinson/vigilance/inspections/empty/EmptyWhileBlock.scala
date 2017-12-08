@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.empty
 import com.github.pinguinson.vigilance.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
-class EmptyWhileBlock extends Inspection { self =>
+object EmptyWhileBlock extends Inspection { self =>
 
   override val level = Levels.Warning
   override val description = "Empty while block"

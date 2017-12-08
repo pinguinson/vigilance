@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.collections
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-class PreferSetEmpty extends Inspection { self =>
+object PreferSetEmpty extends Inspection { self =>
 
   override val level = Levels.Warning
   override val description = "Prefer Set.empty"

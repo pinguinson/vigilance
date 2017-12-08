@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.math
 import com.github.pinguinson.vigilance.{Levels, Inspector, InspectionContext, Inspection}
 
 /** @author Stephen Samuel */
-class ZeroNumerator extends Inspection { self =>
+object ZeroNumerator extends Inspection { self =>
 
   override val level = Levels.Warning
   override val description = "Zero numerator"

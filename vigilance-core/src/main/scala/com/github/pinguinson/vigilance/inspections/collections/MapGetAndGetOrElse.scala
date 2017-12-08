@@ -8,7 +8,7 @@ import com.github.pinguinson.vigilance._
  * Inspired by Intellij inspection that does:
  *   myMap.get(key).getOrElse(defaultValue) –> myMap.getOrElse(key, defaultValue)
  */
-class MapGetAndGetOrElse extends Inspection { self =>
+object MapGetAndGetOrElse extends Inspection { self =>
 
   override val level = Levels.Info
   override val description = "Use of .get.getOrElse"

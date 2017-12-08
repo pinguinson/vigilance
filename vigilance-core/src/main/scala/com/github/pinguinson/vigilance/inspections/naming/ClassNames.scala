@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.naming
 import com.github.pinguinson.vigilance.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
-class ClassNames extends Inspection { self =>
+object ClassNames extends Inspection { self =>
 
   override val level = Levels.Info
   override val description = "Class name not recommended"

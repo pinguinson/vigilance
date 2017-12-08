@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.collections
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-class NegativeSeqPad extends Inspection { self =>
+object NegativeSeqPad extends Inspection { self =>
 
   override val level = Levels.Error
   override val description = "Negative seq padTo"

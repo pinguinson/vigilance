@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.math
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-class BigDecimalDoubleConstructor extends Inspection { self =>
+object BigDecimalDoubleConstructor extends Inspection { self =>
 
   override val level = Levels.Warning
   override val description = "Big decimal double constructor"

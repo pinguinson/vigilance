@@ -5,7 +5,7 @@ import com.github.pinguinson.vigilance._
 import scala.concurrent.Future
 
 /** @author Nikita Gusak */
-class FutureSeqNames extends Inspection { self =>
+object FutureSeqNames extends Inspection { self =>
 
   override val level = Levels.Info
   override val description = "Future[Seq[T]] method name"

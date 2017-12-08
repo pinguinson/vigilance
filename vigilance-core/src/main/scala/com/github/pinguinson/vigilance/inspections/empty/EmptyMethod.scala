@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.empty
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-class EmptyMethod extends Inspection { self =>
+object EmptyMethod extends Inspection { self =>
 
   override val level = Levels.Warning
   override val description = "Empty method"

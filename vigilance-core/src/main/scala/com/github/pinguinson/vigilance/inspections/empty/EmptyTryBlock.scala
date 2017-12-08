@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.empty
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-class EmptyTryBlock extends Inspection { self =>
+object EmptyTryBlock extends Inspection { self =>
 
   override val level = Levels.Warning
   override val description = "Empty try block"

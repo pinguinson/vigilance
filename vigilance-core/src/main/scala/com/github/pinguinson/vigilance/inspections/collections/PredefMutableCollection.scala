@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.collections
 import com.github.pinguinson.vigilance.{ Inspection, InspectionContext, Inspector, Levels }
 
 /** @author Stephen Samuel */
-class PredefMutableCollection extends Inspection { self =>
+object PredefMutableCollection extends Inspection { self =>
 
   override val level = Levels.Info
   override val description = "Use of mutable predefined collections"

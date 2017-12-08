@@ -5,7 +5,7 @@ import com.github.pinguinson.vigilance.{Levels, Inspection, InspectionContext, I
 import scala.reflect.internal.Flags
 
 /** @author Stephen Samuel */
-class ProductWithSerializableInferred extends Inspection { self =>
+object ProductWithSerializableInferred extends Inspection { self =>
 
   override val level = Levels.Warning
   override val description = "Product with Serializable inferred"

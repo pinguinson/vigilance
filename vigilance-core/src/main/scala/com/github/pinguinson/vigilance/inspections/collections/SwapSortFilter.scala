@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.collections
 import com.github.pinguinson.vigilance.{ Inspection, InspectionContext, Inspector, Levels }
 
 /** @author Stephen Samuel */
-class SwapSortFilter extends Inspection { self =>
+object SwapSortFilter extends Inspection { self =>
 
   override val level = Levels.Warning
   override val description = "Swap sort filter"

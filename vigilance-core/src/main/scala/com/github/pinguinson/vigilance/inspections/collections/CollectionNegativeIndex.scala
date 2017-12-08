@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.collections
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-class CollectionNegativeIndex extends Inspection { self =>
+object CollectionNegativeIndex extends Inspection { self =>
 
   override val level = Levels.Warning
   override val description = "Collection index out of bounds"

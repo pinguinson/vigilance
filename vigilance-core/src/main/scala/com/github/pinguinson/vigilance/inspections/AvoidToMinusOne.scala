@@ -5,7 +5,7 @@ import com.github.pinguinson.vigilance.{Inspection, InspectionContext, Inspector
 import scala.runtime.{RichInt, RichLong}
 
 /** @author Stephen Samuel */
-class AvoidToMinusOne extends Inspection { self =>
+object AvoidToMinusOne extends Inspection { self =>
 
   override val level = Levels.Info
   override val description = "Avoid To Minus One"
@@ -15,7 +15,7 @@ class AvoidToMinusOne extends Inspection { self =>
 
       import context._
       import context.global._
-      import definitions._
+      import context.global.definitions._
 
       private def isIntegral(tree: Tree): Boolean = {
         tree.tpe <:< IntTpe || tree.tpe <:< LongTpe || tree.tpe <:< typeOf[RichInt] || tree.tpe <:< typeOf[RichLong]

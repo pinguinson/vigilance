@@ -5,7 +5,7 @@ import java.util.IllegalFormatException
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-class IllegalFormatString extends Inspection { self =>
+object IllegalFormatString extends Inspection { self =>
 
   override val level = Levels.Error
   override val description = "Illegal format string"

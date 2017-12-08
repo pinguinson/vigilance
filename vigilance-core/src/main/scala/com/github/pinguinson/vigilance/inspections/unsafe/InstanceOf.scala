@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.unsafe
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-class InstanceOf extends Inspection { self =>
+object InstanceOf extends Inspection { self =>
 
   override val level = Levels.Warning
   override val description = "Use of isInstanceOf"

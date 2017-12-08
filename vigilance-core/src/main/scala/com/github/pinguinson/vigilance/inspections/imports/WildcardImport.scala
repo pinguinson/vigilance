@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.imports
 import com.github.pinguinson.vigilance.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
-class WildcardImport extends Inspection { self =>
+object WildcardImport extends Inspection { self =>
 
   override val level = Levels.Warning
   override val description = "Wildcard import"

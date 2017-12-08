@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections
 import com.github.pinguinson.vigilance.{Levels, Inspection, InspectionContext, Inspector}
 
 /** @author Stephen Samuel */
-class VarClosure extends Inspection { self =>
+object VarClosure extends Inspection { self =>
 
   override val level = Levels.Warning
   override val description = "Var closure"

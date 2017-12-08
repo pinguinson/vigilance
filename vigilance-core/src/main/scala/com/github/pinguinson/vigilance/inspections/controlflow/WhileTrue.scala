@@ -5,7 +5,7 @@ import com.github.pinguinson.vigilance._
 /**
   * @author Stephen Samuel
   */
-class WhileTrue extends Inspection { self =>
+object WhileTrue extends Inspection { self =>
 
   override val level = Levels.Warning
   override val description = "While true loop"

@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.string
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-class EmptyInterpolatedString extends Inspection { self =>
+object EmptyInterpolatedString extends Inspection { self =>
 
   override val level = Levels.Warning
   override val description = "Empty interpolated string"

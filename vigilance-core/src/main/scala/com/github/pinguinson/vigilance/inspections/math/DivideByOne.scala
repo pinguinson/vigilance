@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.math
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-class DivideByOne extends Inspection { self =>
+object DivideByOne extends Inspection { self =>
 
   override val level = Levels.Warning
   override val description = "Division by one"

@@ -7,7 +7,7 @@ import com.github.pinguinson.vigilance._
   *
   *         Inspired by http://findbugs.sourceforge.net/bugDescriptions.html#INT_BAD_REM_BY_1
   */
-class ModOne extends Inspection { self =>
+object ModOne extends Inspection { self =>
 
   override val level = Levels.Warning
   override val description = "Integer mod one"

@@ -5,7 +5,7 @@ import scala.reflect.internal.Flags
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-class UnusedMethodParameter extends Inspection { self =>
+object UnusedMethodParameter extends Inspection { self =>
 
   override val level = Levels.Warning
   override val description = "Unused constructor parameter"

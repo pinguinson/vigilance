@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.string
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-class ArraysToString extends Inspection { self =>
+object ArraysToString extends Inspection { self =>
 
   override val level = Levels.Warning
   override val description = "Use of Array.toString"

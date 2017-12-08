@@ -5,7 +5,7 @@ import com.github.pinguinson.vigilance.{Inspection, InspectionContext, Inspector
 import scala.reflect.internal.Flags
 
 /** @author Stephen Samuel */
-class MethodReturningAny extends Inspection { self =>
+object MethodReturningAny extends Inspection { self =>
 
   override val level = Levels.Warning
   override val description = "Method returning Any"

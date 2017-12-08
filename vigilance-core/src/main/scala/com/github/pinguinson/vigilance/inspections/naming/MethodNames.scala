@@ -5,7 +5,7 @@ import scala.reflect.internal.Flags
 import com.github.pinguinson.vigilance.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
-class MethodNames extends Inspection { self =>
+object MethodNames extends Inspection { self =>
 
   override val level = Levels.Info
   override val description = "Method name not recommended"

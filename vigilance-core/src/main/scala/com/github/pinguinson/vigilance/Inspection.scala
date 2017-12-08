@@ -7,7 +7,7 @@ import scala.reflect.internal.util.Position
 import scala.tools.nsc.Global
 
 /** @author Stephen Samuel */
-trait Inspection {
+trait Inspection { self =>
   def inspector(context: InspectionContext): Inspector
   def level: Level
   def description: String

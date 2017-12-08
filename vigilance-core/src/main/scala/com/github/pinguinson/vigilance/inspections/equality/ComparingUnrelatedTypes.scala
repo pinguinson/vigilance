@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.equality
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-class ComparingUnrelatedTypes extends Inspection { self =>
+object ComparingUnrelatedTypes extends Inspection { self =>
 
   override val level = Levels.Error
   override val description = "Comparing unrelated types"

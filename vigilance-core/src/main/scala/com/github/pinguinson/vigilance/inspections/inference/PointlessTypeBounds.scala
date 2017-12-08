@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.inference
 import com.github.pinguinson.vigilance.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
-class PointlessTypeBounds extends Inspection { self =>
+object PointlessTypeBounds extends Inspection { self =>
 
   override val level = Levels.Warning
   override val description = "Pointless type bounds"

@@ -8,7 +8,7 @@ import com.github.pinguinson.vigilance._
   *         Checks for if statements where the condition evalutes to a constant true or a constant false.
   *
   */
-class ConstantIf extends Inspection { self =>
+object ConstantIf extends Inspection { self =>
 
   override val level = Levels.Warning
   override val description = "Constant if expression"

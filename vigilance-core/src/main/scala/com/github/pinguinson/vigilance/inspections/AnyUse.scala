@@ -5,7 +5,7 @@ import com.github.pinguinson.vigilance.{Inspection, InspectionContext, Inspector
 import scala.reflect.internal.Flags
 
 /** @author Stephen Samuel */
-class AnyUse extends Inspection { self =>
+object AnyUse extends Inspection { self =>
 
   override val level = Levels.Info
   override val description = "Use of Any"

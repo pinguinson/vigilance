@@ -2,7 +2,7 @@ package com.github.pinguinson.vigilance.inspections.collections
 
 import com.github.pinguinson.vigilance._
 
-class TraversableLast extends Inspection { self =>
+object TraversableLast extends Inspection { self =>
 
   override val level = Levels.Error
   override val description = "Use of Traversable.last"
