@@ -7,3 +7,5 @@ Scala linter (fork of https://github.com/sksamuel/scapegoat)
 - log/print future instead of callback
 - get rid of comparisons via toString
 - re-add tests
+- move from scala-xml to scalatags
+- aliases for (local) publishing in sbt

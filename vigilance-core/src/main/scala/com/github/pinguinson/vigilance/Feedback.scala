@@ -9,35 +9,35 @@ import scala.tools.nsc.reporters.Reporter
 /** @author Stephen Samuel */
 class Feedback(consoleOutput: Boolean, reporter: Reporter) {
 
-  val warnings = new ListBuffer[Warning]
+  val reports = new ListBuffer[Report]
 
   var levelOverridesByInspectionSimpleName: Map[String, Level] = Map.empty
 
-  def infos = warnings(Levels.Info)
-  def errors = warnings(Levels.Error)
-  def warns = warnings(Levels.Warning)
-  def warnings(level: Level): Seq[Warning] = warnings.filter(_.level == level)
+  def infos = reports(Levels.Info)
+  def errors = reports(Levels.Error)
+  def warns = reports(Levels.Warning)
+  def styles = reports(Levels.Style)
 
-  def warn(pos: Position,
-           inspection: Inspection,
-           comment: String): Unit = {
+  def reports(level: Level): Seq[Report] = reports.filter(_.level == level)
+
+  def warn(pos: Position, inspection: Inspection, comment: String): Unit = {
 
     val adjustedLevel = levelOverridesByInspectionSimpleName.getOrElse(inspection.getClass.getSimpleName, inspection.level)
 
     val sourceFileFull = pos.source.file.path
     val sourceFileNormalized = normalizeSourceFile(sourceFileFull)
-    val warning = Warning(inspection.description, pos.line, adjustedLevel, sourceFileFull, sourceFileNormalized, comment, inspection.getClass.getCanonicalName)
-    warnings.append(warning)
+    val report = Report(inspection.description, pos.line, adjustedLevel, sourceFileFull, sourceFileNormalized, comment, inspection.getClass.getCanonicalName)
+    reports.append(report)
     if (consoleOutput) {
       val snippet = IOUtils.getSourceLine(sourceFileFull, pos.line)
-      println(s"[${warning.level.toString.toLowerCase}] $sourceFileNormalized:${warning.line}: ${inspection.description}")
+      println(s"[${report.level.toString.toLowerCase}] $sourceFileNormalized:${report.line}: $comment")
       println(s"          $snippet")
     }
 
     adjustedLevel match {
       case Levels.Error   => reporter.error(pos, inspection.description)
       case Levels.Warning => reporter.warning(pos, inspection.description)
-      case Levels.Info    => reporter.info(pos, inspection.description, force = false)
+      case _              => reporter.info(pos, inspection.description, force = false)
     }
   }
 
@@ -48,10 +48,10 @@ class Feedback(consoleOutput: Boolean, reporter: Reporter) {
   }
 }
 
-case class Warning(text: String,
-                   line: Int,
-                   level: Level,
-                   sourceFileFull: String,
-                   sourceFileNormalized: String,
-                   snippet: String,
-                   inspection: String)
+case class Report(text: String,
+                  line: Int,
+                  level: Level,
+                  sourceFileFull: String,
+                  sourceFileNormalized: String,
+                  snippet: String,
+                  inspection: String)

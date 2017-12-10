@@ -70,7 +70,8 @@ object VigilanceBuild {
         "-Ywarn-numeric-widen"
       ),
       libraryDependencies ++= Seq(
-        "org.scala-lang.modules" %% "scala-xml"      % "1.0.6",
+        "org.scala-lang.modules" %% "scala-xml"      % "1.0.6", //move to scalatags and remove this
+        "com.lihaoyi"            %% "scalatags"      % "0.6.7",
         "org.scala-lang"         %  "scala-reflect"  % scalaVersion.value,
         "org.scala-lang"         %  "scala-compiler" % scalaVersion.value % Provided,
         "org.scala-lang"         %  "scala-compiler" % scalaVersion.value % Test,

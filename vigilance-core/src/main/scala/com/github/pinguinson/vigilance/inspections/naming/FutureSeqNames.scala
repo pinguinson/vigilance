@@ -7,7 +7,7 @@ import scala.concurrent.Future
 /** @author Nikita Gusak */
 object FutureSeqNames extends Inspection { self =>
 
-  override val level = Levels.Info
+  override val level = Levels.Style
   override val description = "Future[Seq[T]] method name"
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
@@ -17,7 +17,7 @@ object FutureSeqNames extends Inspection { self =>
       import context.global._
 
       override def inspect(tree: Tree) = {
-        case DefDef(_, name, _, _, tpt, _) if tpt.tpe <:< typeOf[Future[Seq[Any]]] && !name.startsWith("list") =>
+        case DefDef(_, name, _, _, tpt, _) if tpt.tpe <:< typeOf[Future[Seq[Any]]] && isInService(tree) && !name.startsWith("list") =>
           context.warn(tree.pos, self, "Method returning Future[Seq[T]] should have name prefixed with 'list'")
       }
     }

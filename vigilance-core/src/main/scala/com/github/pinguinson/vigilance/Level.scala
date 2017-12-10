@@ -1,7 +1,9 @@
 package com.github.pinguinson.vigilance
 
 /** @author Stephen Samuel */
-sealed trait Level
+sealed trait Level {
+  def importance: Int
+}
 
 object Levels {
 
@@ -10,12 +12,14 @@ object Levels {
    *
    * An example is use of nulls. Use of nulls can lead to NullPointerExceptions and should be avoided.
    */
-  case object Error extends Level
+  case object Error extends Level {
+    override val importance = 0
+  }
 
   /**
    * Warnings are reserved for code that has bad semantics.
    * This by itself does not necessarily mean the code is buggy, but could mean the developer
-   * made a mistake or does not fully understand the contructs or best practice.
+   * made a mistake or does not fully understand the constructs or best practice.
    *
    * An example is an expression as a statement. While this is perfectly legal, it could indicate
    * that the developer meant to assign the result to or otherwise use it.
@@ -23,10 +27,12 @@ object Levels {
    * Another example is a constant if. You can do things like if (true) { } if you want, but since the block
    * will always evaluate, the if statement perhaps indicates a mistake.
    */
-  case object Warning extends Level
+  case object Warning extends Level {
+    override val importance = 10
+  }
 
   /**
-   * Infos are used for code which is semantically fine, but there exists a more idomatic way of writing it.
+   * Infos are used for code which is semantically fine, but there exists a more idiomatic way of writing it.
    *
    * An example would be using an if statement to return true or false as the last statement in a block.
    * Eg,
@@ -39,12 +45,19 @@ object Levels {
    *
    * def foo = a
    */
-  case object Info extends Level
+  case object Info extends Level {
+    override val importance = 20
+  }
+
+  case object Style extends Level {
+    override val importance = 100
+  }
 
   def fromName(name: String): Level = name.toLowerCase() match {
     case "error"   => Error
     case "warning" => Warning
     case "info"    => Info
+    case "style"   => Style
     case _ => throw new IllegalArgumentException(
       s"Unrecognised level '$name'")
   }

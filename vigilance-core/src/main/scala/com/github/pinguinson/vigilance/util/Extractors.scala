@@ -29,4 +29,8 @@ trait Extractors {
       case _ => None
     }
   }
+
+  def isInService(tree: Tree) = {
+    tree.pos.source.file.name.endsWith("Service.scala")
+  }
 }

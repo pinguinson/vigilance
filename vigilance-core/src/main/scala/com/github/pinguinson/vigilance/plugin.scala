@@ -144,10 +144,11 @@ class VigilanceComponent(val global: Global, inspections: Seq[Inspection])
   override val runsAfter: List[String] = List("typer")
   override val runsBefore = List[String]("patmat")
 
+  //FIXME: ugly stuff
   def disableAll: Boolean = disabled.exists(_.compareToIgnoreCase("all") == 0)
 
   def activeInspections: Seq[Inspection] = (inspections ++ customInspections)
-    .filterNot(inspection => disabled.contains(inspection.getClass.getSimpleName))
+    .filterNot(inspection => disabled.exists(dis => inspection.getClass.getSimpleName.contains(dis)))
   lazy val feedback = new Feedback(consoleOutput, global.reporter)
 
   override def newPhase(prev: scala.tools.nsc.Phase): Phase = new Phase(prev) {
@@ -169,8 +170,9 @@ class VigilanceComponent(val global: Global, inspections: Seq[Inspection])
           val errors = feedback.errors.size
           val warns = feedback.warns.size
           val infos = feedback.infos.size
+          val styles = feedback.styles.size
           val level = if (errors > 0) "error" else if (warns > 0) "warn" else "info"
-          reporter.echo(s"[$level] [vigilance] Analysis complete: ${count.get} files - $errors errors $warns warns $infos infos")
+          reporter.echo(s"[$level] [vigilance] Analysis complete: $errors errors, $warns warns, $infos infos, $styles styles found in ${count.get} file(s)")
         }
 
         if (!disableHTML) {

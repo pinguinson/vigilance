@@ -5,7 +5,7 @@ import com.github.pinguinson.vigilance.{Inspection, InspectionContext, Inspector
 /** @author Stephen Samuel */
 object ClassNames extends Inspection { self =>
 
-  override val level = Levels.Info
+  override val level = Levels.Style
   override val description = "Class name not recommended"
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {

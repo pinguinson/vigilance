@@ -12,9 +12,9 @@ import scala.io.Source
  */
 object IOUtils {
 
-  private val XmlFile = "vigilance.xml"
+  private val XmlFile           = "vigilance.xml"
   private val ScalastyleXmlFile = "vigilance-scalastyle.xml"
-  private val HtmlFile = "vigilance.html"
+  private val HtmlFile          = "vigilance.html"
 
   def serialize(file: File, str: String): Unit = {
     val out = new BufferedWriter(new FileWriter(file))

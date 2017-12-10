@@ -9,7 +9,7 @@ import com.github.pinguinson.vigilance._
   */
 object IncorrectlyNamedExceptions extends Inspection { self =>
 
-  override val level = Levels.Error
+  override val level = Levels.Style
   override val description = "Exception naming"
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
@@ -25,7 +25,7 @@ object IncorrectlyNamedExceptions extends Inspection { self =>
 
           val extendsException = impl.tpe <:< typeOf[Exception]
           val selfTypeIsException = impl match {
-            case Template(_, self, _) => self.tpt.tpe <:< typeOf[Exception]
+            case Template(_, s, _) => s.tpt.tpe <:< typeOf[Exception]
             case _ => false
           }
 
@@ -36,7 +36,7 @@ object IncorrectlyNamedExceptions extends Inspection { self =>
 
           (isNamedException, isAnon, isException) match {
             case (true, _, false) | (false, false, true) =>
-              context.warn(tree.pos, self, "Exceptions should be derived from Exception and be named *Exception")
+              context.warn(tree.pos, self, "Exceptions should be derived from java.lang.Exception and be named '*Exception'")
             case _ =>
           }
       }

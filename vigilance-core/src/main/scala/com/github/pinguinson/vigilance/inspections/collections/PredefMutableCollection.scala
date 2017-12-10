@@ -16,9 +16,9 @@ object PredefMutableCollection extends Inspection { self =>
 
       override def inspect(tree: Tree) = {
         case _: DefDef if tree.symbol.isAccessor =>
-        case _: TypeTree if tree.tpe <:< typeOf[Seq[Any]] => warn(tree, "Seq")
-        case _: TypeTree if tree.tpe <:< typeOf[Iterable[Any]] => warn(tree, "Iterable")
-        case _: TypeTree if tree.tpe <:< typeOf[Traversable[Any]] => warn(tree, "Traversable")
+        case _: TypeTree if tree.tpe.erasure.toString == "Seq[Any]" => warn(tree, "Seq")
+        case _: TypeTree if tree.tpe.erasure.toString == "Iterable[Any]" => warn(tree, "Iterable")
+        case _: TypeTree if tree.tpe.erasure.toString == "Traversable[Any]" => warn(tree, "Traversable")
       }
 
       def warn(tree: Tree, collection: String): Unit = {

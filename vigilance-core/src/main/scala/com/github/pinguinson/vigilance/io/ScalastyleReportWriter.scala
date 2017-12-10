@@ -1,6 +1,6 @@
 package com.github.pinguinson.vigilance.io
 
-import com.github.pinguinson.vigilance.{Warning, Feedback}
+import com.github.pinguinson.vigilance.{Report, Feedback}
 
 import scala.collection.mutable.ListBuffer
 import scala.xml.Node
@@ -13,19 +13,19 @@ object ScalastyleReportWriter {
 
   def toXML(feedback: Feedback): Node = {
     <checkstyle version={checkstyleVersion} generatedBy={vigilance}>
-      {feedback.warnings.groupBy(_.sourceFileFull).map(fileToXml)}
+      {feedback.reports.groupBy(_.sourceFileFull).map(fileToXml)}
     </checkstyle>
   }
 
-  private def fileToXml(fileWarningMapEntry: (String, ListBuffer[Warning])) = {
-    val (file, warnings) = fileWarningMapEntry
+  private def fileToXml(fileWarningMapEntry: (String, ListBuffer[Report])) = {
+    val (file, reports) = fileWarningMapEntry
     <file name={file}>
-      {warnings.map(warningToXml)}
+      {reports.map(reportToXml)}
     </file>
   }
 
-  private def warningToXml(warning: Warning) = {
-    <error line={warning.line.toString} message={warning.text} severity={warning.level.toString} source={warning.inspection} snippet={warning.snippet}></error>
+  private def reportToXml(report: Report) = {
+    <error line={report.line.toString} message={report.text} severity={report.level.toString} source={report.inspection} snippet={report.snippet}></error>
   }
 
 }
