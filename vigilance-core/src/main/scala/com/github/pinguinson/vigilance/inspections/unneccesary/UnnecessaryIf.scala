@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.unneccesary
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-object UnnecessaryIf extends Inspection { self =>
+object UnnecessaryIf extends Inspection {
 
   override val level = Levels.Info
   override val description = "Unnecessary if condition"

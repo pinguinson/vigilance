@@ -2,7 +2,7 @@ package com.github.pinguinson.vigilance.inspections
 
 import com.github.pinguinson.vigilance.{Inspection, InspectionContext, Inspector, Levels}
 
-object RedundantFinalModifierOnVar extends Inspection { self =>
+object RedundantFinalModifierOnVar extends Inspection {
 
   override val level = Levels.Info
   override val description = "Redundant final modifier on var"

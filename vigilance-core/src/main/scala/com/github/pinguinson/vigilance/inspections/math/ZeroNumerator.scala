@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.math
 import com.github.pinguinson.vigilance.{Levels, Inspector, InspectionContext, Inspection}
 
 /** @author Stephen Samuel */
-object ZeroNumerator extends Inspection { self =>
+object ZeroNumerator extends Inspection {
 
   override val level = Levels.Warning
   override val description = "Zero numerator"
@@ -15,7 +15,7 @@ object ZeroNumerator extends Inspection { self =>
       import context.global._
 
       override def inspect(tree: Tree) = {
-        case Apply(Select(Literal(Constant(0)), TermName("$div")), _) =>
+        case Apply(Select(Zero, TermName("$div")), _) =>
           context.warn(tree.pos, self, "Dividing zero by any number will always return zero")
       }
     }

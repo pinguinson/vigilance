@@ -5,7 +5,7 @@ import com.github.pinguinson.vigilance.{Levels, Inspection, InspectionContext, I
 import scala.reflect.internal.Flags
 
 /** @author Stephen Samuel */
-object ProductWithSerializableInferred extends Inspection { self =>
+object ProductWithSerializableInferred extends Inspection {
 
   override val level = Levels.Warning
   override val description = "Product with Serializable inferred"
@@ -31,7 +31,7 @@ object ProductWithSerializableInferred extends Inspection { self =>
 
         case ValDef(mods, _, _, _) if mods.hasFlag(Flags.SYNTHETIC) =>
         case ValDef(_, _, tpt, _) if isProductWithSerializable(tpt.tpe) =>
-          context.warn(tree.pos, self, "It is unlikely that this was your target type: " + tree.toString().take(300))
+          context.warn(tree.pos, self, "It is unlikely that this was your target type: " + tree.toString.take(300))
       }
     }
   }

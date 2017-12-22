@@ -2,7 +2,7 @@ package com.github.pinguinson.vigilance.inspections
 
 import com.github.pinguinson.vigilance._
 
-object VarUse extends Inspection { self =>
+object VarUse extends Inspection {
 
   override val level = Levels.Warning
   override val description = "Use of var"
@@ -20,11 +20,11 @@ object VarUse extends Inspection { self =>
       private def isActor(tree: Tree): Boolean = tree.toString == "akka.actor.Actor"
 
       override def inspect(tree: Tree) = {
-        case ClassDef(_, name, _, Template(parents, _, _)) if parents.exists(isActor) =>
+        case ClassDef(_, _, _, Template(parents, _, _)) if parents.exists(isActor) =>
         case ModuleDef(_, _, Template(parents, _, _)) if parents.exists(isActor) =>
         case ValDef(mods, _, _, _) if mods.isSynthetic || mods.isMacro =>
         case ValDef(_, _, tpt, _) if isXmlLiteral(tpt.tpe) =>
-        case v@ValDef(modifiers, name, tpt, rhs) if modifiers.hasFlag(Flag.MUTABLE) =>
+        case ValDef(modifiers, _, _, _) if modifiers.hasFlag(Flag.MUTABLE) =>
           context.warn(tree.pos, self, tree.toString.take(300))
       }
     }

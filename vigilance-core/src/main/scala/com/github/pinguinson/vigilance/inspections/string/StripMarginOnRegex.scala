@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.string
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-object StripMarginOnRegex extends Inspection { self =>
+object StripMarginOnRegex extends Inspection {
 
   override val level = Levels.Error
   override val description = "Strip margin on regex"

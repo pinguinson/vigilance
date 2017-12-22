@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.matching
 import com.github.pinguinson.vigilance.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
-object SuspiciousMatchOnClassObject extends Inspection { self =>
+object SuspiciousMatchOnClassObject extends Inspection {
 
   override val level = Levels.Warning
   override val description = "Suspicious match on class object"

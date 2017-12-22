@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.empty
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-object EmptyIfBlock extends Inspection { self =>
+object EmptyIfBlock extends Inspection {
 
   override val level = Levels.Warning
   override val description = "Empty if statement"
@@ -15,7 +15,7 @@ object EmptyIfBlock extends Inspection { self =>
       import context.global._
 
       override def inspect(tree: Tree) = {
-        case If(_, Unit, _) => context.warn(tree.pos, self, tree.toString().take(500))
+        case If(_, Unit, _) => context.warn(tree.pos, self, tree.toString.take(500))
       }
     }
   }

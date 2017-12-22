@@ -5,7 +5,7 @@ import com.github.pinguinson.vigilance.{Inspection, InspectionContext, Inspector
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
-object VariableShadowing extends Inspection { self =>
+object VariableShadowing extends Inspection {
 
   override val level = Levels.Warning
   override val description = "Variable shadowing"
@@ -16,12 +16,12 @@ object VariableShadowing extends Inspection { self =>
       import context._
       import context.global._
 
-      private val contexts = new mutable.Stack[ListBuffer[String]]() //TODO: fix
+      private val contexts = new mutable.Stack[ListBuffer[String]]()
 
       private def isDefined(name: String): Boolean = contexts exists (_.contains(name.trim))
 
       private def warn(tree: Tree): Unit = {
-        context.warn(tree.pos, self, "Variable is shadowed: " + tree.toString().take(200))
+        context.warn(tree.pos, self, "Variable is shadowed: " + tree.toString.take(200))
       }
 
       private def enter(): Unit = contexts.push(new ListBuffer[String])

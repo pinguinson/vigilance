@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.equality
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-object ComparisonWithSelf extends Inspection { self =>
+object ComparisonWithSelf extends Inspection {
 
   override val level = Levels.Warning
   override val description = "Comparision with self"
@@ -15,7 +15,7 @@ object ComparisonWithSelf extends Inspection { self =>
       import context.global._
 
       override def inspect(tree: Tree) = {
-        case Apply(Select(left, TermName("$eq$eq")), List(right)) if left.toString == right.toString =>
+        case Apply(Select(left, Equals), List(right)) if left.toString == right.toString =>
           context.warn(tree.pos, self, "Comparing an object with itself doesn't make sense")
       }
     }

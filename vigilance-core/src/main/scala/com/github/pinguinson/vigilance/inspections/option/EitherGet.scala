@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.option
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-object EitherGet extends Inspection { self =>
+object EitherGet extends Inspection {
 
   override val level = Levels.Error
   override val description = "Use of Either Projection get"

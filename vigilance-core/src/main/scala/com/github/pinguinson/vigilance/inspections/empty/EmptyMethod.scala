@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.empty
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-object EmptyMethod extends Inspection { self =>
+object EmptyMethod extends Inspection {
 
   override val level = Levels.Warning
   override val description = "Empty method"
@@ -21,7 +21,7 @@ object EmptyMethod extends Inspection { self =>
         case ClassDef(mods, _, _, _) if mods.isTrait => continue(tree)
         case DefDef(_, _, _, _, _, _) if tree.symbol != null && tree.symbol.enclClass.isTrait =>
         case DefDef(_, _, _, _, _, Unit) =>
-          context.warn(tree.pos, self, "Empty method statement " + tree.toString().take(500))
+          context.warn(tree.pos, self, "Empty method statement " + tree.toString.take(500))
       }
     }
   }

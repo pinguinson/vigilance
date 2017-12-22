@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.style
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-object ParameterlessMethodReturnsUnit extends Inspection { self =>
+object ParameterlessMethodReturnsUnit extends Inspection {
 
   override val level = Levels.Warning
   override val description = "Parameterless methods returns unit"

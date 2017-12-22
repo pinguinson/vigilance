@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.collections
 import com.github.pinguinson.vigilance.{ Inspection, InspectionContext, Inspector, Levels }
 
 /** @author Stephen Samuel */
-object DuplicateSetValue extends Inspection { self =>
+object DuplicateSetValue extends Inspection {
 
   override val level = Levels.Warning
   override val description = "Duplicated set value"
@@ -25,7 +25,7 @@ object DuplicateSetValue extends Inspection { self =>
       //TODO: rework as DuplicateMapKey
       override def inspect(tree: Tree) = {
         case Apply(TypeApply(Select(Select(_, TermName("Set")), TermName("apply")), _), args) if hasDuplicates(args) =>
-          context.warn(tree.pos, self, "A set value is overwritten by a later entry: " + tree.toString().take(100))
+          context.warn(tree.pos, self, "A set value is overwritten by a later entry: " + tree.toString.take(100))
       }
     }
   }

@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections
 import com.github.pinguinson.vigilance.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
-object NoOpOverride extends Inspection { self =>
+object NoOpOverride extends Inspection {
 
   override val level = Levels.Info
   override val description = "Unnecessary override"
@@ -16,7 +16,7 @@ object NoOpOverride extends Inspection { self =>
 
       override def inspect(tree: Tree) = {
         case DefDef(_, name, _, vparamss, _, Apply(Select(Super(This(_), _), name2), args)) if name == name2 && vparamss.foldLeft(0)((a, b) => a + b.size) == args.size =>
-          context.warn(tree.pos, self, "This method is overridden yet only calls super: " + tree.toString().take(200))
+          context.warn(tree.pos, self, "This method is overridden yet only calls super: " + tree.toString.take(200))
       }
     }
   }

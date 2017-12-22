@@ -2,7 +2,7 @@ package com.github.pinguinson.vigilance.inspections.string
 
 import com.github.pinguinson.vigilance.{Inspection, InspectionContext, Inspector, Levels}
 
-object LooksLikeInterpolatedString extends Inspection { self =>
+object LooksLikeInterpolatedString extends Inspection {
 
   override val level = Levels.Warning
   override val description = "Looks Like Interpolated String"

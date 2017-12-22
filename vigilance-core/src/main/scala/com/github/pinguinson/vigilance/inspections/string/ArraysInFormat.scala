@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.string
 import com.github.pinguinson.vigilance.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
-object ArraysInFormat extends Inspection { self =>
+object ArraysInFormat extends Inspection {
 
   override val level = Levels.Error
   override val description = "Incorrect number of args for format"
@@ -18,7 +18,7 @@ object ArraysInFormat extends Inspection { self =>
 
       override def inspect(tree: Tree) = {
         case Apply(Select(lhs, TermName("format")), args) if containsArrayType(args) =>
-          context.warn(tree.pos, self, tree.toString().take(500))
+          context.warn(tree.pos, self, tree.toString.take(500))
       }
     }
   }

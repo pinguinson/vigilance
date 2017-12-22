@@ -10,7 +10,7 @@ import scala.reflect.internal.Flags
   *
   *         http://docs.scala-lang.org/style/naming-conventions.html#symbolic-method-names
   */
-object AvoidOperatorOverload extends Inspection { self =>
+object AvoidOperatorOverload extends Inspection {
 
   override val level = Levels.Info
   override val description = "Avoid operator overload"

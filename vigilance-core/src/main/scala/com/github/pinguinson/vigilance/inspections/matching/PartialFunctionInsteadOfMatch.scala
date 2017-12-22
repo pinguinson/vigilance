@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.matching
 import com.github.pinguinson.vigilance.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
-object PartialFunctionInsteadOfMatch extends Inspection { self =>
+object PartialFunctionInsteadOfMatch extends Inspection {
 
   override val level = Levels.Info
   override val description = "Match instead of partial function"
@@ -30,12 +30,12 @@ object PartialFunctionInsteadOfMatch extends Inspection { self =>
       override def inspect(tree: Tree) = {
         // _ match { case ...; case ... }
         // need to not warn on the partial function style, they use x0$1
-        case Apply(_, List(Function(List(ValDef(mods, name1, _, EmptyTree)), Match(name2, _)))) if name1.toString == name2.toString() => if (!isPFBind(name1)) warn(tree)
-        case Apply(TypeApply(_, _), List(Function(List(ValDef(mods, name1, _, EmptyTree)), Match(name2, _)))) if name1.toString == name2.toString() => if (!isPFBind(name1)) warn(tree)
-        case TypeApply(_, List(Function(List(ValDef(mods, name1, _, EmptyTree)), Match(name2, _)))) if name1.toString == name2.toString() => if (!isPFBind(name1)) warn(tree)
+        case Apply(_, List(Function(List(ValDef(mods, name1, _, EmptyTree)), Match(name2, _)))) if name1.toString == name2.toString => if (!isPFBind(name1)) warn(tree)
+        case Apply(TypeApply(_, _), List(Function(List(ValDef(mods, name1, _, EmptyTree)), Match(name2, _)))) if name1.toString == name2.toString => if (!isPFBind(name1)) warn(tree)
+        case TypeApply(_, List(Function(List(ValDef(mods, name1, _, EmptyTree)), Match(name2, _)))) if name1.toString == name2.toString => if (!isPFBind(name1)) warn(tree)
         // a => a match { case ...; case ... }
         //          case Apply(_, List(Function(List(ValDef(mods, x1, TypeTree(), EmptyTree)), Match(x2, _))))
-        //            if x1.toString == x2.toString() =>
+        //            if x1.toString == x2.toString =>
         //            warn(tree)
       }
     }

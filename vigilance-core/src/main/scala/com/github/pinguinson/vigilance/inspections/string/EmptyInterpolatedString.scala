@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.string
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-object EmptyInterpolatedString extends Inspection { self =>
+object EmptyInterpolatedString extends Inspection {
 
   override val level = Levels.Warning
   override val description = "Empty interpolated string"
@@ -16,11 +16,11 @@ object EmptyInterpolatedString extends Inspection { self =>
 
       override def inspect(tree: Tree) = {
         //TODO: select any?
-        case Apply(Select(Apply(Select(_, TermName("apply")), _), TermName("s")), TermNil) =>
+        case Apply(Select(Apply(Select(_, TermName("apply")), _), TermName("s")), Nil) =>
           context.warn(
             tree.pos,
             self,
-            "String declared as interpolated but has no parameters: " + tree.toString().take(500))
+            "String declared as interpolated but has no parameters: " + tree.toString.take(500))
       }
     }
   }

@@ -5,7 +5,7 @@ import com.github.pinguinson.vigilance._
 /** @author Stephen Samuel */
 
 @deprecated("High chance of false positive", "0.0.2")
-object CollectionNamingConfusion extends Inspection { self =>
+object CollectionNamingConfusion extends Inspection {
 
   override val level = Levels.Info
   override val description = "A Set is named list"
@@ -23,11 +23,9 @@ object CollectionNamingConfusion extends Inspection { self =>
 
       override def inspect(tree: Tree) = {
         case ValDef(_, TermName(name), tpt, _) if isSet(tpt.tpe) && isNamedList(name) =>
-          context.warn(tree.pos, self, "An instance of Set is confusingly referred to by a variable called/containing list: " +
-            tree.toString().take(300))
+          context.warn(tree.pos, self, "An instance of Set is confusingly referred to by a variable called/containing list")
         case ValDef(_, TermName(name), tpt, _) if isList(tpt.tpe) && isNamedSet(name) =>
-          context.warn(tree.pos, self, "An instance of List is confusingly referred to by a variable called/containing set: " +
-            tree.toString().take(300))
+          context.warn(tree.pos, self, "An instance of List is confusingly referred to by a variable called/containing set")
       }
     }
   }

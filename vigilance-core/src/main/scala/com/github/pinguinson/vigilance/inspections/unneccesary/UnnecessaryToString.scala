@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.unneccesary
 import com.github.pinguinson.vigilance.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
-object UnnecessaryToString extends Inspection { self =>
+object UnnecessaryToString extends Inspection {
 
   override val level = Levels.Warning
   override val description = "Unnecessary toString"

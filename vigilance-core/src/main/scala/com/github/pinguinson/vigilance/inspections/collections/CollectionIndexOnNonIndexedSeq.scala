@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.collections
 import com.github.pinguinson.vigilance._
 
 /** @author Josh Rosen */
-object CollectionIndexOnNonIndexedSeq extends Inspection { self =>
+object CollectionIndexOnNonIndexedSeq extends Inspection {
 
   override val level = Levels.Warning
   override val description = "Seq.apply on a non-IndexedSeq may cause performance problems"
@@ -26,7 +26,7 @@ object CollectionIndexOnNonIndexedSeq extends Inspection { self =>
           context.warn(
             tree.pos,
             self,
-            tree.toString().take(100)
+            tree.toString.take(100)
           )
       }
     }

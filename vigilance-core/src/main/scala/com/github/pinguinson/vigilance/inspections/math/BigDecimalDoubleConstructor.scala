@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.math
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-object BigDecimalDoubleConstructor extends Inspection { self =>
+object BigDecimalDoubleConstructor extends Inspection {
 
   override val level = Levels.Warning
   override val description = "Big decimal double constructor"
@@ -21,7 +21,7 @@ object BigDecimalDoubleConstructor extends Inspection { self =>
       private def isFloatingPointType(tree: Tree) = tree.tpe <:< FloatClass.tpe || tree.tpe <:< DoubleClass.tpe
 
       private def warn(tree: Tree): Unit = {
-        context.warn(tree.pos, self, tree.toString().take(100))
+        context.warn(tree.pos, self, tree.toString.take(100))
       }
 
       override def inspect(tree: Tree) = {

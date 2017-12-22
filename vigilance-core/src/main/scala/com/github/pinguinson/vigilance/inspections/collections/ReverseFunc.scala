@@ -2,7 +2,7 @@ package com.github.pinguinson.vigilance.inspections.collections
 
 import com.github.pinguinson.vigilance._
 
-object ReverseFunc extends Inspection { self =>
+object ReverseFunc extends Inspection {
 
   override val level = Levels.Warning
   override val description = "Unnecessary reverse"

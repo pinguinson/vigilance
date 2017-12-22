@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.collections
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-object JavaConversionsUse extends Inspection { self =>
+object JavaConversionsUse extends Inspection {
 
   override val level = Levels.Warning
   override val description = "Use of Java conversions"

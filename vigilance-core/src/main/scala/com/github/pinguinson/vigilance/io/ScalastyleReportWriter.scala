@@ -25,7 +25,7 @@ object ScalastyleReportWriter {
   }
 
   private def reportToXml(report: Report) = {
-    <error line={report.line.toString} message={report.text} severity={report.level.toString} source={report.inspection} snippet={report.snippet}></error>
+    <error line={report.line.toString} message={report.title} severity={report.level.toString} source={report.inspection} snippet={report.comment}></error>
   }
 
 }

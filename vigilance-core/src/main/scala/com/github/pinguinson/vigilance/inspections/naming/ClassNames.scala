@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.naming
 import com.github.pinguinson.vigilance.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
-object ClassNames extends Inspection { self =>
+object ClassNames extends Inspection {
 
   override val level = Levels.Style
   override val description = "Class name not recommended"
@@ -19,7 +19,7 @@ object ClassNames extends Inspection { self =>
       override def inspect(tree: Tree) = {
         case ClassDef(_, name, _, _) if name.toString.contains("$anon") =>
         case ClassDef(mods, name, _, _) if !mods.isSynthetic && !name.toString.matches(regex) =>
-          context.warn(tree.pos, self, s"Class names should begin with uppercase letter (bad = $name)")
+          context.warn(tree.pos, self, s"Class names should begin with uppercase letter: '$name'")
       }
     }
   }

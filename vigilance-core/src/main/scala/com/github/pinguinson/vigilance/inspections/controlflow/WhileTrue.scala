@@ -5,7 +5,7 @@ import com.github.pinguinson.vigilance._
 /**
   * @author Stephen Samuel
   */
-object WhileTrue extends Inspection { self =>
+object WhileTrue extends Inspection {
 
   override val level = Levels.Warning
   override val description = "While true loop"
@@ -15,8 +15,6 @@ object WhileTrue extends Inspection { self =>
 
       import context._
       import context.global._
-
-      private val True = Literal(Constant(true))
 
       override def inspect(tree: Tree) = {
         case LabelDef(name, _, If(True, _, _)) if isWhile(name) =>

@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.collections
 import com.github.pinguinson.vigilance.{ Inspection, InspectionContext, Inspector, Levels }
 
 /** @author Stephen Samuel */
-object ListAppend extends Inspection { self =>
+object ListAppend extends Inspection {
 
   override val level = Levels.Info
   override val description = "List append is slow"

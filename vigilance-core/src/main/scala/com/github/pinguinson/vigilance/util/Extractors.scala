@@ -33,4 +33,8 @@ trait Extractors {
   def isInService(tree: Tree) = {
     tree.pos.source.file.name.endsWith("Service.scala")
   }
+
+  def isAnon(classDef: ClassDef) = {
+    Option(classDef.symbol).exists(_.isAnonymousClass)
+  }
 }

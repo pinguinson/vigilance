@@ -2,9 +2,9 @@ package com.github.pinguinson.vigilance.inspections
 
 import com.github.pinguinson.vigilance.{Inspection, InspectionContext, Inspector, Levels}
 
-object FinalModifierOnCaseClass extends Inspection { self =>
+object FinalModifierOnCaseClass extends Inspection {
 
-  override val level = Levels.Style //TODO: Info?
+  override val level = Levels.Style
   override val description = "Missing final modifier on case class"
 
   override def inspector(context: InspectionContext): Inspector = new Inspector(context) {

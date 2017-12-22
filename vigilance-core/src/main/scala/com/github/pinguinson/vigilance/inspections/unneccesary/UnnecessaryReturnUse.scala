@@ -3,9 +3,9 @@ package com.github.pinguinson.vigilance.inspections.unneccesary
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-object UnnecessaryReturnUse extends Inspection { self =>
+object UnnecessaryReturnUse extends Inspection {
 
-  override val level = Levels.Info
+  override val level = Levels.Error
   override val description = "Unnecessary return"
   //TODO: set level to Error, reference tpolecat blog post
 

@@ -6,7 +6,7 @@ import com.github.pinguinson.vigilance._
   * @author Stephen Samuel
   *         This inspection was inspired by http://p5wscala.wordpress.com/scalaprocessing-gotchas/#t2
   */
-object CollectionPromotionToAny extends Inspection { self =>
+object CollectionPromotionToAny extends Inspection {
 
   override val level = Levels.Warning
   override val description = "Collection promotion to any"
@@ -24,7 +24,7 @@ object CollectionPromotionToAny extends Inspection { self =>
           (full.endsWith("List") || full.endsWith("Set") || full.endsWith("Seq") || full.endsWith("Vector"))
       }
 
-      private def isAny(tree: Tree): Boolean = tree.toString() == "Any"
+      private def isAny(tree: Tree): Boolean = tree.toString == "Any"
 
       private def isAny(symbol: Symbol): Boolean = symbol.typeSignature.resultType.typeArgs.headOption match {
         case Some(t) => t.toString == "Any"

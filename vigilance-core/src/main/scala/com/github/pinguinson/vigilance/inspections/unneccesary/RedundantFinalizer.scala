@@ -7,7 +7,7 @@ import com.github.pinguinson.vigilance._
   *
   *         Inspired by http://findbugs.sourceforge.net/bugDescriptions.html#FI_USELESS
   */
-object RedundantFinalizer extends Inspection { self =>
+object RedundantFinalizer extends Inspection {
 
   override val level = Levels.Warning
   override val description = "Redundant finalizer"
@@ -20,8 +20,8 @@ object RedundantFinalizer extends Inspection { self =>
 
       override def inspect(tree: Tree) = {
 
-        case DefDef(mods, name, _, _, tpt, _) if mods.hasFlag(Flag.OVERRIDE) && name.toString == "finalize" && tpt.toString() == "Unit" =>
-          context.warn(tree.pos, self, tree.toString().take(500))
+        case DefDef(mods, name, _, _, tpt, _) if mods.hasFlag(Flag.OVERRIDE) && name.toString == "finalize" && tpt.toString == "Unit" =>
+          context.warn(tree.pos, self, tree.toString.take(500))
       }
     }
   }

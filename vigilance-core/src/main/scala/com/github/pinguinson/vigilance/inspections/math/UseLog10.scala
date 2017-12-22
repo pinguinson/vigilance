@@ -2,7 +2,7 @@ package com.github.pinguinson.vigilance.inspections.math
 
 import com.github.pinguinson.vigilance._
 
-object UseLog10 extends Inspection { self =>
+object UseLog10 extends Inspection {
 
   override val level = Levels.Info
   override val description = "Use math.log10"
@@ -21,7 +21,7 @@ object UseLog10 extends Inspection { self =>
       override def inspect(tree: Tree) = {
         case Apply(Select(Apply(Select(pack1, TermName("log")), _), nme.DIV), List(Apply(Select(pack2, TermName("log")), List(Literal(Constant(10.0))))))
           if isMathPackage(pack1.symbol.fullName) && isMathPackage(pack2.symbol.fullName) =>
-          val math = pack1.toString().stripSuffix(".package").substring(pack2.toString().lastIndexOf('.'))
+          val math = pack1.toString.stripSuffix(".package").substring(pack2.toString.lastIndexOf('.'))
           context.warn(
             tree.pos,
             self,

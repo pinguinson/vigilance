@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.option
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-object OptionGet extends Inspection { self =>
+object OptionGet extends Inspection {
 
   override val level = Levels.Error
   override val description = "Use of Option.get"

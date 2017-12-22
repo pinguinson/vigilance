@@ -9,3 +9,5 @@ Scala linter (fork of https://github.com/sksamuel/scapegoat)
 - re-add tests
 - move from scala-xml to scalatags
 - aliases for (local) publishing in sbt
+- .drop.take -> .slice
+- add sorting/filtering to html reports

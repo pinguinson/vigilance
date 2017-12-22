@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.collections
 import com.github.pinguinson.vigilance.{ Inspection, InspectionContext, Inspector, Levels }
 
 /** @author Stephen Samuel */
-object AvoidSizeEqualsZero extends Inspection { self =>
+object AvoidSizeEqualsZero extends Inspection {
 
   override val level = Levels.Warning
   override val description = "Avoid Traversable.size == 0"
@@ -16,11 +16,10 @@ object AvoidSizeEqualsZero extends Inspection { self =>
 
       private val Size = TermName("size")
       private val Length = TermName("length")
-      private val Zero = List(Literal(Constant(0)))
       private val Traversable = typeOf[Traversable[_]]
 
       override def inspect(tree: Tree) = {
-        case Apply(Select(Select(q, Size | Length), TermName("$eq$eq")), Zero) if q.tpe <:< Traversable =>
+        case Apply(Select(Select(q, Size | Length), Equals), Zero) if q.tpe <:< Traversable =>
           context.warn(
             tree.pos,
             self,

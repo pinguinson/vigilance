@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.nulls
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-object NullParameter extends Inspection { self =>
+object NullParameter extends Inspection {
 
   override val level = Levels.Warning
   override val description = "Null parameter"

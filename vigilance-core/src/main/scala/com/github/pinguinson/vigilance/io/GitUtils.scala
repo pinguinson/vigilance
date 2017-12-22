@@ -17,7 +17,7 @@ object GitUtils {
       try {
         sys.process.Process(cmd, workingDirectory).!!(swallowStderr).trim
       } catch {
-        case NonFatal(e) => throw new IllegalStateException(s"Failed to run command ${cmd.mkString(" ")} Error: ${lastError.toString()}", e)
+        case NonFatal(e) => throw new IllegalStateException(s"Failed to run command ${cmd.mkString(" ")} Error: ${lastError.toString}", e)
       }
     }
 

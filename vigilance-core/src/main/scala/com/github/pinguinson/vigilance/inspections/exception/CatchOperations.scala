@@ -6,7 +6,7 @@ import scala.collection.mutable
 import scala.util.control.ControlThrowable
 
 /** @author Marconi Lanna */
-object CatchOperations extends Inspection { self =>
+object CatchOperations extends Inspection {
 
   override val level = Levels.Warning
   override val description = "Catching exceptions"

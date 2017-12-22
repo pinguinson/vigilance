@@ -7,7 +7,7 @@ import com.github.pinguinson.vigilance._
   *
   *         Inspired by http://findbugs.sourceforge.net/bugDescriptions.html#NM_CLASS_NOT_EXCEPTION
   */
-object IncorrectlyNamedExceptions extends Inspection { self =>
+object IncorrectlyNamedExceptions extends Inspection {
 
   override val level = Levels.Style
   override val description = "Exception naming"

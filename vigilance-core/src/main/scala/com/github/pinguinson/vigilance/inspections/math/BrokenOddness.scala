@@ -7,7 +7,7 @@ import com.github.pinguinson.vigilance._
   *
   *         Inspired by http://codenarc.sourceforge.net/codenarc-rules-basic.html#BrokenOddnessCheck
   */
-object BrokenOddness extends Inspection { self =>
+object BrokenOddness extends Inspection {
 
   override val level = Levels.Warning
   override val description = "Broken odd check"
@@ -20,7 +20,7 @@ object BrokenOddness extends Inspection { self =>
 
       override def inspect(tree: Tree) = {
         case Apply(Select(Apply(Select(_, TermName("$percent")), List(Literal(Constant(2)))),
-        TermName("$eq$eq")), List(Literal(Constant(1)))) =>
+        Equals), List(One)) =>
           context.warn(tree.pos, self, "Consider using x % 2 != 0 for negative numbers" + tree.toString.take(500))
       }
     }

@@ -2,7 +2,7 @@ package com.github.pinguinson.vigilance.inspections.collections
 
 import com.github.pinguinson.vigilance.{Inspection, InspectionContext, Inspector, Levels}
 
-object FilterOperations extends Inspection { self =>
+object FilterOperations extends Inspection {
 
   override val level = Levels.Info
   override val description = "Use of .filter"

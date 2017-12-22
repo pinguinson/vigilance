@@ -7,7 +7,7 @@ import com.github.pinguinson.vigilance.{ Inspection, InspectionContext, Inspecto
  *
  *         Inspired by Intellij
  */
-object ExistsSimplifiableToContains extends Inspection { self =>
+object ExistsSimplifiableToContains extends Inspection {
 
   override val level = Levels.Info
   override val description = "Exists simplifiable to contains"

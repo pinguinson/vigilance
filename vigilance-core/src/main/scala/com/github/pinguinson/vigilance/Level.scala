@@ -13,7 +13,7 @@ object Levels {
    * An example is use of nulls. Use of nulls can lead to NullPointerExceptions and should be avoided.
    */
   case object Error extends Level {
-    override val importance = 0
+    override val importance = 1
   }
 
   /**
@@ -28,7 +28,7 @@ object Levels {
    * will always evaluate, the if statement perhaps indicates a mistake.
    */
   case object Warning extends Level {
-    override val importance = 10
+    override val importance = 2
   }
 
   /**
@@ -46,11 +46,11 @@ object Levels {
    * def foo = a
    */
   case object Info extends Level {
-    override val importance = 20
+    override val importance = 3
   }
 
   case object Style extends Level {
-    override val importance = 100
+    override val importance = 4
   }
 
   def fromName(name: String): Level = name.toLowerCase() match {

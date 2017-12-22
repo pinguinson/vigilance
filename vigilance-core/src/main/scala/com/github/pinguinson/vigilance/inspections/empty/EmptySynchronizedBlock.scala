@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.empty
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-object EmptySynchronizedBlock extends Inspection { self =>
+object EmptySynchronizedBlock extends Inspection {
 
   override val level = Levels.Warning
   override val description = "Empty synchronized block"
@@ -18,7 +18,7 @@ object EmptySynchronizedBlock extends Inspection { self =>
 
       override def inspect(tree: Tree) = {
         case Apply(TypeApply(Select(_, Sync), _), List(Unit)) =>
-          context.warn(tree.pos, self, tree.toString().take(500))
+          context.warn(tree.pos, self, tree.toString.take(500))
       }
     }
   }

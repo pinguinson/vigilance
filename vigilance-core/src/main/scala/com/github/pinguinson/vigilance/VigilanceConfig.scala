@@ -1,6 +1,5 @@
 package com.github.pinguinson.vigilance
 
-//TODO: add every inspection to com.github.pinguinson.vigilance.inspections.all ?
 import com.github.pinguinson.vigilance.inspections._
 import com.github.pinguinson.vigilance.inspections.collections._
 import com.github.pinguinson.vigilance.inspections.controlflow._
@@ -62,10 +61,8 @@ object VigilanceConfig extends App {
     ExistsSimplifiableToContains,
     FilterOperations,
     FinalizerWithoutSuper,
-    FinalModifierOnCaseClass,
+    //FinalModifierOnCaseClass,
     FindOperations,
-    FutureOptionNames,
-    FutureSeqNames,
     IllegalFormatString,
     IncorrectlyNamedExceptions,
     IncorrectNumberOfArgsToFormat,
@@ -92,7 +89,7 @@ object VigilanceConfig extends App {
     ParameterlessMethodReturnsUnit,
     PartialFunctionInsteadOfMatch,
     PointlessTypeBounds,
-    PredefMutableCollection,
+    //PredefMutableCollection,
     PreferSeqEmpty,
     PreferSetEmpty,
     ProductWithSerializableInferred,
@@ -102,6 +99,7 @@ object VigilanceConfig extends App {
     RedundantFinalModifierOnVar,
     RepeatedCaseBody,
     ReverseFunc,
+    ServiceMethodNames,
     SimplifyBooleanExpression,
     StripMarginOnRegex,
     SubstringZero,

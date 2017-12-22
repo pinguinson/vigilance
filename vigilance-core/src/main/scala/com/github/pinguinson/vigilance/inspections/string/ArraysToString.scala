@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.string
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-object ArraysToString extends Inspection { self =>
+object ArraysToString extends Inspection {
 
   override val level = Levels.Warning
   override val description = "Use of Array.toString"
@@ -18,7 +18,7 @@ object ArraysToString extends Inspection { self =>
 
       override def inspect(tree: Tree) = {
         case Apply(Select(lhs, ToString), TermNil) if isArray(lhs) =>
-          context.warn(tree.pos, self, "toString on an array does not perform a deep toString: " + tree.toString().take(500))
+          context.warn(tree.pos, self, "toString on an array does not perform a deep toString: " + tree.toString.take(500))
       }
     }
   }

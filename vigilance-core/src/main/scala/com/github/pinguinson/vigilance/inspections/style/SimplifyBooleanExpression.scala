@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.style
 import com.github.pinguinson.vigilance.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
-object SimplifyBooleanExpression extends Inspection { self =>
+object SimplifyBooleanExpression extends Inspection {
 
   override val level = Levels.Info
   override val description = "Simplify boolean expressions"
@@ -17,7 +17,7 @@ object SimplifyBooleanExpression extends Inspection { self =>
 
       override def inspect(tree: Tree) = {
         case Apply(Select(lhs, Equals), List(False)) =>
-          context.warn(tree.pos, self, "Boolean expressions such as x == false can be re-written as !x: " + tree.toString().take(200))
+          context.warn(tree.pos, self, "Boolean expressions such as x == false can be re-written as !x: " + tree.toString.take(200))
       }
     }
   }

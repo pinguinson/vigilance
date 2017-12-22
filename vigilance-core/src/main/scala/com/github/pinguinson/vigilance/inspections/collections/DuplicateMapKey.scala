@@ -3,8 +3,9 @@ package com.github.pinguinson.vigilance.inspections.collections
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-object DuplicateMapKey extends Inspection { self =>
+object DuplicateMapKey extends Inspection {
 
+  //TODO: improve snippet
   override val level = Levels.Warning
   override val description = "Duplicated map key"
 
@@ -18,11 +19,9 @@ object DuplicateMapKey extends Inspection { self =>
       private val UnicodeArrow = TermName("$u2192")
 
       private def findDuplicateKeys(trees: Seq[Tree]): Seq[String] = {
-        val keys = trees.foldLeft(Seq.empty[String])((keys, tree) => tree match {
-          case Apply(TypeApply(Select(Apply(_, args), Arrow | UnicodeArrow), _), _) =>
-            keys :+ args.head.toString()
-          case _ => keys
-        })
+        val keys = trees.collect {
+          case Apply(TypeApply(Select(Apply(_, args), Arrow | UnicodeArrow), _), _) => args.head.toString
+        }
         keys.groupBy(identity).collect {
           case (key, list) if list.size > 1 => key
         }.toSeq

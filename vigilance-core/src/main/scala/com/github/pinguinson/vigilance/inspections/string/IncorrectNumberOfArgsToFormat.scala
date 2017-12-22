@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.string
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-object IncorrectNumberOfArgsToFormat extends Inspection { self =>
+object IncorrectNumberOfArgsToFormat extends Inspection {
 
   override val level = Levels.Error
   override val description = "Incorrect number of args for format"
@@ -22,7 +22,7 @@ object IncorrectNumberOfArgsToFormat extends Inspection { self =>
         TermName("format")), args) =>
           val argCount = argRegex.findAllIn(format.toString).matchData.size
           if (argCount > args.size)
-            context.warn(tree.pos, self, tree.toString().take(500))
+            context.warn(tree.pos, self, tree.toString.take(500))
       }
     }
   }

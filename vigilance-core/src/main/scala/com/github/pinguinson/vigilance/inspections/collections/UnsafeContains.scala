@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.collections
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-object UnsafeContains extends Inspection { self =>
+object UnsafeContains extends Inspection {
 
   override val level = Levels.Error
   override val description = "Unsafe contains"
@@ -25,7 +25,7 @@ object UnsafeContains extends Inspection { self =>
 
       override protected def inspect(tree: Tree) = {
         case treeInfo.Applied(Select(lhs, Contains), _, (arg :: TermNil) :: TermNil) if isSeq(lhs) && !isCompatibleType(lhs, arg) =>
-          context.warn(tree.pos, self, tree.toString().take(300))
+          context.warn(tree.pos, self, tree.toString.take(300))
       }
     }
   }

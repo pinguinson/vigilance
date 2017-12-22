@@ -5,7 +5,7 @@ import com.github.pinguinson.vigilance.{Inspection, InspectionContext, Inspector
 import scala.collection.mutable
 
 /** @author Stephen Samuel */
-object VarCouldBeVal extends Inspection { self =>
+object VarCouldBeVal extends Inspection {
 
   override val level = Levels.Warning
   override val description = "Var could be val"
@@ -55,7 +55,7 @@ object VarCouldBeVal extends Inspection { self =>
             context.warn(
               tree.pos,
               self,
-              s"$unwritten is never written to, so could be a val: " + tree.toString().take(200)
+              s"$unwritten is never written to, so could be a val: " + tree.toString.take(200)
             )
           }
       }

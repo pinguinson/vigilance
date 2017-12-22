@@ -5,10 +5,10 @@ import scala.reflect.internal.Flags
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-object UnusedMethodParameter extends Inspection { self =>
+object UnusedMethodParameter extends Inspection {
 
   override val level = Levels.Warning
-  override val description = "Unused constructor parameter"
+  override val description = "Unused parameter"
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def traverser = new context.Traverser {
@@ -53,7 +53,7 @@ object UnusedMethodParameter extends Inspection { self =>
         } yield {
           val paramName = vparam.name.toString
           if (!usesParameter(paramName, constructorBody) && !usesField(paramName, classBody)) {
-            context.warn(vparam.pos, self, s"Unused constructor parameter (${vparam.name})")
+            context.warn(vparam.pos, self, s"Unused constructor parameter: '${vparam.name}'")
           }
         }
       }

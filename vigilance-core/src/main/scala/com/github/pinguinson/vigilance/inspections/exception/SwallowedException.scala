@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.exception
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-object SwallowedException extends Inspection { self =>
+object SwallowedException extends Inspection {
 
   override val level = Levels.Warning
   override val description = "Empty catch block"
@@ -13,8 +13,6 @@ object SwallowedException extends Inspection { self =>
 
       import context._
       import context.global._
-
-      private val Unit = Literal(Constant(()))
 
       private def checkCatches(cases: List[CaseDef]): Unit = cases.foreach {
         case CaseDef(Bind(TermName("ignored") | TermName("ignore"), _), _, _) =>

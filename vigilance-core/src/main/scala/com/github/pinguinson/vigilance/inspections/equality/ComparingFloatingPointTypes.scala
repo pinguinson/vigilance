@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.equality
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-object ComparingFloatingPointTypes extends Inspection { self =>
+object ComparingFloatingPointTypes extends Inspection {
 
   override val level = Levels.Error
   override val description = "Floating type comparison"

@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.unsafe
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-object TryGet extends Inspection { self =>
+object TryGet extends Inspection {
 
   override val level = Levels.Error
   override val description = "Use of Try.get"

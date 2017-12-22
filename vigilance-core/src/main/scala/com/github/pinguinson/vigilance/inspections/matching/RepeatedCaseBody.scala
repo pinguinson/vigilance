@@ -5,7 +5,7 @@ import com.github.pinguinson.vigilance.{Inspection, InspectionContext, Inspector
 import scala.collection.mutable
 
 /** @author Stephen Samuel */
-object RepeatedCaseBody extends Inspection { self =>
+object RepeatedCaseBody extends Inspection {
 
   override val level = Levels.Warning
   override val description = "Repeated case body"
@@ -21,14 +21,14 @@ object RepeatedCaseBody extends Inspection { self =>
         val filteredCases = cases.filter(caseDef => caseDef.guard == EmptyTree && caseDef.body.children.size > 4)
         val bodies = mutable.HashSet[String]()
         for (caseDef <- filteredCases) {
-          bodies add caseDef.body.toString()
+          bodies add caseDef.body.toString
         }
         bodies.size < filteredCases.size
       }
 
       override def inspect(tree: Tree) = {
         case Match(_, cases) if isRepeated(cases) =>
-          context.warn(tree.pos, self, "Case body is repeated. Consider merging pattern clauses together: " + tree.toString().take(500))
+          context.warn(tree.pos, self, "Case body is repeated. Consider merging pattern clauses together: " + tree.toString.take(500))
       }
     }
   }

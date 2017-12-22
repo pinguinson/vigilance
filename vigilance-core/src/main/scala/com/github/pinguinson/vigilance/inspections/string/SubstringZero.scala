@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.string
 import com.github.pinguinson.vigilance.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
-object SubstringZero extends Inspection { self =>
+object SubstringZero extends Inspection {
 
   override val level = Levels.Info
   override val description = "String.substring(0)"
@@ -19,7 +19,7 @@ object SubstringZero extends Inspection { self =>
 
       override def inspect(tree: Tree) = {
         case Apply(Select(lhs, Substring), List(Zero)) if lhs.tpe <:< StringType =>
-          context.warn(tree.pos, self, "Use of String.substring(0) will always return the same string: " + tree.toString().take(100))
+          context.warn(tree.pos, self, "Use of String.substring(0) will always return the same string: " + tree.toString.take(100))
       }
     }
   }

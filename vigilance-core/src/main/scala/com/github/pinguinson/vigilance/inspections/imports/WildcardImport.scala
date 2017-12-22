@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.imports
 import com.github.pinguinson.vigilance.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
-object WildcardImport extends Inspection { self =>
+object WildcardImport extends Inspection {
 
   override val level = Levels.Warning
   override val description = "Wildcard import"
@@ -18,7 +18,7 @@ object WildcardImport extends Inspection { self =>
 
       override def inspect(tree: Tree) = {
         case Import(_, selector) if isWildcard(selector) =>
-          context.warn(tree.pos, self, "Wildcard import used: " + tree.toString())
+          context.warn(tree.pos, self, "Wildcard import used: " + tree.toString)
       }
     }
   }

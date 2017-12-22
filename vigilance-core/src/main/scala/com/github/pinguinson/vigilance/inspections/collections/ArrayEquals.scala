@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.collections
 import com.github.pinguinson.vigilance.{ Inspection, InspectionContext, Inspector, Levels }
 
 /** @author Stephen Samuel */
-object ArrayEquals extends Inspection { self =>
+object ArrayEquals extends Inspection {
 
   override val level = Levels.Info
   override val description = "Array equals"
@@ -23,7 +23,7 @@ object ArrayEquals extends Inspection { self =>
         // We have to add a special case here, because the 'type' of null will
         // be coerced to Array when it is compared to an array, so it would
         // otherwise match the next case.
-        case Literal(Constant(null)) => false
+        case Null => false
         case x                       => x.tpe <:< typeOf[Array[_]]
       }
 

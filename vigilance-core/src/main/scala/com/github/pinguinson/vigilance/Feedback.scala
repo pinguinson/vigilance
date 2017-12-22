@@ -29,7 +29,7 @@ class Feedback(consoleOutput: Boolean, reporter: Reporter) {
     val report = Report(inspection.description, pos.line, adjustedLevel, sourceFileFull, sourceFileNormalized, comment, inspection.getClass.getCanonicalName)
     reports.append(report)
     if (consoleOutput) {
-      val snippet = IOUtils.getSourceLine(sourceFileFull, pos.line)
+      val snippet = IOUtils.getSourceLines(sourceFileFull, pos.start, pos.end)
       println(s"[${report.level.toString.toLowerCase}] $sourceFileNormalized:${report.line}: $comment")
       println(s"          $snippet")
     }
@@ -48,10 +48,10 @@ class Feedback(consoleOutput: Boolean, reporter: Reporter) {
   }
 }
 
-case class Report(text: String,
+case class Report(title: String,
                   line: Int,
                   level: Level,
                   sourceFileFull: String,
                   sourceFileNormalized: String,
-                  snippet: String,
+                  comment: String,
                   inspection: String)

@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.collections
 import com.github.pinguinson.vigilance.{ Inspection, InspectionContext, Inspector, Levels }
 
 /** @author Stephen Samuel */
-object ComparisonToEmptyList extends Inspection { self =>
+object ComparisonToEmptyList extends Inspection {
 
   override val level = Levels.Info
   override val description = "Comparison to empty list"
@@ -22,7 +22,7 @@ object ComparisonToEmptyList extends Inspection { self =>
       }
 
       private def warn(tree: Tree) {
-        context.warn(tree.pos, self, "Prefer use of isEmpty instead of comparison to an empty List: " + tree.toString().take(200))
+        context.warn(tree.pos, self, "Prefer use of isEmpty instead of comparison to an empty List: " + tree.toString.take(200))
       }
     }
   }

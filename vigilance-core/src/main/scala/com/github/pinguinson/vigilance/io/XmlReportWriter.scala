@@ -14,6 +14,6 @@ object XmlReportWriter {
   }
 
   private def reportToXml(report: Report) = {
-      <warning line={report.line.toString} text={report.text} snippet={report.snippet} level={report.level.toString} file={report.sourceFileNormalized} inspection={report.inspection}/>
+      <warning line={report.line.toString} text={report.title} snippet={report.comment} level={report.level.toString} file={report.sourceFileNormalized} inspection={report.inspection}/>
   }
 }

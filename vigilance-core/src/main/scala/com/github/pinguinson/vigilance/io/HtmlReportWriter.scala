@@ -31,19 +31,19 @@ object HtmlReportWriter {
 
   private def reportsToXml(reporter: Feedback) = {
     reporter.reports
-      .sortBy(_.level.importance)
-      .map { warning =>
+      .sortBy(report => s"${report.level.importance}${report.title}")
+      .map { report =>
         <div class="warning">
           <div class="source">
-            {warning.sourceFileNormalized + ":" + warning.line}
+            {report.sourceFileNormalized + ":" + report.line}
           </div>
           <div class="title">
-            {levelSpan(warning.level)}
-            &nbsp;{warning.text}&nbsp;
-            <span class="inspection">{warning.inspection}</span>
+            {levelSpan(report.level)}
+            &nbsp;{report.title}&nbsp;
+            <span class="inspection">{report.inspection.filterNot(_ == '$')}</span>
           </div>
-          <div class="snippet">{IOUtils.getSourceLine(warning.sourceFileFull, warning.line)}</div>
-          <div class="snippet">{warning.snippet}</div>
+          <div class="snippet">{IOUtils.getSourceLine(report.sourceFileFull, report.line)}</div>
+          <div class="comment">{report.comment}</div>
         </div>
       }
   }
@@ -92,6 +92,14 @@ object HtmlReportWriter {
       |}
       |
       |.snippet {
+      |  padding-top: 8px;
+      |  color: #0C0C0C;
+      |  font-family: 'Ubuntu Mono', sans-serif;
+      |  font-weight: 300;
+      |  font-size: 12px;
+      |}
+      |
+      |.comment {
       |  padding-top: 8px;
       |  color: #0C0C0C;
       |  font-family: 'Ubuntu Mono', sans-serif;

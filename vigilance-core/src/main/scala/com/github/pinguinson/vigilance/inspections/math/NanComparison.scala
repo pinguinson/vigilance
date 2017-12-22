@@ -3,7 +3,7 @@ package com.github.pinguinson.vigilance.inspections.math
 import com.github.pinguinson.vigilance._
 
 /** @author Stephen Samuel */
-object NanComparison extends Inspection { self =>
+object NanComparison extends Inspection {
 
   override val level = Levels.Error
   override val description = "NaN comparision"
@@ -23,9 +23,9 @@ object NanComparison extends Inspection { self =>
       }
 
       override def inspect(tree: Tree) = {
-        case Apply(Select(lhs, TermName("$eq$eq")), List(Literal(Constant(x)))) if isFloatingPointType(lhs) && isNan(x) =>
+        case Apply(Select(lhs, Equals), List(Literal(Constant(x)))) if isFloatingPointType(lhs) && isNan(x) =>
           warn(tree)
-        case Apply(Select(Literal(Constant(x)), TermName("$eq$eq")), List(rhs)) if isFloatingPointType(rhs) && isNan(x) =>
+        case Apply(Select(Literal(Constant(x)), Equals), List(rhs)) if isFloatingPointType(rhs) && isNan(x) =>
           warn(tree)
       }
 
@@ -34,7 +34,7 @@ object NanComparison extends Inspection { self =>
       }
 
       private def warn(tree: Tree) {
-        context.warn(tree.pos, self, tree.toString.take(500))
+        context.warn(tree.pos, self, "Comparison to NaN will always fail")
       }
     }
   }

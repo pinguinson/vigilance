@@ -164,6 +164,9 @@ class VigilanceComponent(val global: Global, inspections: Seq[Inspection])
         diffBranch.foreach { branch =>
           reporter.echo(s"[info] [vigilance] diff against [$branch]")
         }
+        diffFiles.foreach { file =>
+          reporter.echo(s"[info] [vigilance] file in diff: $file")
+        }
         super.run()
 
         if (summary) {
