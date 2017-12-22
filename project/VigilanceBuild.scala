@@ -48,12 +48,6 @@ object VigilanceBuild {
     pomIncludeRepository          := Function.const(false)
   )
 
-  lazy val root = (project in file("."))
-    .settings(publishSettings)
-    .disablePlugins(BintrayPlugin)
-    .settings(name := "vigilance")
-    .aggregate(vigilanceCore, vigilanceSbt)
-
   lazy val vigilanceCore = (project in file("vigilance-core"))
     .settings(commonSettings)
     .disablePlugins(BintrayPlugin)
@@ -89,9 +83,9 @@ object VigilanceBuild {
     .settings(
       publishMavenStyle   := false,
       bintrayRepository   := "sbt-plugins",
-      bintrayOrganization := Some("ngusak"),
+      bintrayOrganization := None,
       organization        := "com.github.pinguinson",
-      name                := "sbt-vigilance",
+      name                := "vigilance",
       sbtPlugin           := true,
       crossSbtVersions    := Seq("0.13.16", "1.0.3")
     )
