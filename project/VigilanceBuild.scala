@@ -89,7 +89,7 @@ object VigilanceBuild {
     .settings(
       publishMavenStyle   := false,
       bintrayRepository   := "sbt-plugins",
-      bintrayOrganization := None,
+      bintrayOrganization := Some("ngusak"),
       organization        := "com.github.pinguinson",
       name                := "sbt-vigilance",
       sbtPlugin           := true,
