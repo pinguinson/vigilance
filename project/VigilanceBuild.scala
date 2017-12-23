@@ -85,7 +85,7 @@ object VigilanceBuild {
       bintrayRepository   := "sbt-plugins",
       bintrayOrganization := None,
       organization        := "com.github.pinguinson",
-      name                := "vigilance",
+      name                := "sbt-vigilance",
       sbtPlugin           := true,
       crossSbtVersions    := Seq("0.13.16", "1.0.3")
     )
