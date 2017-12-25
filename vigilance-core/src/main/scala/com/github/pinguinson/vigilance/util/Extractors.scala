@@ -19,6 +19,7 @@ trait Extractors {
   object SelectTraversable extends SelectT[TraversableLike[_, _]]
   object SelectList extends SelectT[List[_]]
   object SelectSeq extends SelectT[Seq[_]]
+  object SelectSet extends SelectT[Set[_]]
   object SelectEither extends SelectT[Either[_, _]]
   object SelectMap extends SelectT[MapLike[_, _, _]]
   object SelectAny extends SelectT[Any]

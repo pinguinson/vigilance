@@ -15,8 +15,8 @@ object NoOpOverride extends Inspection {
       import context.global._
 
       override def inspect(tree: Tree) = {
-        case DefDef(_, name, _, vparamss, _, Apply(Select(Super(This(_), _), name2), args)) if name == name2 && vparamss.foldLeft(0)((a, b) => a + b.size) == args.size =>
-          context.warn(tree.pos, self, "This method is overridden yet only calls super: " + tree.toString.take(200))
+        case DefDef(_, name, _, vparamss, _, Apply(Select(Super(This(_), _), name2), args)) if name == name2 && vparamss.map(_.size).sum == args.size =>
+          context.warn(tree.pos, self, "This method is overridden yet only calls super")
       }
     }
   }

@@ -1,6 +1,7 @@
 package com.github.pinguinson.vigilance.io
 
-import java.io.{BufferedWriter, File, FileWriter}
+import java.io.{BufferedWriter, File, FileOutputStream, OutputStreamWriter}
+import java.nio.charset.StandardCharsets
 
 import com.github.pinguinson.vigilance.Feedback
 
@@ -17,7 +18,7 @@ object IOUtils {
   private val HtmlFile          = "vigilance.html"
 
   def serialize(file: File, str: String): Unit = {
-    val out = new BufferedWriter(new FileWriter(file))
+    val out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8.name))
     out.write(str)
     out.close()
   }

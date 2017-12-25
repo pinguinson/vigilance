@@ -21,9 +21,11 @@ object NegationIsEmpty extends Inspection {
         case Select(SelectTraversable(NonEmpty), Bang) =>
           context.warn(tree.pos, self, "Traversable.!nonEmpty can be replaced with Traversable.isEmpty")
         case Select(SelectOption(IsEmpty), Bang) =>
-          context.warn(tree.pos, self, "Option.!isEmpty can be replaced with Option.nonEmpty")
-        case Select(SelectOption(IsEmpty), Bang) =>
+          context.warn(tree.pos, self, "Option.!isEmpty can be replaced with Option.nonEmpty or Option.isDefined")
+        case Select(SelectOption(NonEmpty), Bang) =>
           context.warn(tree.pos, self, "Option.!nonEmpty can be replaced with Option.isEmpty")
+        case Select(SelectOption(IsDefined), Bang) =>
+          context.warn(tree.pos, self, "Option.!isDefined can be replaced with Option.isEmpty")
       }
     }
   }

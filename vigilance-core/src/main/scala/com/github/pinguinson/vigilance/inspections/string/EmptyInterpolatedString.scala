@@ -17,10 +17,7 @@ object EmptyInterpolatedString extends Inspection {
       override def inspect(tree: Tree) = {
         //TODO: select any?
         case Apply(Select(Apply(Select(_, TermName("apply")), _), TermName("s")), Nil) =>
-          context.warn(
-            tree.pos,
-            self,
-            "String declared as interpolated but has no parameters: " + tree.toString.take(500))
+          context.warn(tree.pos, self, "String declared as interpolated but has no parameters")
       }
     }
   }

@@ -29,6 +29,7 @@ class Feedback(consoleOutput: Boolean, reporter: Reporter) {
     val report = Report(inspection.description, pos.line, adjustedLevel, sourceFileFull, sourceFileNormalized, comment, inspection.getClass.getCanonicalName)
     reports.append(report)
     if (consoleOutput) {
+      //TODO: does not seem to work
       val snippet = IOUtils.getSourceLines(sourceFileFull, pos.start, pos.end)
       println(s"[${report.level.toString.toLowerCase}] $sourceFileNormalized:${report.line}: $comment")
       println(s"          $snippet")

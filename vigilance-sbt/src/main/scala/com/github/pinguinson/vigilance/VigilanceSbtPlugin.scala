@@ -15,7 +15,6 @@ object VigilanceSbtPlugin extends AutoPlugin {
     lazy val vigilance = taskKey[Unit]("Run vigilance quality checks")
     lazy val vigilanceCleanTask = taskKey[Unit]("Conditionally clean the vigilance output directories")
     lazy val vigilanceClean = taskKey[Unit]("Clean the vigilance output directories")
-    lazy val vigilanceVersion = settingKey[String]("The version of the scala plugin to use")
     lazy val vigilanceDisabledInspections = settingKey[Seq[String]]("Inspections that are disabled globally")
     lazy val vigilanceEnabledInspections = settingKey[Seq[String]]("Inspections that are explicitly enabled")
     lazy val vigilanceRunAlways = settingKey[Boolean]("Force inspections to run even on files that haven't changed")
@@ -111,9 +110,8 @@ object VigilanceSbtPlugin extends AutoPlugin {
       vigilanceCleanTask := doVigilanceClean(vigilanceRunAlways.value, (classDirectory in Vigilance).value, streams.value.log),
       vigilanceClean := doVigilanceClean(true, (classDirectory in Vigilance).value, streams.value.log),
       vigilanceRunAlways := true,
-      vigilanceVersion := "0.0.2-SNAPSHOT",
       vigilanceConsoleOutput := true,
-      vigilanceVerbose := true,
+      vigilanceVerbose := false,
       vigilanceMaxInfos := -1,
       vigilanceMaxWarnings := -1,
       vigilanceMaxErrors := -1,
@@ -123,7 +121,7 @@ object VigilanceSbtPlugin extends AutoPlugin {
       vigilanceDiffBranch := None,
       vigilanceOutputPath := (crossTarget in Compile).value.getAbsolutePath + "/vigilance-report",
       vigilanceReports := Seq("all"),
-      libraryDependencies += GroupId %% ArtifactId % vigilanceVersion.value % Compile
+      libraryDependencies += GroupId %% ArtifactId % "0.0.7" % Compile
     )
   }
 }

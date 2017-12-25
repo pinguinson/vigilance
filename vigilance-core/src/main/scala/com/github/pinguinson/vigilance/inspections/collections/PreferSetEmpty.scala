@@ -19,11 +19,7 @@ object PreferSetEmpty extends Inspection {
 
       override def inspect(tree: Tree) = {
         case Apply(TypeApply(Select(Select(_, SetTerm), ApplyTerm), _), List()) =>
-          context.warn(
-            tree.pos,
-            self,
-            "Set[T]() creates a new instance. Consider Set.empty which does not allocate a new object. " + tree.toString.take(500)
-          )
+          context.warn(tree.pos, self, "Set[T]() creates a new instance, use Set.empty[T] which does not allocate a new object")
       }
     }
   }
