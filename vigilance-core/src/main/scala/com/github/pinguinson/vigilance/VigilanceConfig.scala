@@ -27,7 +27,6 @@ object VigilanceConfig extends App {
     ArraysToString,
     AvoidOperatorOverload,
     AvoidSizeEqualsZero,
-    AvoidSizeNotEqualsZero,
     AvoidToMinusOne,
     BigDecimalDoubleConstructor,
     BigDecimalScaleWithoutRoundingMode,

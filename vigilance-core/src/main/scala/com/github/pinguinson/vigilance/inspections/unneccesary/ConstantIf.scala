@@ -22,7 +22,7 @@ object ConstantIf extends Inspection {
       override def inspect(tree: Tree) = {
         // ignore while loops, this will be picked up by the WhileTrue inspection
         case LabelDef(_, _, _) =>
-        case If(True | False, _, _) =>
+        case If(Literal(Constant(true)) | Literal(Constant(false)), _, _) =>
           context.warn(tree.pos, self, "Constant if expression " + tree.toString.take(500))
       }
     }

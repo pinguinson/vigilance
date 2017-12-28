@@ -17,7 +17,7 @@ object EmptyFor extends Inspection {
       private val Foreach = TermName("foreach")
 
       override def inspect(tree: Tree) = {
-        case Apply(TypeApply(Select(_, Foreach), _), List(Function(List(ValDef(_, _, _, EmptyTree)), Unit))) =>
+        case Apply(TypeApply(Select(_, Foreach), _), List(Function(List(ValDef(_, _, _, EmptyTree)), Literal(Constant(()))))) =>
           context.warn(tree.pos, self, tree.toString.take(500))
       }
     }

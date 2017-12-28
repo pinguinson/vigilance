@@ -16,7 +16,7 @@ object SimplifyBooleanExpression extends Inspection {
       import context.global._
 
       override def inspect(tree: Tree) = {
-        case Apply(Select(lhs, Equals), List(False)) =>
+        case Apply(Select(lhs, Equals), List(Literal(Constant(false)))) =>
           context.warn(tree.pos, self, "Boolean expressions such as x == false can be re-written as !x: " + tree.toString.take(200))
       }
     }

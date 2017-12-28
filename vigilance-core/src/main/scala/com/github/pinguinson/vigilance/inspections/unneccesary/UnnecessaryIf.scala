@@ -15,7 +15,7 @@ object UnnecessaryIf extends Inspection {
       import context.global._
 
       override def inspect(tree: Tree) = {
-        case If(_, True | False, False | True) =>
+        case If(_, Literal(Constant(true)) | Literal(Constant(false)), Literal(Constant(false)) | Literal(Constant(true))) =>
           context.warn(tree.pos, self, tree.toString.take(500))
       }
     }

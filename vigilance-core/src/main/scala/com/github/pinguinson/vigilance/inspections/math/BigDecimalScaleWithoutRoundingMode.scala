@@ -17,7 +17,7 @@ object BigDecimalScaleWithoutRoundingMode extends Inspection {
       private def isBigDecimal(t: Tree) = t.tpe <:< typeOf[BigDecimal] || t.tpe <:< typeOf[java.math.BigDecimal]
 
       override def inspect(tree: Tree) = {
-        case Apply(Select(lhs, TermName("setScale")), _) if isBigDecimal(lhs) =>
+        case Apply(Select(lhs, TermName("setScale")), List(_)) if isBigDecimal(lhs) =>
           context.warn(tree.pos, self, "BigDecimal.setScale without setting the rounding mode can throw an exception")
       }
     }

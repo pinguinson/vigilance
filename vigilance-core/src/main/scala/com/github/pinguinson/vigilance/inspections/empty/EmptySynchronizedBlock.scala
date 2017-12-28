@@ -17,7 +17,7 @@ object EmptySynchronizedBlock extends Inspection {
       private val Sync = TermName("synchronized")
 
       override def inspect(tree: Tree) = {
-        case Apply(TypeApply(Select(_, Sync), _), List(Unit)) =>
+        case Apply(TypeApply(Select(_, Sync), _), List(Literal(Constant(())))) =>
           context.warn(tree.pos, self, tree.toString.take(500))
       }
     }

@@ -19,11 +19,11 @@ object NullAssignment extends Inspection {
       }
 
       override def inspect(tree: Tree) = {
-        case ValDef(_, _, _, Null) =>
+        case ValDef(_, _, _, Literal(Constant(null))) =>
           warn(tree)
-        case Apply(Select(_, name), List(Null)) if name.endsWith("_$eq") =>
+        case Apply(Select(_, name), List(Literal(Constant(null)))) if name.endsWith("_$eq") =>
           warn(tree)
-        case Assign(_, Null) =>
+        case Assign(_, Literal(Constant(null))) =>
           warn(tree)
       }
     }

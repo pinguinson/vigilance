@@ -15,7 +15,7 @@ object EmptyIfBlock extends Inspection {
       import context.global._
 
       override def inspect(tree: Tree) = {
-        case If(_, Unit, _) => context.warn(tree.pos, self, tree.toString.take(500))
+        case If(_, Literal(Constant(())), _) => context.warn(tree.pos, self, tree.toString.take(500))
       }
     }
   }

@@ -16,7 +16,7 @@ object UseExpM1 extends Inspection {
 
       override def inspect(tree: Tree) = {
 
-        case Apply(Select(Apply(Select(pack, TermName("exp")), List(number)), nme.SUB), List(One)) =>
+        case Apply(Select(Apply(Select(pack, TermName("exp")), List(number)), nme.SUB), List(Literal(Constant(1)))) =>
           val math = pack.toString.stripSuffix(".`package`").substring(pack.toString.lastIndexOf('.'))
           context.warn(tree.pos, self, s"$math.expm1(x) is clearer and more performant than $math.exp(x) - 1")
 

@@ -19,7 +19,7 @@ object ModOne extends Inspection {
       import context.global._
 
       override def inspect(tree: Tree) = {
-        case Apply(Select(lhs, TermName("$percent")), List(One)) if lhs.tpe <:< typeOf[Int] =>
+        case Apply(Select(lhs, TermName("$percent")), List(Literal(Constant(1)))) if lhs.tpe <:< typeOf[Int] =>
           context.warn(tree.pos, self, "Any expression x % 1 will always return 0. " + tree.toString.take(300))
       }
     }

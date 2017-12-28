@@ -18,7 +18,7 @@ object SubstringZero extends Inspection {
       private val StringType = typeOf[String]
 
       override def inspect(tree: Tree) = {
-        case Apply(Select(lhs, Substring), List(Zero)) if lhs.tpe <:< StringType =>
+        case Apply(Select(lhs, Substring), List(Literal(Constant(0)))) if lhs.tpe <:< StringType =>
           context.warn(tree.pos, self, "Use of String.substring(0) will always return the same string: " + tree.toString.take(100))
       }
     }

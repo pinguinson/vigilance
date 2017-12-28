@@ -18,7 +18,7 @@ abstract class Inspector(val context: InspectionContext) {
   def traverser: context.Traverser
 }
 
-case class InspectionContext(global: Global, feedback: Feedback) extends CompilerAccess with Constants with Extractors {
+case class InspectionContext(global: Global, feedback: Feedback) extends CompilerAccess with Terms with Extractors {
 
   def warn(pos: Position, inspection: Inspection, snippet: String): Unit = {
     feedback.warn(pos, inspection, snippet)
@@ -59,7 +59,6 @@ case class InspectionContext(global: Global, feedback: Feedback) extends Compile
 
     override final def traverse(tree: Tree): Unit = tree match {
         // ignore synthetic methods added
-        // TODO: can we replace these with `case t: Tree if isSuppressed(t.symbol)`?
         case ddf: DefDef    if isSuppressed(ddf.symbol) || tree.symbol.isSynthetic =>
         case blk: Block     if isSuppressed(blk.symbol) =>
         case iff: If        if isSuppressed(iff.symbol) =>

@@ -16,7 +16,7 @@ object SwallowedException extends Inspection {
 
       private def checkCatches(cases: List[CaseDef]): Unit = cases.foreach {
         case CaseDef(Bind(TermName("ignored") | TermName("ignore"), _), _, _) =>
-        case catchBlock @ CaseDef(_, _, Unit) =>
+        case catchBlock @ CaseDef(_, _, Literal(Constant(()))) =>
           context.warn(catchBlock.pos, self, "Empty catch block")
         case _ =>
       }

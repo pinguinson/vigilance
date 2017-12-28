@@ -17,9 +17,9 @@ object WhileTrue extends Inspection {
       import context.global._
 
       override def inspect(tree: Tree) = {
-        case LabelDef(name, _, If(True, _, _)) if isWhile(name) =>
+        case LabelDef(name, _, If(Literal(Constant(true)), _, _)) if isWhile(name) =>
           context.warn(tree.pos, self, "A while true loop is unlikely to be meant for production")
-        case LabelDef(name, _, Block(_, If(True, _, _))) if isWhile(name) =>
+        case LabelDef(name, _, Block(_, If(Literal(Constant(true)), _, _))) if isWhile(name) =>
           context.warn(tree.pos, self, "A do while true loop is unlikely to be meant for production")
       }
 

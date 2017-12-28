@@ -19,12 +19,12 @@ object UnsafeContains extends Inspection {
       private def isSeq(tree: Tree): Boolean = tree.tpe.widen.baseClasses contains Seq
 
       private def isCompatibleType(container: Tree, value: Tree) = container.tpe baseType Seq match {
-        case TypeRef(_, Seq, elem :: TermNil) => value.tpe <:< elem
+        case TypeRef(_, Seq, elem :: Nil) => value.tpe <:< elem
         case _                            => false
       }
 
       override protected def inspect(tree: Tree) = {
-        case treeInfo.Applied(Select(lhs, Contains), _, (arg :: TermNil) :: TermNil) if isSeq(lhs) && !isCompatibleType(lhs, arg) =>
+        case treeInfo.Applied(Select(lhs, Contains), _, (arg :: Nil) :: Nil) if isSeq(lhs) && !isCompatibleType(lhs, arg) =>
           context.warn(tree.pos, self, tree.toString.take(300))
       }
     }

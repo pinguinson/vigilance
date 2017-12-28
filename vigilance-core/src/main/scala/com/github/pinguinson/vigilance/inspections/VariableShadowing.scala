@@ -7,6 +7,7 @@ import scala.collection.mutable.ListBuffer
 
 object VariableShadowing extends Inspection {
 
+  //TODO: does not work
   override val level = Levels.Warning
   override val description = "Variable shadowing"
 
@@ -18,7 +19,7 @@ object VariableShadowing extends Inspection {
 
       private val contexts = new mutable.Stack[ListBuffer[String]]()
 
-      private def isDefined(name: String): Boolean = contexts exists (_.contains(name.trim))
+      private def isDefined(name: String): Boolean = contexts.exists(_.contains(name.trim))
 
       private def warn(tree: Tree): Unit = {
         context.warn(tree.pos, self, "Variable is shadowed: " + tree.toString.take(200))
@@ -43,10 +44,13 @@ object VariableShadowing extends Inspection {
           contexts.top.append(name.trim)
         case Match(_, cases) =>
           cases.foreach {
-            case CaseDef(Bind(name, _), _, _) if isDefined(name.toString) =>
-              warn(tree)
+            case CaseDef(Bind(name, _), _, _) =>
+              if (isDefined(name.toString)) warn(tree)
+              continue(tree)
             case _ =>
+              continue(tree)
           }
+        case _ => continue(tree)
       }
     }
   }

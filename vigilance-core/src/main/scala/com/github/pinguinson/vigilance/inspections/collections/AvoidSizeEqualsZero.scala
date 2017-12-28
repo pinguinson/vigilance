@@ -1,6 +1,6 @@
 package com.github.pinguinson.vigilance.inspections.collections
 
-import com.github.pinguinson.vigilance.{ Inspection, InspectionContext, Inspector, Levels }
+import com.github.pinguinson.vigilance.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
 object AvoidSizeEqualsZero extends Inspection {
@@ -19,12 +19,8 @@ object AvoidSizeEqualsZero extends Inspection {
       private val Traversable = typeOf[Traversable[_]]
 
       override def inspect(tree: Tree) = {
-        case Apply(Select(Select(q, Size | Length), Equals), Zero) if q.tpe <:< Traversable =>
-          context.warn(
-            tree.pos,
-            self,
-            "Traversable.size is slow for some implementations. Prefer .isEmpty which is O(1): " + tree.toString.take(100)
-          )
+        case Apply(Select(Select(lhs, Length | Size), Equals | NotEquals), List(Literal(Constant(0)))) if lhs.tpe <:< Traversable =>
+          context.warn(tree.pos, self, "Traversable.size might be slow, use .isEmpty or .nonEmpty instead")
       }
     }
   }

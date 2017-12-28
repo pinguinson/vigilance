@@ -21,15 +21,10 @@ object DivideByOne extends Inspection {
           tree.tpe <:< typeOf[Float]
       }
 
-      private def isOne(value: Any): Boolean = value match {
-        case i: Int => i == 1
-        case _ => false
-      }
-
       //TODO: fix this
       override def inspect(tree: Tree) = {
-        case Apply(Select(lhs, TermName("$div")), List(Literal(Constant(x)))) if isNumber(lhs) && isOne(x) =>
-          context.warn(tree.pos, self, tree.toString.take(500))
+        case Apply(Select(lhs, TermName("$div")), List(Literal(Constant(1)))) if isNumber(lhs) =>
+          context.warn(tree.pos, self, "Division by 1 is unnecessary")
       }
     }
   }

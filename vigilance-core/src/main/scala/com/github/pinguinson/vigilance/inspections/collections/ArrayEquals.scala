@@ -23,7 +23,7 @@ object ArrayEquals extends Inspection {
         // We have to add a special case here, because the 'type' of null will
         // be coerced to Array when it is compared to an array, so it would
         // otherwise match the next case.
-        case Null => false
+        case Literal(Constant(null)) => false
         case x                       => x.tpe <:< typeOf[Array[_]]
       }
 

@@ -17,8 +17,8 @@ object ArraysToString extends Inspection {
       private def isArray(tree: Tree) = tree.tpe <:< typeOf[Array[_]]
 
       override def inspect(tree: Tree) = {
-        case Apply(Select(lhs, ToString), TermNil) if isArray(lhs) =>
-          context.warn(tree.pos, self, "toString on an array does not perform a deep toString: " + tree.toString.take(500))
+        case Apply(Select(lhs, ToString), Nil) if isArray(lhs) =>
+          context.warn(tree.pos, self, "Array.toString does not perform a deep toString")
       }
     }
   }

@@ -15,7 +15,7 @@ object EmptyTryBlock extends Inspection {
       import context.global._
 
       override def inspect(tree: Tree) = {
-        case Try(Unit, _, _) =>
+        case Try(Literal(Constant(())), _, _) =>
           context.warn(tree.pos, self, tree.toString.take(500))
       }
     }

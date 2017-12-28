@@ -39,8 +39,8 @@ object ComparingUnrelatedTypes extends Inspection {
           // -- Special cases ---------------------------------------------------------------------
 
           // Comparing any numeric value to a literal 0 should be ignored:
-          case Apply(Select(lhs, Equals), List(Zero)) if lhs.tpe.typeSymbol.isNumericValueClass =>
-          case Apply(Select(Zero, Equals), List(rhs)) if rhs.tpe.typeSymbol.isNumericValueClass =>
+          case Apply(Select(lhs, Equals), List(Literal(Constant(0)))) if lhs.tpe.typeSymbol.isNumericValueClass =>
+          case Apply(Select(Literal(Constant(0)), Equals), List(rhs)) if rhs.tpe.typeSymbol.isNumericValueClass =>
 
           // Comparing a integral value to a integral literal should be ignored if the literal
           // fits in the in range of the other value's type. For example, in general it may be

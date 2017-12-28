@@ -1,19 +1,10 @@
 package com.github.pinguinson.vigilance.util
 
-trait Constants {
+trait Terms {
   self: CompilerAccess =>
 
   import global._
 
-  // constants
-  val Unit = Literal(Constant(()))
-  val Zero = Literal(Constant(0))
-  val One = Literal(Constant(1))
-  val Null = Literal(Constant(null))
-  val True = Literal(Constant(true))
-  val False = Literal(Constant(false))
-
-  // terms
   val Finalize = TermName("finalize")
   val IsInstanceOf = TermName("isInstanceOf")
   val AsInstanceOf = TermName("asInstanceOf")

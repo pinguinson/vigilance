@@ -15,7 +15,7 @@ object ZeroNumerator extends Inspection {
       import context.global._
 
       override def inspect(tree: Tree) = {
-        case Apply(Select(Zero, TermName("$div")), _) =>
+        case Apply(Select(Literal(Constant(0)), TermName("$div")), _) =>
           context.warn(tree.pos, self, "Dividing zero by any number will always return zero")
       }
     }

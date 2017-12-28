@@ -23,10 +23,10 @@ object UseLog1P extends Inspection {
       }
 
       override def inspect(tree: Tree) = {
-        case Apply(Select(pack, TermName("log")), List(Apply(Select(One, nme.ADD), _))) if isMathPackage(pack.symbol.fullName) =>
+        case Apply(Select(pack, TermName("log")), List(Apply(Select(Literal(Constant(1)), nme.ADD), _))) if isMathPackage(pack.symbol.fullName) =>
           val math = pack.toString.stripSuffix(".`package`").substring(pack.toString.lastIndexOf('.'))
           warn(tree, math)
-        case Apply(Select(pack, TermName("log")), List(Apply(Select(_, nme.ADD), List(One)))) if isMathPackage(pack.symbol.fullName) =>
+        case Apply(Select(pack, TermName("log")), List(Apply(Select(_, nme.ADD), List(Literal(Constant(1)))))) if isMathPackage(pack.symbol.fullName) =>
           val math = pack.toString.stripSuffix(".`package`").substring(pack.toString.lastIndexOf('.'))
           warn(tree, math)
       }
