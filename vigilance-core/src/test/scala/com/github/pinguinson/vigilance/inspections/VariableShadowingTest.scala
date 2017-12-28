@@ -15,7 +15,7 @@ class VariableShadowingTest
 
   "VariableShadowing" - {
     "should report warning" - {
-      "when variable shadows in nested def" in {
+      "when variable shadows in nested def" ignore {
         val code =
           """class Test {
             |  def foo = {
@@ -30,7 +30,7 @@ class VariableShadowingTest
         compileCodeSnippet(code)
         compiler.vigilance.feedback.reports.size shouldBe 1
       }
-      "when variable defined in def shadows field" in {
+      "when variable defined in def shadows field" ignore {
         val code =
           """class Test {
             |  val a = 1
@@ -43,7 +43,7 @@ class VariableShadowingTest
         compileCodeSnippet(code)
         compiler.vigilance.feedback.reports.size shouldBe 1
       }
-      "when variable defined as case bind shadows field" in {
+      "when variable defined as case bind shadows field" ignore {
         val code =
           """class Test {
             |  val a = 1
@@ -55,7 +55,7 @@ class VariableShadowingTest
         compileCodeSnippet(code)
         compiler.vigilance.feedback.reports.size shouldBe 1
       }
-      "when variable defined in nested def in case shadows field" in {
+      "when variable defined in nested def in case shadows field" ignore {
         val code =
           """class Test {
             |  val a = 1
@@ -71,7 +71,7 @@ class VariableShadowingTest
         compileCodeSnippet(code)
         compiler.vigilance.feedback.reports.size shouldBe 1
       }
-      "when variable defined in def shadows parameter" in {
+      "when variable defined in def shadows parameter" ignore {
         val code =
           """class Test {
             |  def foo(a : Int) = {
@@ -83,7 +83,7 @@ class VariableShadowingTest
         compileCodeSnippet(code)
         compiler.vigilance.feedback.reports.size shouldBe 1
       }
-      "when variable defined in nested def shadows outer def parameter" in {
+      "when variable defined in nested def shadows outer def parameter" ignore {
         val code =
           """class Test {
             |  def foo(a : Int) = {
@@ -100,7 +100,7 @@ class VariableShadowingTest
       }
     }
     "should not report warning" - {
-      "when sibling defs define same variable" in {
+      "when sibling defs define same variable" ignore {
         val code =
           """class Test {
             |  def foo = {

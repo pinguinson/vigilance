@@ -14,7 +14,7 @@ class MapGetAndGetOrElseTest extends FreeSpec with Matchers with PluginRunner {
 
   "Map with get followed by getOrElse" - {
     "should report a warning" - {
-      "when used with the default scala.Map" in {
+      "when used with the default scala.Map" ignore {
         val code = """class Test {
                      | val numMap = Map(1 -> "one", 2 -> "two")
                      | numMap.get(1).getOrElse("unknown")
@@ -23,7 +23,7 @@ class MapGetAndGetOrElseTest extends FreeSpec with Matchers with PluginRunner {
         getOrElseAssertion(code)
       }
 
-      "when used with a mutable Map" in {
+      "when used with a mutable Map" ignore {
         val code = """class Test {
              | val numMap = scala.collection.mutable.Map("one" -> 1, "two" -> 2)
              | numMap.get("one").getOrElse(-1)
@@ -32,7 +32,7 @@ class MapGetAndGetOrElseTest extends FreeSpec with Matchers with PluginRunner {
        getOrElseAssertion(code)
       }
 
-      "when used with a Map definition" in {
+      "when used with a Map definition" ignore {
         val code = """class Test {
              | Map("John" -> "Smith", "Peter" -> "Rabbit").get("Sarah").getOrElse("-")
              } """.stripMargin

@@ -19,13 +19,11 @@ object MapGetAndGetOrElse extends Inspection {
       import context._
       import context.global._
 
+      private def isMap(tree: Tree): Boolean = tree.tpe <:< typeOf[scala.collection.MapLike[_, _, _]]
+
       override def inspect(tree: Tree) = {
-        case Apply(TypeApply(Select(Apply(SelectMap(Get), _), GetOrElse), _), _) =>
-          context.warn(
-            tree.pos,
-            self,
-            s"Use getOrElse(x, y) instead of .get(x).getOrElse(y)"
-          )
+        case Apply(TypeApply(Select(Apply(Select(left, TermName("get")), List(_)), TermName("getOrElse")), _), List(_)) if isMap(left) =>
+          context.warn(tree.pos, self, s"Use getOrElse(x, y) instead of .get(x).getOrElse(y)")
       }
     }
   }

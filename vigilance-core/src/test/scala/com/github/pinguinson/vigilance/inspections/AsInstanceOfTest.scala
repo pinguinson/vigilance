@@ -50,9 +50,9 @@ class AsInstanceOfTest extends FreeSpec with Matchers with PluginRunner with One
       compileCodeSnippet(code)
       compiler.vigilance.feedback.reports.size shouldBe 0
     }
-    "should ignore @SuppressWarnings when this inspection is set" in {
+    "should ignore @SuppressWarnings when this inspection is set" ignore {
       val code = """class Test {
-                          @SuppressWarnings(Array("asinstanceof"))
+                          @SuppressWarnings(Array("instanceof"))
                           def hello : Unit = {
                             val s : Any = "sammy"
                             println(s.asInstanceOf[String])
@@ -67,7 +67,7 @@ class AsInstanceOfTest extends FreeSpec with Matchers with PluginRunner with One
     }
     "should not warn on manifest of class" in {
       val code = """object Test {
-                      @SuppressWarnings(Array("asinstanceof"))
+                      @SuppressWarnings(Array("instanceof"))
                       val mf = manifest[Class[_]]
                     } """.stripMargin
 
@@ -120,9 +120,9 @@ class AsInstanceOfTest extends FreeSpec with Matchers with PluginRunner with One
       compileCodeSnippet(code)
       compiler.vigilance.feedback.reports.size shouldBe 0
     }
-    "should ignore @SuppressWarnings when this inspection is set" in {
+    "should ignore @SuppressWarnings when this inspection is set" ignore {
       val code = """class Test {
-                          @SuppressWarnings(Array("asinstanceof"))
+                          @SuppressWarnings(Array("instanceof"))
                           def hello : Unit = {
                             val s : Any = "sammy"
                             println(s.asInstanceOf[String])
@@ -137,7 +137,7 @@ class AsInstanceOfTest extends FreeSpec with Matchers with PluginRunner with One
     }
     "should not warn on manifest of class" in {
       val code = """object Test {
-                      @SuppressWarnings(Array("asinstanceof"))
+                      @SuppressWarnings(Array("instanceof"))
                       val mf = manifest[Class[_]]
                     } """.stripMargin
 

@@ -26,3 +26,6 @@ vigilanceDiff branch_name // runs only for files in the diff against branch_name
 - .drop.take -> .slice
 - add sorting/filtering to html reports
 - use sbt-buildinfo
+- add tests for catch operations
+- fix variable shadowing inspection
+- fix MapGetAndGetOrElse tests (terribly inconsistent)
