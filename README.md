@@ -18,14 +18,14 @@ vigilanceDiff branch_name // runs only for files in the diff against branch_name
 
 ## TODO
 
-- log/print future instead of callback
-- get rid of comparisons via toString
-- re-add tests
-- move from scala-xml to scalatags
-- aliases for (local) publishing in sbt
-- .drop.take -> .slice
-- add sorting/filtering to html reports
-- use sbt-buildinfo
-- add tests for catch operations
-- fix variable shadowing inspection
-- fix MapGetAndGetOrElse tests (terribly inconsistent)
+- [ ] log/print future instead of callback
+- [ ] get rid of comparisons via toString
+- [x] re-add tests
+- [ ] move from scala-xml to scalatags
+- [ ] aliases for (local) publishing in sbt
+- [ ] .drop.take -> .slice
+- [ ] add sorting/filtering to html reports
+- [ ] use sbt-buildinfo
+- [ ] add tests for catch operations
+- [ ] fix variable shadowing inspection
+- [x] fix MapGetAndGetOrElse tests (terribly inconsistent)
