@@ -7,7 +7,7 @@ Scala linter (fork of https://github.com/sksamuel/scapegoat)
 
 Add sbt plugin:
 ```scala
-addSbtPlugin("com.github.pinguinson" % "sbt-vigilance" % "0.0.7")
+addSbtPlugin("com.github.pinguinson" % "sbt-vigilance" % "0.0.9")
 ```
 
 Run inspections in sbt:
