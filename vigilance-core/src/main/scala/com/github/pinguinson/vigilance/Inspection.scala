@@ -42,7 +42,7 @@ case class InspectionContext(global: Global, feedback: Feedback) extends Compile
     }
 
     private def isThisDisabled(an: AnnotationInfo): Boolean = {
-      an.javaArgs.head._2.toString.toLowerCase.contains(inspectionClass(getClass).getSimpleName.toLowerCase)
+      an.javaArgs.head._2.toString.toLowerCase.contains(inspectionClass(getClass).getSimpleName.toLowerCase.init) //removes '$' symbol (because companion object)
     }
 
     private def isSkipAnnotation(an: AnnotationInfo): Boolean = {

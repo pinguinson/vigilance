@@ -74,7 +74,8 @@ object VigilanceBuild {
         "org.mockito"            %  "mockito-all"    % "1.10.19"          % Test,
         "joda-time"              %  "joda-time"      % "2.9.9"            % Test,
         "org.joda"               %  "joda-convert"   % "1.9.2"            % Test,
-        "org.slf4j"              %  "slf4j-api"      % "1.7.25"           % Test
+        "org.slf4j"              %  "slf4j-api"      % "1.7.25"           % Test,
+        "com.typesafe.akka"      %% "akka-actor"     % "2.5.9"            % Test
       ),
       fullClasspath in (Compile, console) ++= (fullClasspath in Test).value // because that's where "PluginRunner" is
     )

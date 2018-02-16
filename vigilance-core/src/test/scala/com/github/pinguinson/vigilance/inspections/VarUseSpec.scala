@@ -20,8 +20,8 @@ class VarUseSpec extends FreeSpec with Matchers with PluginRunner with OneInstan
       compiler.vigilance.feedback.reports.size shouldBe 1
     }
     "should not report warning" - {
-      "for akka actors" ignore {
-        addToClassPath("com.typesafe.akka", "akka-actor_2.11", "2.3.4")
+      "for akka actors" in {
+        addToClassPath("com.typesafe.akka", "akka-actor_2.11", "2.5.4")
         val code =
           """import akka.actor.Actor
             |import akka.actor.Actor.Receive
@@ -39,32 +39,11 @@ class VarUseSpec extends FreeSpec with Matchers with PluginRunner with OneInstan
       }
     }
   }
-  "async macros" - {
-    "should be ignored" ignore {
-      addToClassPath("org.scala-lang.modules", "scala-async_2.11", "0.9.2")
-
-      val code =
-        """import scala.async.Async._
-          |import scala.concurrent.Future
-          |import scala.concurrent.ExecutionContext.Implicits.global
-          |
-          |object Test {
-          |  val result = async {
-          |    val a = await( Future { 1 } )
-          |    val b = await( Future { 2 } )
-          |    a + b
-          |  }
-          |}
-        """.stripMargin
-      compileCodeSnippet(code)
-      compiler.vigilance.feedback.reports.size shouldBe 0
-    }
-  }
 
 //  travis doesn't seem to find scala xml on the classpath so disabling
   "xml variables" - {
-    "should not report warning" ignore {
-      addToClassPath("org.scala-lang.modules", "scala-xml_2.11", "1.0.2")
+    "should not report warning" in {
+      addToClassPath("org.scala-lang.modules", "scala-xml_2.11", "1.0.6")
 
       val code =
         """class Test {

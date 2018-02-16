@@ -1,9 +1,13 @@
 package com.github.pinguinson.vigilance.inspections.collections
 
 import com.github.pinguinson.vigilance.PluginRunner
-import org.scalatest.{ FreeSpec, Matchers }
+import org.scalatest.{FreeSpec, Matchers, OneInstancePerTest}
 
-class MapGetAndGetOrElseTest extends FreeSpec with Matchers with PluginRunner {
+class MapGetAndGetOrElseTest
+  extends FreeSpec
+    with Matchers
+    with PluginRunner
+    with OneInstancePerTest {
 
   override val inspections = Seq(MapGetAndGetOrElse)
 
@@ -14,7 +18,7 @@ class MapGetAndGetOrElseTest extends FreeSpec with Matchers with PluginRunner {
 
   "Map with get followed by getOrElse" - {
     "should report a warning" - {
-      "when used with the default scala.Map" ignore {
+      "when used with the default scala.Map" in {
         val code = """class Test {
                      | val numMap = Map(1 -> "one", 2 -> "two")
                      | numMap.get(1).getOrElse("unknown")
@@ -23,7 +27,7 @@ class MapGetAndGetOrElseTest extends FreeSpec with Matchers with PluginRunner {
         getOrElseAssertion(code)
       }
 
-      "when used with a mutable Map" ignore {
+      "when used with a mutable Map" in {
         val code = """class Test {
              | val numMap = scala.collection.mutable.Map("one" -> 1, "two" -> 2)
              | numMap.get("one").getOrElse(-1)
@@ -32,7 +36,7 @@ class MapGetAndGetOrElseTest extends FreeSpec with Matchers with PluginRunner {
        getOrElseAssertion(code)
       }
 
-      "when used with a Map definition" ignore {
+      "when used with a Map definition" in {
         val code = """class Test {
              | Map("John" -> "Smith", "Peter" -> "Rabbit").get("Sarah").getOrElse("-")
              } """.stripMargin

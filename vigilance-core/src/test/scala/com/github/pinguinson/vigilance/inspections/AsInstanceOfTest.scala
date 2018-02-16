@@ -50,9 +50,9 @@ class AsInstanceOfTest extends FreeSpec with Matchers with PluginRunner with One
       compileCodeSnippet(code)
       compiler.vigilance.feedback.reports.size shouldBe 0
     }
-    "should ignore @SuppressWarnings when this inspection is set" ignore {
+    "should ignore @SuppressWarnings when this inspection is set" in {
       val code = """class Test {
-                          @SuppressWarnings(Array("instanceof"))
+                          @SuppressWarnings(Array("instanceOf"))
                           def hello : Unit = {
                             val s : Any = "sammy"
                             println(s.asInstanceOf[String])
@@ -67,7 +67,7 @@ class AsInstanceOfTest extends FreeSpec with Matchers with PluginRunner with One
     }
     "should not warn on manifest of class" in {
       val code = """object Test {
-                      @SuppressWarnings(Array("instanceof"))
+                      @SuppressWarnings(Array("instanceOf"))
                       val mf = manifest[Class[_]]
                     } """.stripMargin
 
@@ -120,7 +120,7 @@ class AsInstanceOfTest extends FreeSpec with Matchers with PluginRunner with One
       compileCodeSnippet(code)
       compiler.vigilance.feedback.reports.size shouldBe 0
     }
-    "should ignore @SuppressWarnings when this inspection is set" ignore {
+    "should ignore @SuppressWarnings when this inspection is set" in {
       val code = """class Test {
                           @SuppressWarnings(Array("instanceof"))
                           def hello : Unit = {

@@ -2,6 +2,7 @@ package com.github.pinguinson.vigilance
 
 import java.io.{File, FileNotFoundException}
 import java.net.URL
+import java.nio.charset.StandardCharsets
 
 import scala.tools.nsc.reporters.ConsoleReporter
 
@@ -35,7 +36,7 @@ trait PluginRunner {
 
   def writeCodeSnippetToTempFile(code: String): File = {
     val file = File.createTempFile("vigilanceSnippet", ".scala")
-    org.apache.commons.io.FileUtils.write(file, code)
+    org.apache.commons.io.FileUtils.write(file, code, StandardCharsets.UTF_8)
     file.deleteOnExit()
     file
   }
@@ -67,12 +68,20 @@ trait PluginRunner {
   def findIvyJar(groupId: String, artifactId: String, version: String): File = {
     val userHome = System.getProperty("user.home")
     val sbtHome = userHome + "/.ivy2"
-    val jarPath = sbtHome + "/cache/" + groupId + "/" + artifactId + "/jars/" + artifactId + "-" + version + ".jar"
-    val file = new File(jarPath)
-    if (file.exists) {
-      // println(s"Located ivy jar [$file]")
-      file
-    } else throw new FileNotFoundException(s"Could not locate [$jarPath].")
+    val artifactFolder = s"$sbtHome/cache/$groupId/$artifactId/"
+    val possibleFolders = Seq("jars", "bundles")
+    val artifactFileName = s"$artifactId-$version.jar"
+    val possibleLocations = possibleFolders.map { subFolder =>
+      val fullPath = s"$artifactFolder/$subFolder/$artifactFileName"
+      new File(fullPath)
+    }
+    possibleLocations.find(_.exists).getOrElse {
+      val paths = possibleLocations.map(_.getAbsolutePath).mkString("\n")
+      val errorMessage =
+        s"""Could not locate jar. Tried:
+           |$paths""".stripMargin
+      throw new FileNotFoundException(errorMessage)
+    }
   }
 
   def sbtCompileDir: File = {
