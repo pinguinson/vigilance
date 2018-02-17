@@ -3,11 +3,13 @@ package com.github.pinguinson.vigilance
 import sbt._
 import sbt.complete.DefaultParsers._
 import sbt.Keys._
+import com.github.pinguinson.vigilance.buildinfo.BuildInfo
 
 object VigilanceSbtPlugin extends AutoPlugin {
 
-  val GroupId = "com.github.pinguinson"
-  val ArtifactId = "scalac-vigilance-plugin"
+  private[this] val organization = BuildInfo.vigilanceOrganization
+  private[this] val artifactId   = BuildInfo.vigilanceName
+  private[this] val version      = BuildInfo.vigilanceVersion
 
   object autoImport {
     val Vigilance = config("vigilance") extend Compile
@@ -51,8 +53,10 @@ object VigilanceSbtPlugin extends AutoPlugin {
             // find all deps for the compile scope
             val vigilanceDependencies = (update in Vigilance).value matching configurationFilter(Compile.name)
             // ensure we have the vigilance dependency on the classpath and if so add it as a scalac plugin
-            vigilanceDependencies.find(_.getAbsolutePath.endsWith(s"${ArtifactId}_${scalaBinaryVersion.value}.jar")) match {
-              case None => throw new Exception(s"Fatal: ${ArtifactId}_${scalaBinaryVersion.value} not in libraryDependencies ($vigilanceDependencies)")
+            vigilanceDependencies.find(_.getAbsolutePath.endsWith(s"${artifactId}_${scalaBinaryVersion.value}.jar")) match {
+              case None =>
+                val deps = vigilanceDependencies.mkString("\n")
+                throw new Exception(s"Fatal: ${artifactId}_${scalaBinaryVersion.value} not in libraryDependencies:\n $deps")
               case Some(classpath) =>
 
                 val verbose = vigilanceVerbose.value
@@ -121,7 +125,7 @@ object VigilanceSbtPlugin extends AutoPlugin {
       vigilanceDiffBranch := None,
       vigilanceOutputPath := (crossTarget in Compile).value.getAbsolutePath + "/vigilance-report",
       vigilanceReports := Seq("all"),
-      libraryDependencies += GroupId %% ArtifactId % "0.0.8" % Compile
+      libraryDependencies += organization %% artifactId % "0.0.10-SNAPSHOT" % Compile
     )
   }
 }

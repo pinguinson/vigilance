@@ -1,10 +1,13 @@
+import bintray.BintrayPlugin
+import bintray.BintrayKeys._
 import com.typesafe.sbt.SbtPgp.autoImportImpl.PgpKeys
 import sbt.Keys._
 import sbt.Opts.resolver._
 import sbt._
+import sbtbuildinfo.BuildInfoPlugin.autoImport._
+import sbtbuildinfo.{BuildInfoKey, BuildInfoPlugin}
+import sbtrelease.ReleasePlugin.autoImport.ReleaseTransformations._
 import sbtrelease.ReleasePlugin.autoImport._
-import bintray.BintrayPlugin
-import bintray.BintrayKeys._
 
 object VigilanceBuild {
 
@@ -77,11 +80,19 @@ object VigilanceBuild {
         "org.slf4j"              %  "slf4j-api"      % "1.7.25"           % Test,
         "com.typesafe.akka"      %% "akka-actor"     % "2.5.9"            % Test
       ),
-      fullClasspath in (Compile, console) ++= (fullClasspath in Test).value // because that's where "PluginRunner" is
+      fullClasspath in (Compile, console) ++= (fullClasspath in Test).value, // because that's where "PluginRunner" is
+      releaseUseGlobalVersion := true
     )
 
   lazy val vigilanceSbt = (project in file("vigilance-sbt"))
+    .enablePlugins(BuildInfoPlugin)
     .settings(
+      buildInfoKeys := Seq[BuildInfoKey](
+        version      in vigilanceCore,
+        organization in vigilanceCore,
+        name         in vigilanceCore
+      ).map(k => BuildInfoKey.map(k) { case (key, value) => "vigilance" + key.capitalize -> value }),
+      buildInfoPackage    := "com.github.pinguinson.vigilance.buildinfo",
       publishMavenStyle   := false,
       bintrayRepository   := "sbt-plugins",
       bintrayOrganization := None,

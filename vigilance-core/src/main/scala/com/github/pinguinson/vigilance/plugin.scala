@@ -180,18 +180,15 @@ class VigilanceComponent(val global: Global, inspections: Seq[Inspection])
 
         if (!disableHTML) {
           val html = IOUtils.writeHTMLReport(dataDir, feedback)
-          if (verbose)
-            reporter.echo(s"[info] [vigilance] Written HTML report [$html]")
+          reporter.echo(s"[info] [vigilance] Written HTML report [$html]")
         }
         if (!disableXML) {
           val xml = IOUtils.writeXMLReport(dataDir, feedback)
-          if (verbose)
-            reporter.echo(s"[info] [vigilance] Written XML report [$xml]")
+          reporter.echo(s"[info] [vigilance] Written XML report [$xml]")
         }
         if (!disableScalastyleXML) {
           val xml = IOUtils.writeScalastyleReport(dataDir, feedback)
-          if (verbose)
-            reporter.echo(s"[info] [vigilance] Written Scalastyle XML report [$xml]")
+          reporter.echo(s"[info] [vigilance] Written Scalastyle XML report [$xml]")
         }
       }
     }
