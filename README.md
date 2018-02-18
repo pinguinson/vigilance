@@ -1,4 +1,4 @@
-[ ![Download](https://api.bintray.com/packages/pinguinson/sbt-plugins/sbt-vigilance/images/download.svg) ](https://bintray.com/pinguinson/sbt-plugins/sbt-vigilance/_latestVersion)
+[ ![Download](https://img.shields.io/github/tag/pinguinson/vigilance.svg?label=release&colorB=007ec6) ](https://bintray.com/pinguinson/sbt-plugins/sbt-vigilance/_latestVersion)
 
 # vigilance
 Scala linter (fork of https://github.com/sksamuel/scapegoat)
