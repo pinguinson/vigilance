@@ -7,7 +7,7 @@ Scala linter (fork of https://github.com/sksamuel/scapegoat)
 
 Add sbt plugin:
 ```scala
-addSbtPlugin("com.github.pinguinson" % "sbt-vigilance" % "0.0.10")
+addSbtPlugin("com.github.pinguinson" % "sbt-vigilance" % "0.1")
 ```
 
 Run inspections in sbt:
@@ -29,19 +29,4 @@ vigilanceDiff branch_name // runs only for files in the diff against branch_name
 - [ ] add tests for catch operations
 - [ ] fix variable shadowing inspection
 - [x] fix MapGetAndGetOrElse tests (terribly inconsistent)
-
-
-### Expected release steps for sbt-release
-
-- [x] checkSnapshotDependencies
-- [x] inquireVersions
-- [x] runClean
-- [x] runTest (for vigilanceCore only! doesn't work right now)
-- [x] setReleaseVersion (write to `version.sbt` in root project)
-- [ ] maybe update current version in `README.md` as well?
-- [x] commitReleaseVersion
-- [x] tagRelease
-- [ ] publishArtifacts (for both `vigilanceCore` and `vigilanceSbt`)
-- [x] setNextVersion (write to `version.sbt` in root project)
-- [x] commitNextVersion
-- [x] pushChanges
+- [ ] add release step that would update plugin version in README.md
