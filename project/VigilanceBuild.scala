@@ -6,7 +6,6 @@ import sbt.Opts.resolver._
 import sbt._
 import sbtbuildinfo.BuildInfoPlugin.autoImport._
 import sbtbuildinfo.{BuildInfoKey, BuildInfoPlugin}
-import sbtrelease.ReleasePlugin.autoImport.ReleaseTransformations._
 import sbtrelease.ReleasePlugin.autoImport._
 
 object VigilanceBuild {
