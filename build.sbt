@@ -6,7 +6,7 @@ import sbtrelease.ReleasePlugin.autoImport.ReleaseTransformations._
 def runTests(project: Project) = ReleaseStep { st: State =>
   if (!st.get(skipTests).getOrElse(false)) {
     val extracted = Project.extract(st)
-    extracted.runAggregated(test in Test in vigilanceCore, st)
+    extracted.runAggregated(vigilanceCore / Test / test, st)
   } else st
 }
 
@@ -39,4 +39,3 @@ lazy val vigilanceSbt  = VigilanceBuild.vigilanceSbt
 
 // for some reason '^vigilanceSbt/publishLocal' will only publish for sbt 1.X
 addCommandAlias("pubLocal", ";+vigilanceCore/publishLocal; project vigilanceSbt; ^publishLocal ;project vigilance")
-addCommandAlias("releaseArtifacts", ";+vigilanceCore/release ;^vigilanceSbt/publish")

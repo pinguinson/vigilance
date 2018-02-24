@@ -41,8 +41,8 @@ object VigilanceBuild {
       email = "nikita.penguin@gmail.com",
       url   = url("https://github.com/pinguinson")
     ),
-    parallelExecution in Test     := false,
-    publishArtifact in Test       := false,
+    Test / parallelExecution      := false,
+    Test / publishArtifact        := false,
     publishMavenStyle             := true,
     publishTo                     := Some(if (isSnapshot.value) sonatypeSnapshots else sonatypeStaging),
     releaseCrossBuild             := true,
@@ -79,7 +79,7 @@ object VigilanceBuild {
         "org.slf4j"              %  "slf4j-api"      % "1.7.25"           % Test,
         "com.typesafe.akka"      %% "akka-actor"     % "2.5.9"            % Test
       ),
-      fullClasspath in (Compile, console) ++= (fullClasspath in Test).value, // because that's where "PluginRunner" is
+      fullClasspath in (Compile, console) ++= (Test / fullClasspath).value, // because that's where "PluginRunner" is
       releaseUseGlobalVersion := true
     )
 
@@ -87,9 +87,9 @@ object VigilanceBuild {
     .enablePlugins(BuildInfoPlugin)
     .settings(
       buildInfoKeys := Seq[BuildInfoKey](
-        version      in vigilanceCore,
-        organization in vigilanceCore,
-        name         in vigilanceCore
+        vigilanceCore / version,
+        vigilanceCore / organization,
+        vigilanceCore / name
       ).map(k => BuildInfoKey.map(k) { case (key, value) => "vigilance" + key.capitalize -> value }),
       buildInfoPackage    := "com.github.pinguinson.vigilance.buildinfo",
       publishMavenStyle   := false,
@@ -98,6 +98,6 @@ object VigilanceBuild {
       organization        := "com.github.pinguinson",
       name                := "sbt-vigilance",
       sbtPlugin           := true,
-      crossSbtVersions    := Seq("0.13.16", "1.0.3")
+      crossSbtVersions    := Seq("0.13.16", sbtVersion.value)
     )
 }
