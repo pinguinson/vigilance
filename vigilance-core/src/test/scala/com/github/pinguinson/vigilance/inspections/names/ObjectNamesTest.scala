@@ -24,5 +24,14 @@ class ObjectNamesTest
         compiler.vigilance.feedback.reports.size shouldBe 2
       }
     }
+    "should not report warning" - {
+      "for package objects" in {
+        val code =
+          """package object banana
+          """.stripMargin
+        compileCodeSnippet(code)
+        compiler.vigilance.feedback.reports.size shouldBe 0
+      }
+    }
   }
 }

@@ -1,7 +1,6 @@
 package com.github.pinguinson.vigilance
 
 import java.io.{File, FileNotFoundException}
-import java.net.URL
 import java.nio.charset.StandardCharsets
 
 import scala.tools.nsc.reporters.ConsoleReporter
@@ -12,8 +11,10 @@ import scala.tools.nsc.reporters.ConsoleReporter
   */
 trait PluginRunner {
 
+  def inspections: Seq[Inspection]
+
   val scalaVersion = scala.util.Properties.versionNumberString
-  val shortScalaVersion = scalaVersion.dropRight(2)
+  val shortScalaVersion = scalaVersion.split('.').init.mkString(".")
 
   val classPath = getScalaJars.map(_.getAbsolutePath) :+ sbtCompileDir.getAbsolutePath
 
@@ -30,42 +31,40 @@ trait PluginRunner {
     s
   }
 
-  val inspections: Seq[Inspection]
   val reporter = new ConsoleReporter(settings)
   lazy val compiler = new VigilanceCompiler(settings, inspections, reporter)
 
-  def writeCodeSnippetToTempFile(code: String): File = {
+  def compileCodeSnippet(code: String): VigilanceCompiler = {
+    compileSourceFiles(writeCodeSnippetToTempFile(code))
+  }
+
+  def addToClassPath(groupId: String, artifactId: String, version: String): Unit = {
+    val jarPath = findIvyJar(groupId, artifactId, version).getAbsolutePath
+    settings.classpath.value = settings.classpath.value + ":" + jarPath
+  }
+
+  private def writeCodeSnippetToTempFile(code: String): File = {
     val file = File.createTempFile("vigilanceSnippet", ".scala")
     org.apache.commons.io.FileUtils.write(file, code, StandardCharsets.UTF_8)
     file.deleteOnExit()
     file
   }
 
-  def addToClassPath(groupId: String, artifactId: String, version: String): Unit = {
-    settings.classpath.value = settings.classpath.value + ":" + findIvyJar(groupId, artifactId, version).getAbsolutePath
-  }
-
-  def compileCodeSnippet(code: String): VigilanceCompiler = compileSourceFiles(writeCodeSnippetToTempFile(code))
-
-  def compileSourceResources(urls: URL*): VigilanceCompiler = {
-    compileSourceFiles(urls.map(_.getFile).map(new File(_)): _*)
-  }
-
-  def compileSourceFiles(files: File*): VigilanceCompiler = {
+  private def compileSourceFiles(files: File*): VigilanceCompiler = {
     reporter.flush()
     val command = new scala.tools.nsc.CompilerCommand(files.map(_.getAbsolutePath).toList, settings)
     new compiler.Run().compile(command.files)
     compiler
   }
 
-  def getScalaJars: List[File] = {
+  private def getScalaJars: List[File] = {
     val scalaJars = List("scala-compiler", "scala-library", "scala-reflect")
     scalaJars.map(findScalaJar)
   }
 
-  def findScalaJar(artifactId: String): File = findIvyJar("org.scala-lang", artifactId, scalaVersion)
+  private def findScalaJar(artifactId: String): File = findIvyJar("org.scala-lang", artifactId, scalaVersion)
 
-  def findIvyJar(groupId: String, artifactId: String, version: String): File = {
+  private def findIvyJar(groupId: String, artifactId: String, version: String): File = {
     val userHome = System.getProperty("user.home")
     val sbtHome = userHome + "/.ivy2"
     val artifactFolder = s"$sbtHome/cache/$groupId/$artifactId/"
@@ -84,7 +83,7 @@ trait PluginRunner {
     }
   }
 
-  def sbtCompileDir: File = {
+  private def sbtCompileDir: File = {
     val dir = new File("./vigilance-core/target/scala-" + shortScalaVersion + "/classes")
     if (dir.exists) dir
     else throw new FileNotFoundException(s"Could not locate SBT compile directory for plugin files [$dir]")
