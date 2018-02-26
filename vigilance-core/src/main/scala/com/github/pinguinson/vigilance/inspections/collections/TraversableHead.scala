@@ -15,7 +15,7 @@ object TraversableHead extends Inspection {
       import context.global._
 
       override def inspect(tree: Tree) = {
-        case SelectTraversable(Head) =>
+        case SelectTraversableLike(Head) =>
           context.warn(tree.pos, self, "Traversable.head is unsafe, use Traversable.headOption instead")
       }
     }

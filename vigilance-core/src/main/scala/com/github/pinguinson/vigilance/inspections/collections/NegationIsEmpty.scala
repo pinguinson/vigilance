@@ -16,9 +16,9 @@ object NegationIsEmpty extends Inspection {
 
       //TODO: add more cases
       override def inspect(tree: Tree) = {
-        case Select(SelectTraversable(IsEmpty), Bang) =>
+        case Select(SelectTraversableLike(IsEmpty), Bang) =>
           context.warn(tree.pos, self, "Traversable.!isEmpty can be replaced with Traversable.nonEmpty")
-        case Select(SelectTraversable(NonEmpty), Bang) =>
+        case Select(SelectTraversableLike(NonEmpty), Bang) =>
           context.warn(tree.pos, self, "Traversable.!nonEmpty can be replaced with Traversable.isEmpty")
         case Select(SelectOption(IsEmpty), Bang) =>
           context.warn(tree.pos, self, "Option.!isEmpty can be replaced with Option.nonEmpty or Option.isDefined")

@@ -16,7 +16,8 @@ trait Extractors {
 
   object SelectOption extends SelectT[Option[_]]
   object SelectTry extends SelectT[scala.util.Try[_]]
-  object SelectTraversable extends SelectT[TraversableLike[_, _]]
+  object SelectTraversableLike extends SelectT[TraversableLike[_, _]]
+  object SelectTraversableOnce extends SelectT[TraversableOnce[_]]
   object SelectList extends SelectT[List[_]]
   object SelectSeq extends SelectT[Seq[_]]
   object SelectSet extends SelectT[Set[_]]

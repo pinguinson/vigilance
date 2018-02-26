@@ -124,5 +124,5 @@ object VigilanceConfig extends App {
     VarCouldBeVal,
     WhileTrue,
     ZeroNumerator
-  )
+  ) ++ TraversableOnceUnsafe.All
 }

@@ -14,7 +14,7 @@ object TraversableLast extends Inspection {
       import context.global._
 
       override def inspect(tree: Tree) = {
-        case SelectTraversable(Last) =>
+        case SelectTraversableLike(Last) =>
           context.warn(tree.pos, self, "Traversable.last is unsafe, use Traversable.lastOption instead")
       }
     }

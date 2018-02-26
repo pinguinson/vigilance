@@ -26,7 +26,7 @@ object ReverseFunc extends Inspection {
       import context.global._
 
       override def inspect(tree: Tree) = {
-        case Select(SelectTraversable(Reverse), TermName(FuncReplace(func, replace))) =>
+        case Select(SelectTraversableLike(Reverse), TermName(FuncReplace(func, replace))) =>
           warn(func, replace, tree)
         case Select(Apply(arrayOps1, List(Select(Apply(arrayOps2, List(_)), Reverse))), TermName(FuncReplace(func, replace)))
           if arrayOps1.toString.contains("ArrayOps") && arrayOps2.toString.contains("ArrayOps") =>

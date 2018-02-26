@@ -15,7 +15,7 @@ object NegationNonEmpty extends Inspection {
       import context.global._
 
       override def inspect(tree: Tree) = {
-        case Select(SelectTraversable(NonEmpty), Bang) =>
+        case Select(SelectTraversableLike(NonEmpty), Bang) =>
           context.warn(tree.pos, self, description)
       }
     }
