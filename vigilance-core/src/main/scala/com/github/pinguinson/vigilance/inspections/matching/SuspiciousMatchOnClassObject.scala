@@ -9,7 +9,7 @@ object SuspiciousMatchOnClassObject extends Inspection {
   override val description = "Suspicious match on class object"
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-     override def traverser = new context.Traverser {
+    override def traverser = new context.Traverser {
 
       import context._
       import context.global._
@@ -21,15 +21,14 @@ object SuspiciousMatchOnClassObject extends Inspection {
       }
 
       private def checkCases(cases: List[CaseDef]): Unit = {
-        cases.exists {
-          case c @ CaseDef(pat, _, _) // if we have a case object and a companion class, then we are matching on an object instead of a class
+        cases.foreach {
+          case c@CaseDef(pat, _, _) // if we have a case object and a companion class, then we are matching on an object instead of a class
             if pat.symbol != null &&
               pat.symbol.isModuleOrModuleClass &&
               pat.tpe.typeSymbol.companionClass.isClass &&
               !pat.tpe.typeSymbol.companionClass.isAbstractClass =>
             warn(c)
-            true
-          case _ => false
+          case _ =>
         }
       }
 

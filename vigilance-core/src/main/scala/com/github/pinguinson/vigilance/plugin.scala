@@ -142,7 +142,7 @@ class VigilanceComponent(val global: Global, inspections: Seq[Inspection])
 
   override val phaseName: String = "vigilance"
   override val runsAfter: List[String] = List("typer")
-  override val runsBefore = List[String]("patmat")
+  override val runsBefore: List[String] = List("patmat")
 
   //FIXME: ugly stuff
   def disableAll: Boolean = disabled.exists(_.compareToIgnoreCase("all") == 0)
