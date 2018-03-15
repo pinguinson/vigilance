@@ -125,7 +125,7 @@ object VigilanceSbtPlugin extends AutoPlugin {
       vigilanceDiffBranch := None,
       vigilanceOutputPath := (crossTarget in Compile).value.getAbsolutePath + "/vigilance-report",
       vigilanceReports := Seq("all"),
-      libraryDependencies += organization %% artifactId % "0.0.10-SNAPSHOT" % Compile
+      libraryDependencies += organization %% artifactId % version % Compile
     )
   }
 }

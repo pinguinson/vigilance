@@ -17,10 +17,14 @@ object VarClosure extends Inspection {
       private def capturesVar(tree: Tree): Unit = tree match {
         case Block(stmt, expr) => (stmt :+ expr).foreach(capturesVar)
         case Apply(Select(_, _), args) =>
-          args.filter(_.symbol != null)
-            .foreach(arg => if (arg.symbol.isMethod && arg.symbol.isGetter && !arg.symbol.isStable) {
-              context.warn(tree.pos, self, "Closing over a var can lead to subtle bugs: " + tree.toString.take(500))
-            })
+          args
+            .filter(_.symbol != null)
+            .filter(_.symbol.isMethod)
+            .filter(_.symbol.isGetter)
+            .filterNot(_.symbol.isStable)
+            .foreach { arg =>
+              context.warn(tree.pos, self, s"Closing over a var can lead to subtle bugs ${arg.symbol.name.toString}")
+            }
         case _ =>
       }
 

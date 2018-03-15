@@ -21,7 +21,7 @@ object BrokenOddness extends Inspection {
       override def inspect(tree: Tree) = {
         case Apply(Select(Apply(Select(_, TermName("$percent")), List(Literal(Constant(2)))),
         Equals), List(Literal(Constant(1)))) =>
-          context.warn(tree.pos, self, "Consider using x % 2 != 0 for negative numbers" + tree.toString.take(500))
+          context.warn(tree.pos, self, "Consider using x % 2 != 0 for negative numbers")
       }
     }
   }
