@@ -22,6 +22,8 @@ lazy val vigilance = (project in file("."))
       checkSnapshotDependencies,
       inquireVersions,
       runClean,
+      runInProject(vigilanceCore, "clean"),
+      runInProject(vigilanceSbt,  "clean"),
       runTests(vigilanceCore),
       setReleaseVersion,
       commitReleaseVersion,
