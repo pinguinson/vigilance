@@ -21,7 +21,7 @@ class VarUseSpec extends FreeSpec with Matchers with PluginRunner with OneInstan
     }
     "should not report warning" - {
       "for akka actors" in {
-        addToClassPath("com.typesafe.akka", "akka-actor_2.11", "2.5.4")
+        addToClassPath("com.typesafe.akka", "akka-actor_2.11", "2.5.9")
         val code =
           """import akka.actor.Actor
             |import akka.actor.Actor.Receive
