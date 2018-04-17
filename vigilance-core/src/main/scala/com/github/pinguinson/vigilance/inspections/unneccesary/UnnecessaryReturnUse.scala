@@ -7,7 +7,6 @@ object UnnecessaryReturnUse extends Inspection {
 
   override val level = Levels.Error
   override val description = "Unnecessary return"
-  //TODO: set level to Error, reference tpolecat blog post
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def traverser = new context.Traverser {
