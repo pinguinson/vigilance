@@ -32,6 +32,6 @@ object GitUtils {
       "--diff-filter=d",
       branch
     )
-    exec(cmd).toOption.toSeq.flatMap(_.map(file => s"$workingDirectory/$file"))
+    exec(cmd).get.map(file => s"$workingDirectory/$file")
   }
 }

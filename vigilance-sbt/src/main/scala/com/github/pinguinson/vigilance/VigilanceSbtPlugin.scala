@@ -53,7 +53,12 @@ object VigilanceSbtPlugin extends AutoPlugin {
             // find all deps for the compile scope
             val vigilanceDependencies = (update in Vigilance).value matching configurationFilter(Compile.name)
             // ensure we have the vigilance dependency on the classpath and if so add it as a scalac plugin
-            val requiredArtifactName = s"${artifactId}_${scalaBinaryVersion.value}-$version.jar"
+            val requiredArtifactName = {
+              if (version.endsWith("SNAPSHOT"))
+                s"${artifactId}_${scalaBinaryVersion.value}.jar"
+              else
+                s"${artifactId}_${scalaBinaryVersion.value}-$version.jar"
+            }
             vigilanceDependencies.find(_.getAbsolutePath.endsWith(requiredArtifactName)) match {
               case None =>
                 val dependencies = vigilanceDependencies.mkString("\n")
