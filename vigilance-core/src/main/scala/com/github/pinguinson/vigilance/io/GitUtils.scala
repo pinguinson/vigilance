@@ -25,13 +25,32 @@ object GitUtils {
   }
 
   def diff(branch: String): Seq[String] = {
-    val cmd = Seq(
+    val remoteSetBranchesCmd = Seq(
+      "git",
+      "remote",
+      "set-branches",
+      "--add",
+      "origin",
+      branch
+    )
+    val fetchCmd = Seq(
+      "git",
+      "fetch"
+    )
+    val diffCmd = Seq(
       "git",
       "diff",
       "--name-only",
       "--diff-filter=d",
-      branch
+      s"origin/$branch"
     )
-    exec(cmd).get.map(file => s"$workingDirectory/$file")
+
+    val triedFiles = for {
+      _ <- exec(remoteSetBranchesCmd)
+      _ <- exec(fetchCmd)
+      files <- exec(diffCmd)
+    } yield files
+
+    triedFiles.get.map(file => s"$workingDirectory/$file")
   }
 }
