@@ -42,7 +42,7 @@ object GitUtils {
       "diff",
       "--name-only",
       "--diff-filter=d",
-      s"origin/$branch"
+      branch
     )
 
     val triedFiles = for {
